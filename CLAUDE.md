@@ -6,7 +6,7 @@
 
 ## 1. Project Identity
 
-CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). All data is stored as JSON files on disk (no database in v1). Repository: `github.com/enesol-julio/core-assessment`. We are building **v1.0** through milestone blocks v0.1–v0.5.
+CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). All data is stored as JSON files on disk (no database in v1). Repository: `github.com/enesol-julio/core-assessment`. Production: `assessment.dataforgetechnologies.com` (EC2 Ubuntu behind ALB). We are building **v1.0** through milestone blocks v0.1–v0.5.
 
 ---
 
@@ -263,7 +263,29 @@ AUTH_BYPASS_ROLE=admin
 
 ---
 
-## 12. Companion Docs
+## 12. Deployment Target
+
+| Property | Value |
+|---|---|
+| **Domain** | `assessment.dataforgetechnologies.com` |
+| **Server** | AWS EC2, Ubuntu 24.04 LTS |
+| **App path (server)** | `/home/ubuntu/core-assessment` |
+| **App path (local)** | `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment` |
+| **Process manager** | pm2 (`pm2 restart core-assessment`) |
+| **Reverse proxy** | nginx (port 80 → localhost:3000) |
+| **SSL** | Terminated at AWS ALB (ACM certificate) — app handles HTTP only |
+| **Env file (server)** | `.env.production` (gitignored, created manually on server) |
+
+**What this means for code:**
+
+- `NEXT_PUBLIC_APP_URL` is `https://assessment.dataforgetechnologies.com` in production, `http://localhost:3000` in dev.
+- The app never handles HTTPS directly — the ALB does. No SSL config in Next.js or nginx on the instance.
+- The `data/` directory persists on the EC2 EBS volume across deploys and reboots.
+- Deploy workflow: `git push` from Mac → `git pull && npm run build && pm2 restart` on server. Full details in `docs/RUNBOOK.md` Part 5.
+
+---
+
+## 13. Companion Docs
 
 Implementation briefs live in `docs/briefs/`. These are scoped instructions produced by the planning chat (Claude Chat Project) for each feature. They contain:
 
@@ -281,6 +303,7 @@ Implementation briefs live in `docs/briefs/`. These are scoped instructions prod
 | Dashboard Module Spec | v1.1 | Three-layer dashboard, transforms, components, access control |
 | Versioning Roadmap | v1.1 | Version scheme, milestone gates, dependency chain |
 | Future Backlog Spec | v2.1 | Everything deferred to v2+ (use to detect scope creep) |
+| RUNBOOK | 1.2 | Local setup, build workflow, version block checklists, EC2 deployment |
 
 **Key entities:**
 

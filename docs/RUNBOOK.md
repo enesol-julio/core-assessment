@@ -5,6 +5,9 @@
 **Project:** CORE Assessment Platform
 **Repository:** [github.com/enesol-julio/core-assessment](https://github.com/enesol-julio/core-assessment)
 **Local path (macOS):** `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment`
+**Production domain:** `assessment.dataforgetechnologies.com`
+**Server:** AWS EC2 (Ubuntu 24.04 LTS) behind ALB with ACM SSL
+**Server app path:** `/home/ubuntu/core-assessment`
 **Author:** Julio (julio@datacracy.co)
 **Created:** February 2026
 
@@ -98,7 +101,7 @@ When prompted:
 - Would you like to use App Router? → **Yes**
 - Would you like to use Tailwind CSS? → **Yes**
 
-**Note:** `create-next-app` may warn about the directory not being empty (because of `README.md` and `.gitignore`). This is fine — it will merge its output with the existing files. If it overwrites `.gitignore`, we'll replace it in Step 5.
+**Note:** `create-next-app` may warn about the directory not being empty (because of `README.md` and `.gitignore`). This is fine — it will merge its output with the existing files. If it overwrites `.gitignore`, we'll replace it in Step 6.
 
 ### Step 4: Verify the scaffold works
 
@@ -185,9 +188,8 @@ mkdir -p scripts
 
 ### Step 6: Replace `.gitignore`
 
-Replace the default `.gitignore` with the following (the GitHub Node template is close but needs project-specific additions):
-
-```gitignore
+```bash
+cat > .gitignore << 'EOF'
 # Dependencies
 node_modules/
 .pnp
@@ -228,6 +230,7 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+EOF
 ```
 
 **Critical:** The `data/` directory is gitignored. It contains runtime data (responses, profiles, calibration, audit logs). Assessment content lives in `content/` and IS committed.
@@ -239,6 +242,12 @@ Git doesn't track empty directories. Add `.gitkeep` files so the structure persi
 ```bash
 find content data docs/briefs prompts tests scripts src/services src/lib src/components src/hooks \
   -type d -empty -exec touch {}/.gitkeep \;
+```
+
+Verify:
+
+```bash
+find . -name ".gitkeep" -not -path "./node_modules/*" | sort
 ```
 
 ---
@@ -314,15 +323,10 @@ git commit -m "docs: add implementation brief for 0.1.1"
 
 ## 1.5 `.env.local` Setup
 
-Create `.env.local` at the project root (this file is gitignored):
+Create `.env.local` at the project root. This file is gitignored and never committed.
 
 ```bash
-touch .env.local
-```
-
-Add the following environment variables:
-
-```env
+cat > .env.local << 'EOF'
 # ─────────────────────────────────────────────
 # CORE Assessment Platform — Environment Config
 # ─────────────────────────────────────────────
@@ -341,15 +345,14 @@ OTP_EXPIRY_MINUTES=10
 # Session expiry in hours (default: 4)
 SESSION_EXPIRY_HOURS=4
 
-# ── Email Service (for OTP delivery via Microsoft Graph API) ──
-# Requires Entra ID App Registration with Mail.Send permission.
-# See docs/AZURE_APP_REGISTRATION_SETUP.md and docs/M365_GRAPH_SETUP.md for setup.
-EMAIL_PROVIDER=graph
-GRAPH_TENANT_ID=REPLACE_WITH_YOUR_ENTRA_TENANT_ID
-GRAPH_CLIENT_ID=REPLACE_WITH_YOUR_APP_CLIENT_ID
-GRAPH_CLIENT_SECRET=REPLACE_WITH_YOUR_APP_CLIENT_SECRET
-GRAPH_SENDER_EMAIL=core-assessment@dataforgetechnologies.com
-GRAPH_SENDER_NAME=CORE Assessment
+# ── Email Service (OTP delivery via Microsoft Graph API) ──
+# Requires an Entra ID (Azure AD) app registration with Mail.Send application permission.
+# Client credentials flow via @azure/msal-node.
+# See docs/M365_GRAPH_SETUP.md for full setup instructions.
+AZURE_TENANT_ID=REPLACE_WITH_YOUR_ENTRA_TENANT_ID
+AZURE_CLIENT_ID=REPLACE_WITH_YOUR_ENTRA_APP_CLIENT_ID
+AZURE_CLIENT_SECRET=REPLACE_WITH_YOUR_ENTRA_APP_CLIENT_SECRET
+EMAIL_FROM=noreply@datacracy.co
 
 # ── AI Pipeline ──
 # Anthropic API key — required for v0.3+ (pipeline scoring and synthesis)
@@ -377,12 +380,19 @@ AUTH_BYPASS_ROLE=admin
 # Comma-separated initial domain allowlist
 SEED_DOMAINS=enesol.ai,dataforgetechnologies.com,datacracy.co
 SEED_ADMIN_EMAIL=julio@datacracy.co
+EOF
+```
+
+Verify it was created:
+
+```bash
+cat .env.local
 ```
 
 **Notes:**
-- `ANTHROPIC_API_KEY` is not needed until v0.3 (pipeline). You can leave the placeholder during v0.1–v0.2.
-- `GRAPH_*` credentials are not needed until v0.2 (auth). Leave placeholders until then. See `docs/AZURE_APP_REGISTRATION_SETUP.md` for obtaining the values.
-- `JWT_SECRET` — generate a real one: `openssl rand -base64 32`
+- `ANTHROPIC_API_KEY` is not needed until v0.3 (pipeline). Leave the placeholder during v0.1–v0.2.
+- `AZURE_TENANT_ID` / `AZURE_CLIENT_ID` / `AZURE_CLIENT_SECRET` are not needed until v0.2 (auth). Leave placeholders until then. Setup requires an Entra ID app registration with `Mail.Send` application permission (client credentials flow via `@azure/msal-node`).
+- `JWT_SECRET` — generate a real one when you need it: `openssl rand -base64 32`
 - Never commit `.env.local`. It's in `.gitignore`.
 
 ---
@@ -393,7 +403,7 @@ During early development (pre-v0.2), authentication doesn't exist yet. The dev b
 
 **How it works:**
 
-Three env vars control it:
+Three env vars control it (already set in `.env.local` from §1.5):
 
 ```env
 AUTH_BYPASS=true
@@ -418,8 +428,8 @@ AUTH_BYPASS_ROLE=admin
 
 **To disable:**
 
-```env
-AUTH_BYPASS=false
+```bash
+sed -i '' 's/AUTH_BYPASS=true/AUTH_BYPASS=false/' .env.local
 ```
 
 ---
@@ -489,9 +499,56 @@ git push
 
 ### Step 6: Create .env.example (committed reference)
 
+This creates a sanitized copy of `.env.local` with only placeholders — safe to commit.
+
 ```bash
-cp .env.local .env.example
-# Edit .env.example to remove any real keys, keep only placeholders
+cat > .env.example << 'EOF'
+# ─────────────────────────────────────────────
+# CORE Assessment Platform — Environment Config
+# ─────────────────────────────────────────────
+# Copy this file to .env.local and fill in real values.
+# .env.local is gitignored and never committed.
+
+# ── Application ──
+NODE_ENV=development
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# ── Authentication ──
+# Generate with: openssl rand -base64 32
+JWT_SECRET=
+OTP_EXPIRY_MINUTES=10
+SESSION_EXPIRY_HOURS=4
+
+# ── Email Service (OTP delivery via Microsoft Graph API) ──
+# Requires Entra ID app registration with Mail.Send application permission.
+# Client credentials flow via @azure/msal-node.
+# See docs/M365_GRAPH_SETUP.md for setup instructions.
+AZURE_TENANT_ID=
+AZURE_CLIENT_ID=
+AZURE_CLIENT_SECRET=
+EMAIL_FROM=noreply@datacracy.co
+
+# ── AI Pipeline ──
+ANTHROPIC_API_KEY=
+# OPENAI_API_KEY=
+PIPELINE_SCORING_MODEL=claude-sonnet-4-5-20250514
+PIPELINE_SYNTHESIS_MODEL=claude-opus-4-5-20250514
+PIPELINE_SCORING_TEMPERATURE=0.1
+PIPELINE_SYNTHESIS_TEMPERATURE=0.4
+
+# ── Storage ──
+DATA_DIRECTORY=./data
+
+# ── Dev Bypass (DEVELOPMENT ONLY) ──
+AUTH_BYPASS=true
+AUTH_BYPASS_EMAIL=julio@datacracy.co
+AUTH_BYPASS_ROLE=admin
+
+# ── Seed Data ──
+SEED_DOMAINS=enesol.ai,dataforgetechnologies.com,datacracy.co
+SEED_ADMIN_EMAIL=julio@datacracy.co
+EOF
+
 git add .env.example
 git commit -m "docs: add .env.example with placeholder values"
 git push
@@ -501,180 +558,256 @@ git push
 
 ---
 
-# PART 2: BUILD WORKFLOW
+## 1.8 SSH Configuration (Local Mac → EC2)
 
-How to use the two-chat architecture (planning chat + Claude Code) to build features.
+Set up a named SSH shortcut so you can connect to the EC2 server without remembering the IP or PEM path.
+
+### Step 1: Move PEM to SSH directory
+
+```bash
+mv ~/Downloads/YOUR_KEY_NAME.pem ~/.ssh/core-assessment.pem
+chmod 400 ~/.ssh/core-assessment.pem
+```
+
+### Step 2: Create SSH config entry
+
+Edit `~/.ssh/config` (create it if it doesn't exist):
+
+```bash
+nano ~/.ssh/config
+```
+
+Add:
+
+```
+Host core-assessment
+    HostName YOUR_EC2_PUBLIC_IP
+    User ubuntu
+    IdentityFile ~/.ssh/core-assessment.pem
+    StrictHostKeyChecking accept-new
+```
+
+Replace `YOUR_EC2_PUBLIC_IP` with the actual IP. **This file stays local — it is not committed to the repo.**
+
+### Step 3: Verify connection
+
+```bash
+ssh core-assessment
+# Should drop you into the EC2 Ubuntu shell
+# exit to return
+```
+
+### Step 4: Quick commands you'll use
+
+```bash
+# SSH into server
+ssh core-assessment
+
+# Copy a file TO the server
+scp local-file.txt core-assessment:/home/ubuntu/
+
+# Copy a file FROM the server
+scp core-assessment:/home/ubuntu/some-file.txt ./
+```
 
 ---
 
-## 2.1 Overview of the Two-Chat Architecture
+# PART 2: BUILD WORKFLOW (REPEATING CYCLE)
 
-The project uses two separate Claude contexts:
-
-| Context | Purpose | Has Access To |
-|---|---|---|
-| **Planning Chat** (this Claude Project) | Strategy, architecture, specs, brief creation | All spec documents as Project Knowledge |
-| **Claude Code** (CLI tool) | Implementation — writes and edits code | `CLAUDE.md`, local codebase, briefs |
-
-They don't communicate directly. **You are the bridge.**
-
-```
-┌──────────────────┐                ┌──────────────────┐
-│  Planning Chat   │   → Brief →   │   Claude Code    │
-│  (Claude Project)│               │   (CLI)          │
-│                  │   ← Report ←  │                  │
-│  • Specs         │               │  • CLAUDE.md     │
-│  • Architecture  │   (You carry  │  • src/          │
-│  • Briefs        │    messages)  │  • content/      │
-│  • Decisions     │               │  • data/         │
-└──────────────────┘               └──────────────────┘
-```
+This is the loop you'll follow for every feature, from v0.1.1 through v0.5.3.
 
 ---
 
-## 2.2 Before Starting a Feature
+## 2.1 Planning Chat — Start a Feature
 
-### Step 1: Ask the planning chat to create an implementation brief
+Open the **Claude Chat Project** (this Project — the one with all the spec docs in Project Knowledge).
 
-In the planning chat (this Claude Project), request a brief:
+**What to say — template:**
 
-> Create an implementation brief for Feature 0.1.1 — Assessment Metadata File.
+> I'm ready to start Feature {version.feature} — {Feature Name}.
+>
+> Current project state: {describe what's built, what's running, any issues}.
+>
+> Please create the implementation brief.
 
-The planning chat will produce a markdown document with:
-- Exact file paths
-- Code structure
-- Acceptance criteria
-- What NOT to do
+**Example:**
 
-### Step 2: Save the brief locally
+> I'm ready to start Feature 0.1.1 — Assessment Metadata File.
+>
+> Current project state: Fresh scaffold. Next.js 14 running. Folder structure created per CLAUDE.md. No content files yet.
+>
+> Please create the implementation brief.
 
-Download the brief and save it to the project:
+**What happens:**
+- The planning chat confirms the version block and feature number
+- It checks prerequisites against the progress tracker
+- It produces a downloadable implementation brief (MD file)
+
+**What NOT to do:**
+- Don't ask the planning chat to write code — it doesn't do that
+- Don't mix features from different version blocks in the same chat
+- Don't skip ahead to a later feature without confirming prerequisites are met
+
+---
+
+## 2.2 Receive and Save the Implementation Brief
+
+The planning chat produces an implementation brief as a downloadable `.md` file.
+
+**Save it:**
 
 ```bash
-mv ~/Downloads/v0.1.1-assessment-metadata.md \
-   /Users/jutuonair/GDrive/ProductDevelopment/core-assessment/docs/briefs/
-```
-
-Commit it:
-
-```bash
-cd /Users/jutuonair/GDrive/ProductDevelopment/core-assessment
-git add docs/briefs/v0.1.1-assessment-metadata.md
-git commit -m "docs: add implementation brief for 0.1.1"
+mv ~/Downloads/{brief-filename}.md docs/briefs/
+git add docs/briefs/{brief-filename}.md
+git commit -m "docs: add implementation brief for {feature-id}"
 git push
 ```
 
-### Step 3: Feed the brief to Claude Code
+**Brief structure (what you'll get):**
 
-Start a Claude Code session:
+- Objective
+- Spec sources and cross-references
+- Prerequisites
+- File-by-file creation/modification list
+- Acceptance criteria
+- Scope boundaries (what NOT to build)
+- Claude Code instructions (architecture rules, conventions to respect)
+
+---
+
+## 2.3 Feed the Brief to Claude Code
+
+### Option A: Direct invocation with brief
+
+Open your terminal in the project directory and run:
 
 ```bash
 cd /Users/jutuonair/GDrive/ProductDevelopment/core-assessment
 claude
 ```
 
-Then paste or reference the brief:
+Once Claude Code starts, paste or reference the brief:
 
-> Read docs/briefs/v0.1.1-assessment-metadata.md and implement Feature 0.1.1 — Assessment Metadata File. Follow CLAUDE.md for all conventions.
+```
+Please implement Feature {version.feature} — {Feature Name}.
+
+The implementation brief is at docs/briefs/{filename}.md. Read it and follow its instructions exactly.
+```
+
+Claude Code will:
+1. Read `CLAUDE.md` automatically (project root conventions)
+2. Read the implementation brief you pointed it to
+3. Create/modify files as specified
+4. Run tests if applicable
+5. Report what it built
+
+### Option B: Feed the brief content directly
+
+If the brief is short or you want to be explicit:
+
+```
+Implement the following feature. Follow CLAUDE.md conventions.
+
+[paste brief content]
+```
+
+### Tips for Claude Code sessions:
+
+- **Be specific about what's done:** If some files already exist, tell Claude Code so it doesn't overwrite them.
+- **One feature per session when possible.** Claude Code works best with focused scope.
+- **Let it run tests.** If the brief specifies acceptance criteria with testable conditions, ask Claude Code to write and run tests.
+- **If it gets stuck:** Don't fight it for more than 2 attempts. Escalate to the planning chat (see §2.5 and Part 4).
 
 ---
 
-## 2.3 During Implementation
+## 2.4 Validate a Completed Feature
 
-### What Claude Code should do:
+After Claude Code finishes, verify the feature meets its acceptance criteria.
 
-1. Read `CLAUDE.md` (it does this automatically at session start)
-2. Read the brief you feed it
-3. Create/edit files in the correct locations per the folder structure
-4. Follow the conventions in `CLAUDE.md` §3–§4
-5. Self-validate against the acceptance criteria in the brief
+**General validation checklist:**
 
-### What you should monitor:
+1. **Does it run?** `npm run dev` — no build errors, no console errors
+2. **Do tests pass?** `npm test` (when tests exist)
+3. **Does it match the brief?** Walk through each acceptance criterion listed in the brief
+4. **Schema validation (v0.1)?** Run the schema validator: `npx ts-node scripts/validate-schemas.ts` (or whatever the validation tooling produces)
+5. **Visual check (v0.2+)?** Open the browser and walk through the user flow
+6. **Pipeline check (v0.3+)?** Submit a test response and verify a profile is generated
+7. **Dashboard check (v0.4+)?** Load the dashboard and verify data renders correctly
 
-1. **Files are in the right place** — check `git diff --stat` after each Claude Code session
-2. **No scope creep** — Claude Code should only build what's in the brief
-3. **No unnecessary dependencies** — check `package.json` for surprise additions
-4. **TypeScript compiles** — run `npx tsc --noEmit` after implementation
+**If validation fails:**
 
-### If Claude Code gets stuck:
-
-1. First, try re-stating the requirement with more specificity
-2. If it's a structural/architectural question, escalate to the planning chat:
-
-> Claude Code is trying to implement Feature 0.2.3 but is confused about how the timer state should persist across question transitions. Here's what it built: [paste relevant code]. What's the correct approach?
-
-The planning chat will provide architectural guidance or update the brief.
+- Minor issues → Fix directly in Claude Code: "The timer display isn't showing the warning. Please fix per the acceptance criteria."
+- Structural issues → Escalate to planning chat with specific error details
 
 ---
 
-## 2.4 After Implementation
+## 2.5 Feature Closeout — Tag, Sync, Update Progress
 
-### Step 1: Validate against acceptance criteria
+Once a feature passes validation:
 
-Each brief has specific acceptance criteria. Test each one:
-
-```bash
-# Example for v0.1.5 (schema validation)
-npx ts-node scripts/validate-schemas.ts
-# Should output: All validations passed ✓
-```
-
-### Step 2: Run the full check suite
-
-```bash
-npm run lint          # ESLint passes
-npx tsc --noEmit      # TypeScript compiles
-npm test              # All tests pass (if tests exist for this feature)
-npm run build         # Production build succeeds
-```
-
-### Step 3: Commit with the feature tag convention
+### Step 1: Commit all changes
 
 ```bash
 git add .
-git commit -m "feat(0.1.1): assessment metadata file
-
-- content/assessment-meta.json created with all required fields
-- Weights validated: sum to 1.0
-- Classification tiers cover 0-100 range
-- Timer modes and scoring parameters defined
-- Passes schema validation"
-
-git push
+git commit -m "feat({feature-id}): {short description}"
+# Example: git commit -m "feat(0.1.1): add assessment-meta.json"
 ```
 
-### Step 4: Tag the feature
+### Step 2: Tag the feature
 
 ```bash
-git tag v0.1.0-feature-1
+git tag v0.{X}.0-feature-{N}
+# Example: git tag v0.1.0-feature-1
+```
+
+### Step 3: Push
+
+```bash
+git push
 git push --tags
 ```
 
----
+### Step 4: Update CHANGELOG.md
 
-## 2.5 After Each Feature: Update CLAUDE.md §5
+Add an entry under the current version block:
 
-Update the "Current Version Block" section in `CLAUDE.md`:
+```markdown
+## [v0.1.1] - 2026-MM-DD
+### Added
+- Assessment metadata file (content/assessment-meta.json)
+- Schema validation for section weights, classification tiers
+```
 
-**Before:**
+```bash
+git add CHANGELOG.md
+git commit -m "docs: update CHANGELOG for v{feature-id}"
+git push
+```
+
+### Step 5: Report back to the planning chat
+
+Return to the Claude Chat Project and confirm completion:
+
+> Feature 0.1.1 — Assessment Metadata File is complete.
+> All acceptance criteria pass. Tagged as v0.1.0-feature-1.
+> Ready for the next feature.
+
+The planning chat will:
+- Update the progress tracker status to ✅ Complete
+- Record the completion date
+- Confirm what's next in the sequence
+
+### Step 6: Update CLAUDE.md §5 (Current Version Block)
+
+After each feature, update the "CURRENTLY BUILDING" block in `CLAUDE.md`:
+
 ```markdown
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.1                   │
-│  Feature: 0.1.1 — Assessment Metadata File  │
+│  Feature: 0.1.2 — Section Definition Files  │
 │  Status: In Progress                        │
 └─────────────────────────────────────────────┘
 ```
-
-**After:**
-```markdown
-┌─────────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.1                       │
-│  Feature: 0.1.2 — Section Definition Files (×5) │
-│  Status: Not Started                            │
-└─────────────────────────────────────────────────┘
-```
-
-Commit:
 
 ```bash
 git add CLAUDE.md
@@ -788,17 +921,17 @@ A checklist-style walkthrough of every version block, with feature order, spec d
 - `01_ARCHITECTURE.md` §2.1–§2.2 (web app, auth system), §9 (auth model)
 
 **Additional setup needed before starting:**
-- Microsoft Entra ID App Registration with `Mail.Send` permission for OTP delivery via Microsoft Graph API (see `docs/AZURE_APP_REGISTRATION_SETUP.md`)
-- Shared mailbox created in Microsoft 365 Admin Center (see `docs/M365_GRAPH_SETUP.md`)
-- `GRAPH_TENANT_ID`, `GRAPH_CLIENT_ID`, `GRAPH_CLIENT_SECRET`, `GRAPH_SENDER_EMAIL` populated in `.env.local`
-- `@azure/msal-node` installed: `npm install @azure/msal-node`
+- Microsoft Entra ID (Azure AD) app registration with `Mail.Send` application permission (client credentials flow)
+- `@azure/msal-node` npm package installed
+- `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET` populated in `.env.local`
 - `JWT_SECRET` generated: `openssl rand -base64 32`
+- See `docs/M365_GRAPH_SETUP.md` for full Entra ID setup instructions
 
 ### Feature Checklist
 
 | # | Feature | Prerequisites | Key Output |
 |---|---|---|---|
-| 0.2.1 | Email OTP Authentication | v0.1 complete, Graph API email configured | `/api/auth/*` routes, session management, login page |
+| 0.2.1 | Email OTP Authentication | v0.1 complete, Entra ID app configured | `/api/auth/*` routes, session management, login page |
 | 0.2.2 | Domain Allowlist Management | 0.2.1 (auth system) | Admin settings page, `/api/admin/domains` endpoints |
 | 0.2.3 | Assessment Session Flow | v0.1 complete, 0.2.1 (user identity) | Full 5-section timed assessment UI, response capture |
 | 0.2.4 | Deterministic Scoring Engine | 0.1.2 (scoring params), 0.1.1 (weights) | `src/lib/scoring/` — auto-scoring for objective types |
@@ -922,10 +1055,13 @@ npm install @tremor/react recharts
 - [ ] Production guard verified (throws if bypass enabled in production)
 - [ ] All three org domains in allowlist: `enesol.ai`, `dataforgetechnologies.com`, `datacracy.co`
 - [ ] `julio@datacracy.co` confirmed as Admin
-- [ ] Email OTP delivery tested from production/staging environment
+- [ ] Email OTP delivery tested from production/staging environment (via Microsoft Graph API)
 - [ ] Pipeline tested end-to-end with real-looking responses
 - [ ] Golden test suite passing all thresholds
 - [ ] Dashboard rendering correctly with test data
+- [ ] EC2 deployed and accessible at `https://assessment.dataforgetechnologies.com`
+- [ ] SSL termination via ALB + ACM verified working
+- [ ] `data/` backup procedure tested (see §5.8)
 
 ### Feature Checklist
 
@@ -1108,7 +1244,7 @@ cd core-assessment
 | Version block completed | §5 — Current Version Block | Change "v0.1" to "v0.2" |
 | New convention established | §3 — Tech Stack & Conventions | Added Vitest as test runner |
 | New pattern discovered | §4 — Architecture Invariants | All API routes must validate request body with Zod |
-| Dependency added | §3 — Tech Stack table | Added `@azure/msal-node` for Graph API email delivery |
+| Dependency added | §3 — Tech Stack table | Added `@azure/msal-node` for email delivery |
 | Planning chat recommends | Wherever specified | Chat will say "Update CLAUDE.md §X to add..." |
 | Scope creep attempted | §6 — Scope Boundaries | Add a new entry to the NOT in scope table |
 
@@ -1158,31 +1294,443 @@ curl -X POST http://localhost:3000/api/evaluate \
 
 # Check pipeline status
 curl http://localhost:3000/api/evaluate/test-response-1/status
+
+# ── EC2 Deployment ──
+ssh core-assessment                    # Connect to server
+ssh core-assessment "cd /home/ubuntu/core-assessment && git pull && npm install && npm run build && pm2 restart core-assessment"  # One-line deploy
+pm2 logs core-assessment               # View app logs (on server)
+pm2 status                             # Check process status (on server)
+sudo nginx -t                          # Test nginx config (on server)
+sudo systemctl reload nginx            # Reload nginx after config change (on server)
 ```
 
 ---
 
 ## 4.6 Environment-Specific Notes
 
-### macOS / Apple Silicon
+### macOS / Apple Silicon (Development)
 
 - Node.js 20 LTS runs natively on Apple Silicon
 - If you encounter `node-gyp` issues with native modules: `brew install python3` and ensure Xcode Command Line Tools are installed: `xcode-select --install`
 
-### Persistent Filesystem Warning
+### Ubuntu / EC2 (Staging & Production)
 
-The v1.0 architecture stores all data as JSON files. If deploying to Vercel (serverless), file writes won't persist between invocations. Use Railway, Render, or a VPS with persistent disk for staging/production. Local development (`npm run dev`) has no issues.
+- The deployment target is an AWS EC2 instance running Ubuntu 24.04 LTS
+- Domain: `assessment.dataforgetechnologies.com`
+- SSL is terminated at the ALB (AWS Certificate Manager) — the EC2 instance itself handles HTTP only
+- Nginx on the instance proxies port 80 → localhost:3000
+- Process managed by pm2 (auto-restart on crash, startup on reboot)
+- Full server setup instructions in **Part 5: EC2 Server Setup & Deployment**
+
+### Persistent Filesystem
+
+The v1.0 architecture stores all data as JSON files in the `data/` directory. The EC2 instance has persistent disk (EBS volume), so file writes persist across deployments and reboots. This is one of the key reasons a VPS was chosen over serverless platforms. Local development (`npm run dev`) also has no issues. **Do not deploy to Vercel or other serverless platforms** — file writes won't persist between invocations.
 
 ### API Key Security
 
-- Never commit `.env.local`
+- Never commit `.env.local` or `.env.production`
 - Never paste API keys into Claude Code chat (it logs conversations)
-- For production deployment, use the hosting platform's secret management (Vercel Environment Variables, Railway Variables, etc.)
+- On the EC2 server, environment variables live in `/home/ubuntu/core-assessment/.env.production` — this file is gitignored and must be created manually on the server
+- Use `chmod 600 .env.production` to restrict read access to the ubuntu user
 
 ---
 
-*RUNBOOK Version: 1.2*
+# PART 5: EC2 SERVER SETUP & DEPLOYMENT
+
+Everything needed to go from a fresh EC2 Ubuntu instance to a running production application.
+
+**What's handled elsewhere:** SSL termination (AWS Certificate Manager), ALB configuration, and DNS routing are managed by the sysadmin and are not covered here. This section covers the EC2 instance itself.
+
+---
+
+## 5.1 EC2 Instance Requirements
+
+| Resource | Minimum | Recommended |
+|---|---|---|
+| **Instance type** | t3.small (2 vCPU, 2 GB RAM) | t3.medium (2 vCPU, 4 GB RAM) |
+| **OS** | Ubuntu 24.04 LTS | Ubuntu 24.04 LTS |
+| **Storage** | 20 GB EBS (gp3) | 30 GB EBS (gp3) |
+| **Security groups** | SSH (22) from your IP, HTTP (80) from ALB SG | Same |
+
+**Why t3.small/medium:** Next.js build process is memory-hungry. 1 GB RAM will OOM during `npm run build`. 2 GB is the minimum; 4 GB is comfortable for build + runtime + pipeline (LLM calls are outbound HTTP, not CPU/memory intensive).
+
+**Important:** Port 3000 and port 443 should NOT be open in the EC2 security group. The ALB handles HTTPS (443) and forwards to the instance on port 80. Nginx on the instance proxies port 80 → localhost:3000.
+
+---
+
+## 5.2 Initial Server Provisioning
+
+SSH into the server and run these commands once.
+
+```bash
+ssh core-assessment
+```
+
+### Step 1: System updates
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### Step 2: Install Node.js 20 LTS
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+node --version    # v20.x.x
+npm --version     # 10.x.x
+```
+
+### Step 3: Install pm2 (process manager)
+
+```bash
+sudo npm install -g pm2
+```
+
+### Step 4: Install nginx
+
+```bash
+sudo apt install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+```
+
+### Step 5: Install Git
+
+```bash
+sudo apt install -y git
+git --version     # Should be 2.40+
+```
+
+### Step 6: Configure Git and clone the repo
+
+```bash
+git config --global user.email "julio@datacracy.co"
+git config --global user.name "Julio"
+
+cd /home/ubuntu
+git clone https://github.com/enesol-julio/core-assessment.git
+cd core-assessment
+```
+
+**Note:** If the repo is private, you'll need a GitHub Personal Access Token (PAT) or deploy key. For PAT:
+
+```bash
+git clone https://YOUR_PAT@github.com/enesol-julio/core-assessment.git
+```
+
+Or configure a deploy key (read-only SSH key added to the repo's Settings → Deploy Keys).
+
+---
+
+## 5.3 Environment Variables (Production)
+
+Create the production environment file on the server. **This file is never committed to Git.**
+
+```bash
+cd /home/ubuntu/core-assessment
+cat > .env.production << 'EOF'
+# ─────────────────────────────────────────────
+# CORE Assessment Platform — Production Config
+# ─────────────────────────────────────────────
+
+# ── Application ──
+NODE_ENV=production
+NEXT_PUBLIC_APP_URL=https://assessment.dataforgetechnologies.com
+
+# ── Authentication ──
+JWT_SECRET=REPLACE_WITH_REAL_SECRET
+OTP_EXPIRY_MINUTES=10
+SESSION_EXPIRY_HOURS=4
+
+# ── Email Service (OTP delivery via Microsoft Graph API) ──
+# Entra ID app registration with Mail.Send application permission.
+AZURE_TENANT_ID=REPLACE_WITH_YOUR_ENTRA_TENANT_ID
+AZURE_CLIENT_ID=REPLACE_WITH_YOUR_ENTRA_APP_CLIENT_ID
+AZURE_CLIENT_SECRET=REPLACE_WITH_YOUR_ENTRA_APP_CLIENT_SECRET
+EMAIL_FROM=noreply@datacracy.co
+
+# ── AI Pipeline ──
+ANTHROPIC_API_KEY=sk-ant-REPLACE_WITH_YOUR_KEY
+PIPELINE_SCORING_MODEL=claude-sonnet-4-5-20250514
+PIPELINE_SYNTHESIS_MODEL=claude-opus-4-5-20250514
+PIPELINE_SCORING_TEMPERATURE=0.1
+PIPELINE_SYNTHESIS_TEMPERATURE=0.4
+
+# ── Storage ──
+DATA_DIRECTORY=./data
+
+# ── Dev Bypass — MUST be false in production ──
+AUTH_BYPASS=false
+
+# ── Seed Data ──
+SEED_DOMAINS=enesol.ai,dataforgetechnologies.com,datacracy.co
+SEED_ADMIN_EMAIL=julio@datacracy.co
+EOF
+```
+
+Lock down permissions:
+
+```bash
+chmod 600 .env.production
+```
+
+Generate a real JWT secret:
+
+```bash
+openssl rand -base64 32
+# Paste the output into JWT_SECRET above
+```
+
+---
+
+## 5.4 Nginx Configuration
+
+The ALB terminates SSL and forwards traffic to the EC2 instance on port 80. Nginx on the instance proxies port 80 to the Next.js app on port 3000.
+
+```bash
+sudo nano /etc/nginx/sites-available/core-assessment
+```
+
+```nginx
+server {
+    listen 80;
+    server_name assessment.dataforgetechnologies.com;
+
+    # Proxy to Next.js
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+
+        # Timeout for pipeline requests (LLM calls can take 30+ seconds)
+        proxy_read_timeout 120s;
+        proxy_connect_timeout 10s;
+        proxy_send_timeout 120s;
+    }
+
+    # Don't expose data directory
+    location /data {
+        deny all;
+        return 404;
+    }
+}
+```
+
+Enable the site and test:
+
+```bash
+sudo ln -s /etc/nginx/sites-available/core-assessment /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default    # Remove default site
+sudo nginx -t                                   # Test config — must say "ok"
+sudo systemctl reload nginx
+```
+
+---
+
+## 5.5 First Build & Launch
+
+```bash
+cd /home/ubuntu/core-assessment
+
+# Install dependencies
+npm install
+
+# Build the Next.js production app
+npm run build
+
+# Start with pm2
+pm2 start npm --name "core-assessment" -- start
+pm2 save               # Save process list for auto-restart on reboot
+pm2 startup systemd     # Generate startup script — run the command it outputs with sudo
+```
+
+**Verify it's running:**
+
+```bash
+pm2 status
+# Should show "core-assessment" with status "online"
+
+pm2 logs core-assessment
+# Should show Next.js startup logs
+
+curl http://localhost:3000
+# Should return HTML
+```
+
+**Verify via browser:** Navigate to `https://assessment.dataforgetechnologies.com` — should show the app (once ALB + DNS are configured by sysadmin).
+
+---
+
+## 5.6 Deployment Workflow (Repeating)
+
+After the initial setup, every deployment follows this pattern:
+
+### From your Mac (push changes):
+
+```bash
+cd /Users/jutuonair/GDrive/ProductDevelopment/core-assessment
+git add .
+git commit -m "feat(0.X.Y): description"
+git push
+```
+
+### On the server (pull and restart):
+
+```bash
+ssh core-assessment
+cd /home/ubuntu/core-assessment
+git pull
+npm install          # Only needed if dependencies changed
+npm run build
+pm2 restart core-assessment
+```
+
+### One-liner deploy from Mac:
+
+```bash
+ssh core-assessment "cd /home/ubuntu/core-assessment && git pull && npm install && npm run build && pm2 restart core-assessment"
+```
+
+### Deploy script (optional)
+
+```bash
+cat > scripts/deploy.sh << 'SCRIPT'
+#!/bin/bash
+# Deploy CORE Assessment to EC2
+# Usage: ./scripts/deploy.sh
+
+set -e
+
+echo "Deploying CORE Assessment..."
+
+ssh core-assessment << 'EOF'
+    cd /home/ubuntu/core-assessment
+    echo "Pulling latest changes..."
+    git pull
+    echo "Installing dependencies..."
+    npm install
+    echo "Building..."
+    npm run build
+    echo "Restarting app..."
+    pm2 restart core-assessment
+    echo "Deploy complete!"
+    pm2 status
+EOF
+SCRIPT
+
+chmod +x scripts/deploy.sh
+# Then: ./scripts/deploy.sh
+```
+
+---
+
+## 5.7 Server Maintenance
+
+### View logs
+
+```bash
+pm2 logs core-assessment              # Real-time logs
+pm2 logs core-assessment --lines 100  # Last 100 lines
+```
+
+### Restart / stop / reload
+
+```bash
+pm2 restart core-assessment    # Hard restart
+pm2 reload core-assessment     # Zero-downtime reload (graceful)
+pm2 stop core-assessment       # Stop
+pm2 start core-assessment      # Start again
+```
+
+### Monitor resource usage
+
+```bash
+pm2 monit                      # Real-time CPU/memory dashboard
+htop                           # System-wide resource monitor
+df -h                          # Disk usage (watch data/ growth)
+```
+
+### Backup runtime data
+
+The `data/` directory contains all assessment responses, profiles, calibration, and audit logs. Back it up periodically:
+
+```bash
+# On the server — create a timestamped backup
+cd /home/ubuntu/core-assessment
+tar -czf ~/backups/data-$(date +%Y%m%d-%H%M%S).tar.gz data/
+
+# From your Mac — pull a backup
+mkdir -p ~/backups/core-assessment
+scp core-assessment:~/backups/data-*.tar.gz ~/backups/core-assessment/
+```
+
+Create the backups directory on the server:
+
+```bash
+ssh core-assessment "mkdir -p ~/backups"
+```
+
+### Update system packages
+
+```bash
+ssh core-assessment "sudo apt update && sudo apt upgrade -y"
+```
+
+---
+
+## 5.8 Troubleshooting (EC2-Specific)
+
+### "502 Bad Gateway" in browser
+
+**Cause:** Nginx can't reach the app on port 3000.
+**Fix:** Check if the app is running: `pm2 status`. If not: `pm2 restart core-assessment`. Check logs: `pm2 logs core-assessment`.
+
+### "Permission denied" on SSH
+
+**Cause:** PEM file permissions too open.
+**Fix:** `chmod 400 ~/.ssh/core-assessment.pem`
+
+### Build fails with OOM (Out of Memory)
+
+**Cause:** Not enough RAM for `npm run build`. Next.js build is memory-hungry.
+**Fix:** If on t3.micro (1 GB), upgrade to t3.small (2 GB) or t3.medium (4 GB). As a temporary workaround, create a swap file:
+
+```bash
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+### App starts but can't reach external APIs (Anthropic, Microsoft Graph)
+
+**Cause:** Security group outbound rules might be restricting traffic, or env vars missing.
+**Fix:** Check `.env.production` has correct API keys and Azure credentials. Verify outbound is open: `curl -I https://api.anthropic.com` and `curl -I https://graph.microsoft.com` from the server. AWS security groups allow all outbound by default, but verify.
+
+### "ENOSPC: no space left on device"
+
+**Cause:** Disk full — likely `data/` or `node_modules/` grew too large, or old `.next` build artifacts.
+**Fix:** `df -h` to check. Clean old builds: `rm -rf .next`. Check data size: `du -sh data/`. If persistent, resize the EBS volume in AWS console.
+
+### ALB health check failing
+
+**Cause:** The ALB target group health check can't reach the app.
+**Fix:** Ensure the health check path returns 200 (e.g., `/` or a dedicated `/api/health` endpoint). Verify nginx is running: `sudo systemctl status nginx`. Verify the app is running: `pm2 status`. Confirm the target group uses port 80 and the EC2 security group allows inbound 80 from the ALB security group.
+
+---
+
+*RUNBOOK Version: 1.3*
 *Created: February 2026*
 *Updated: February 2026*
+*Changes in v1.3: Corrected email service from Resend to Microsoft Graph API / Entra ID per architecture spec. Added executable commands throughout Part 1.*
 *Project: CORE Assessment Platform*
 *Repository: [github.com/enesol-julio/core-assessment](https://github.com/enesol-julio/core-assessment)*
+*Production: [assessment.dataforgetechnologies.com](https://assessment.dataforgetechnologies.com)*
