@@ -1,0 +1,485 @@
+{
+  "section_id": "section-4-logical-reasoning",
+  "name": "Logical Reasoning Under Constraints",
+  "instructions": "You will answer 8 logical reasoning questions. Some are quick (30 seconds, visible timer); others are deeper problems with more time. You cannot go back to previous questions.",
+  "question_count": 8,
+  "selection_constraints": {
+    "method": "constrained_random",
+    "count": 8,
+    "rules": [
+      { "field": "subtype", "value": "quick", "min": 3 },
+      { "field": "subtype", "value": "deep", "min": 3 },
+      { "field": "type", "value": "open_ended", "min": 2 }
+    ]
+  },
+  "questions": [
+    {
+      "question_id": "s4-q01",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "easy",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Policy threshold: A company policy states that any single expense over $500 requires manager approval, and any expense over $2,000 requires VP approval. An employee submits a $1,800 expense. What approval is needed?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] No approval needed" },
+        { "option_id": "b", "text": "[B] Manager approval only" },
+        { "option_id": "c", "text": "[C] VP approval only" },
+        { "option_id": "d", "text": "[D] Both manager and VP approval" }
+      ],
+      "correct_answer": "b",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q02",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "easy",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Contrapositive reasoning: Company policy states 'If a project exceeds $50K, it must undergo executive review.' A project did not undergo executive review. What can you conclude?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] The project did not exceed $50K" },
+        { "option_id": "b", "text": "[B] The project exceeded $50K but was exempt" },
+        { "option_id": "c", "text": "[C] The project may or may not have exceeded $50K" },
+        { "option_id": "d", "text": "[D] The policy was not enforced" }
+      ],
+      "correct_answer": "a",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q03",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "medium",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Correlation vs. causation: A company notices that departments that hired more people last quarter also had higher revenue growth. A manager concludes that hiring more people causes revenue to grow. What is the best critique?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] The sample size is too small to draw any conclusion" },
+        { "option_id": "b", "text": "[B] Revenue growth may have caused the departments to hire more, not the other way around" },
+        { "option_id": "c", "text": "[C] Correlation does not establish causation; a third factor could drive both hiring and revenue" },
+        { "option_id": "d", "text": "[D] The manager should have used a different metric instead of revenue" }
+      ],
+      "correct_answer": "c",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q04",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "medium",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Necessary vs. sufficient: Company policy states 'Employees must sign an NDA before accessing confidential project files.' Jordan has signed an NDA. Can Jordan access confidential project files?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] Yes, signing the NDA grants access" },
+        { "option_id": "b", "text": "[B] No, signing the NDA is not related to access" },
+        { "option_id": "c", "text": "[C] Yes, but only for projects Jordan is assigned to" },
+        { "option_id": "d", "text": "[D] Not enough information to decide" }
+      ],
+      "correct_answer": "d",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q05",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "medium",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Constraint filtering: A team must select a vendor proposal. Requirements: budget under $100K, delivery within 6 months, and at least 3 references. Proposal A: $95K, 5 months, 2 references. Proposal B: $88K, 4 months, 4 references. Proposal C: $105K, 3 months, 5 references. Proposal D: $92K, 7 months, 3 references. Which proposal meets all requirements?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] Proposal A" },
+        { "option_id": "b", "text": "[B] Proposal B" },
+        { "option_id": "c", "text": "[C] Proposal C" },
+        { "option_id": "d", "text": "[D] Proposal D" }
+      ],
+      "correct_answer": "b",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q06",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "medium",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Multi-rule eligibility: Based on the training program rules described in the scenario, which employee is eligible for the Advanced Leadership Program?",
+      "context": "[PLACEHOLDER] Scenario: A company's Advanced Leadership Program has the following eligibility rules: (1) Must have at least 3 years of tenure. (2) Must have received a 'Meets Expectations' or higher rating in the last two review cycles. (3) Must be nominated by their direct manager. (4) Employees currently on a Performance Improvement Plan are ineligible regardless of other criteria. Four candidates: Alex (4 years, 'Exceeds' both cycles, nominated, not on PIP), Bailey (2 years, 'Exceeds' both cycles, nominated, not on PIP), Casey (5 years, 'Meets' and 'Below Expectations', nominated, not on PIP), Dana (3 years, 'Meets' both cycles, nominated, currently on PIP).",
+      "options": [
+        { "option_id": "a", "text": "[A] Alex and Bailey" },
+        { "option_id": "b", "text": "[B] Alex and Dana" },
+        { "option_id": "c", "text": "[C] Alex only" },
+        { "option_id": "d", "text": "[D] Alex and Casey" }
+      ],
+      "correct_answer": "c",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q07",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "hard",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Constraint satisfaction: Given the project assignment constraints in the scenario, which assignment is the only valid one?",
+      "context": "[PLACEHOLDER] Scenario: A company must assign four employees (W, X, Y, Z) to four projects (P1, P2, P3, P4), one employee per project. Constraints: (1) W cannot be assigned to P2 or P4. (2) X must be assigned to either P1 or P3. (3) If Y is assigned to P1, then Z must be assigned to P3. (4) Z cannot be assigned to P2. Given that X is assigned to P3, determine the full valid assignment.",
+      "options": [
+        { "option_id": "a", "text": "[A] W→P1, X→P3, Y→P2, Z→P4" },
+        { "option_id": "b", "text": "[B] W→P3, X→P1, Y→P4, Z→P2" },
+        { "option_id": "c", "text": "[C] W→P1, X→P3, Y→P4, Z→P2" },
+        { "option_id": "d", "text": "[D] W→P2, X→P3, Y→P1, Z→P4" }
+      ],
+      "correct_answer": "a",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q08",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "medium",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Contradiction detection: Review the shipping rules in the scenario. Which rule creates a contradiction that makes it impossible to fulfill the described order?",
+      "context": "[PLACEHOLDER] Scenario: A warehouse has the following shipping rules: (Rule 1) All fragile items must ship via Ground. (Rule 2) Orders over $200 qualify for free Express shipping. (Rule 3) Express shipments cannot contain fragile items. (Rule 4) Orders containing both fragile and non-fragile items must ship together in one package. A customer places a $250 order containing both fragile glassware and non-fragile clothing. Identify which rule, when combined with the others, creates the contradiction.",
+      "options": [
+        { "option_id": "a", "text": "[A] Rule 1, because Ground shipping is too slow for premium orders" },
+        { "option_id": "b", "text": "[B] Rule 4, because requiring a single package forces fragile and non-fragile items into the same shipment method, conflicting with Rules 1 and 3" },
+        { "option_id": "c", "text": "[C] Rule 2, because free Express should override fragile restrictions" },
+        { "option_id": "d", "text": "[D] Rule 3, because Express should be able to handle any item type" }
+      ],
+      "correct_answer": "b",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q09",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "hard",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Committee selection: Based on the constraints in the scenario, which group of 3 people can form a valid committee?",
+      "context": "[PLACEHOLDER] Scenario: A company must form a 3-person committee from 6 candidates: F, G, H, J, K, L. Constraints: (1) F and G cannot both serve on the committee. (2) If H is selected, then J must also be selected. (3) K and L must either both be selected or neither selected. (4) At least one of F or H must be on the committee.",
+      "options": [
+        { "option_id": "a", "text": "[A] F, G, H" },
+        { "option_id": "b", "text": "[B] H, K, L" },
+        { "option_id": "c", "text": "[C] F, K, L" },
+        { "option_id": "d", "text": "[D] H, J, F" }
+      ],
+      "correct_answer": "d",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q10",
+      "type": "single_select",
+      "subtype": "quick",
+      "difficulty": "hard",
+      "points": 10,
+      "timer_config": {
+        "time_allowed_seconds": 30,
+        "warning_seconds": 10,
+        "show_timer": "visible",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Logical fallacy: A risk analyst argues: 'We have never experienced a data breach, therefore our security systems are effective and we don't need additional investment.' What is the primary flaw in this reasoning?",
+      "context": null,
+      "options": [
+        { "option_id": "a", "text": "[A] Appeal to authority — the analyst's role doesn't qualify them to assess security" },
+        { "option_id": "b", "text": "[B] Straw man — the argument misrepresents the opposing position" },
+        { "option_id": "c", "text": "[C] Absence of evidence is not evidence of absence — no breach doesn't prove systems are effective" },
+        { "option_id": "d", "text": "[D] False dilemma — the argument presents only two options when there are more" }
+      ],
+      "correct_answer": "c",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 3,
+        "slow_threshold_seconds": 25
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q11",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "hard",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Priority queue ordering: Based on the warehouse priority rules in the scenario, what is the correct shipping order for the five pending orders?",
+      "context": "[PLACEHOLDER] Scenario: A warehouse processes shipping orders using these priority rules (applied in order): (1) Express orders ship before Standard orders. (2) Within the same shipping tier, orders with perishable items ship first. (3) Within the same tier and perishability, older orders ship first. (4) If two orders have identical priority, the higher-value order ships first. Five pending orders: Order A (Standard, perishable, placed 9am, $150), Order B (Express, non-perishable, placed 10am, $80), Order C (Express, perishable, placed 11am, $200), Order D (Standard, non-perishable, placed 8am, $300), Order E (Express, non-perishable, placed 9am, $120).",
+      "options": [
+        { "option_id": "a", "text": "[A] C, E, B, A, D" },
+        { "option_id": "b", "text": "[B] C, B, E, A, D" },
+        { "option_id": "c", "text": "[C] B, C, E, A, D" },
+        { "option_id": "d", "text": "[D] C, E, B, D, A" }
+      ],
+      "correct_answer": "a",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q12",
+      "type": "open_ended",
+      "subtype": "deep",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Evaluate causation argument: A support team lead claims the new support page redesign caused a 20% drop in support tickets. Evaluate this causal claim. What alternative explanations should be considered? What additional data would you need to validate or refute the claim?",
+      "context": "[PLACEHOLDER] Scenario: Last quarter, the company redesigned its customer support page with a new FAQ layout and search function. Support ticket volume dropped 20% compared to the previous quarter. The support team lead presented this to leadership as proof that the redesign is working and recommended expanding the same approach to other product pages. However, during the same quarter, the company also released a major product update that fixed several commonly reported bugs, and it was the holiday season when overall product usage typically dips 15%.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Explain your reasoning..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies confounding variables (bug fix, seasonal dip) that weaken the causal claim",
+          "[PLACEHOLDER] Proposes specific alternative explanations or hypotheses",
+          "[PLACEHOLDER] Suggests concrete data or methods to isolate the redesign's actual impact"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q13",
+      "type": "open_ended",
+      "subtype": "deep",
+      "difficulty": "hard",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 180,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Critique flawed A/B test conclusion: The product team ran an A/B test and concluded that the new checkout flow increases conversions by 12%. Review the test details in the scenario and identify the logical and methodological flaws in their conclusion. Explain what they should have done differently.",
+      "context": "[PLACEHOLDER] Scenario: The product team tested a new checkout flow (Variant B) against the existing flow (Variant A). Test details: (1) Variant A had 10,000 users; Variant B had 1,200 users. (2) The test ran for 3 days, starting on Black Friday. (3) Variant B users were sourced from a retargeting campaign (users who previously abandoned carts). (4) Conversion rate: A = 3.2%, B = 3.58%, reported as a '12% lift.' (5) No statistical significance was reported. The team recommends immediately rolling out Variant B to all users.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Explain your reasoning..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies sample size imbalance and lack of statistical significance",
+          "[PLACEHOLDER] Recognizes selection bias from retargeting campaign sourcing",
+          "[PLACEHOLDER] Identifies timing bias (Black Friday) and proposes corrective experimental design"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 12,
+        "slow_threshold_seconds": 170
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q14",
+      "type": "open_ended",
+      "subtype": "deep",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Policy ambiguity analysis: Read the overtime pre-approval policy in the scenario. Identify the ambiguities and logical gaps that could lead to disputes or inconsistent enforcement. For each issue, explain the problem and suggest a specific revision.",
+      "context": "[PLACEHOLDER] Scenario: Company overtime policy states: 'All overtime must be pre-approved by a manager. Employees who work overtime without approval may not be compensated. Emergency situations are exempt from the pre-approval requirement. Overtime is defined as any work beyond 40 hours in a week. Managers should respond to overtime requests within a reasonable timeframe.'",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Explain your reasoning..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies key ambiguities (e.g., 'emergency,' 'reasonable timeframe,' 'may not be compensated')",
+          "[PLACEHOLDER] Explains practical consequences of each ambiguity for employees and managers",
+          "[PLACEHOLDER] Proposes specific, actionable revisions that resolve the identified gaps"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s4-q15",
+      "type": "single_select",
+      "subtype": "deep",
+      "difficulty": "hard",
+      "points": 15,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Task dependency chain: Based on the task dependencies in the scenario, what is the earliest position in the sequence at which Task F can be scheduled?",
+      "context": "[PLACEHOLDER] Scenario: A project has 7 tasks (A through G) with the following dependencies: Task A has no dependencies. Task B depends on A. Task C depends on A. Task D depends on B and C. Task E depends on C. Task F depends on D. Task G depends on E and F. Each task takes exactly one time slot. Tasks that share no dependency can run in parallel.",
+      "options": [
+        { "option_id": "a", "text": "[A] Position 3 (third time slot)" },
+        { "option_id": "b", "text": "[B] Position 4 (fourth time slot)" },
+        { "option_id": "c", "text": "[C] Position 5 (fifth time slot)" },
+        { "option_id": "d", "text": "[D] Position 2 (second time slot)" }
+      ],
+      "correct_answer": "b",
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    }
+  ]
+}

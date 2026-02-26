@@ -1,0 +1,406 @@
+{
+  "section_id": "section-2-problem-decomposition",
+  "name": "Problem Decomposition",
+  "instructions": "You will answer 5 problem decomposition questions. Some ask you to arrange steps in the correct order; others ask you to write a decomposition plan. Timers are running but hidden \u2014 you will receive a warning when time is almost up. You cannot go back to previous questions.",
+  "question_count": 5,
+  "selection_constraints": {
+    "method": "constrained_random",
+    "count": 5,
+    "rules": [
+      { "field": "type", "value": "drag_to_order", "min": 2 },
+      { "field": "type", "value": "open_ended", "min": 2 }
+    ]
+  },
+  "questions": [
+    {
+      "question_id": "s2-q01",
+      "type": "drag_to_order",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to relocate a 200-person office to a new building with minimal disruption.",
+      "context": "[PLACEHOLDER] A mid-size company (200 employees) is relocating its single office to a new building across town. The move must happen over a weekend to minimize business disruption. IT infrastructure, furniture, and employee seating assignments all need to transfer.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Assess current office space and new location requirements" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Create detailed floor plan and seating assignments for new location" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Coordinate with IT to plan infrastructure migration and network setup" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Communicate move timeline and logistics to all employees" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Pack and label department equipment and materials" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Execute physical move of furniture and equipment over the weekend" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Verify IT systems, access badges, and workspace readiness on Monday morning" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.86,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q02",
+      "type": "drag_to_order",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to add a new menu item at a restaurant that requires sourcing from a new supplier.",
+      "context": "[PLACEHOLDER] A popular restaurant wants to add a seasonal dish that requires an ingredient not currently in their supply chain. They need to find a reliable supplier, test the dish, train kitchen staff, and launch it to customers while maintaining food safety and quality standards.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Research and identify potential suppliers for the new ingredient" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Request samples and evaluate ingredient quality from shortlisted suppliers" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Negotiate pricing, delivery schedule, and minimum order quantities" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Develop and test the recipe with the chef team" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Conduct food safety and allergen assessment for the new dish" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Train kitchen and front-of-house staff on preparation and presentation" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Launch the menu item with a soft rollout and gather customer feedback" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.86,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q03",
+      "type": "drag_to_order",
+      "difficulty": "hard",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to transition a hospital's patient intake process from paper forms to a digital system while maintaining patient privacy compliance.",
+      "context": "[PLACEHOLDER] A regional hospital currently uses paper-based patient intake forms across its emergency, outpatient, and specialist departments. They must transition to a digital system that complies with healthcare privacy regulations (e.g., HIPAA). The transition must not disrupt patient care during the changeover period.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Audit current paper intake workflow and identify all data fields collected" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Map privacy and compliance requirements for digital patient data handling" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Evaluate and select a digital intake platform that meets compliance standards" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Design digital forms mirroring current data collection with privacy safeguards" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Conduct a pilot in one department with parallel paper and digital intake" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Train all intake staff and address issues identified during the pilot" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Roll out digital intake across all departments with paper backup available" },
+        { "item_id": "h", "text": "[PLACEHOLDER] Step: Decommission paper forms after confirming digital system stability and compliance audit" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g", "h"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.50,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q04",
+      "type": "drag_to_order",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to plan and execute a corporate conference for 500 attendees.",
+      "context": "[PLACEHOLDER] A company is organizing its annual corporate conference for 500 employees across multiple offices. The event includes keynote speakers, breakout sessions, catering, and AV requirements. It must be planned within a fixed budget and a 4-month timeline.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Define conference objectives, budget, and target attendance" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Select and book venue with required capacity and AV capabilities" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Confirm keynote speakers and plan breakout session topics" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Arrange catering, transportation, and accommodation logistics" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Send invitations and open registration for attendees" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Conduct final walkthrough and rehearsal at the venue" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Execute the conference and collect attendee feedback post-event" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.86,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q05",
+      "type": "drag_to_order",
+      "difficulty": "hard",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to unify customer accounts after a bank merger.",
+      "context": "[PLACEHOLDER] Two regional banks are merging. Each has its own core banking system, account numbering scheme, and customer database. Customers of both banks must end up with unified accounts accessible through a single online banking platform. Regulatory requirements mandate uninterrupted access to funds throughout the transition.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Inventory both banks' account types, numbering schemes, and data formats" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Define the unified account structure and mapping rules between legacy systems" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Obtain regulatory approval for the account migration plan" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Build and test the data migration pipeline with synthetic account data" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Communicate migration timeline and changes to all affected customers" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Execute phased account migration with parallel system access during transition" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Validate migrated accounts and reconcile balances against source systems" },
+        { "item_id": "h", "text": "[PLACEHOLDER] Step: Decommission legacy systems after confirmation period and final audit" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g", "h"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.50,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q06",
+      "type": "open_ended",
+      "difficulty": "medium",
+      "points": 25,
+      "timer_config": {
+        "time_allowed_seconds": 180,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Decompose the launch of a new customer loyalty program for a retail chain with 150 physical stores and an online store. Describe the key phases, dependencies, and potential risks.",
+      "context": "[PLACEHOLDER] A national retail chain with 150 brick-and-mortar stores and an e-commerce platform wants to launch a unified loyalty program. Customers should earn and redeem points both in-store and online. The chain currently has no loyalty program and uses separate POS and e-commerce systems.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe your decomposition approach..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies key phases including system integration, staff training, and customer communication",
+          "[PLACEHOLDER] Recognizes dependencies between POS integration, e-commerce integration, and unified customer database",
+          "[PLACEHOLDER] Addresses risks such as data synchronization failures, customer confusion, and staff adoption challenges"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 12,
+        "slow_threshold_seconds": 170
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q07",
+      "type": "open_ended",
+      "difficulty": "medium",
+      "points": 25,
+      "timer_config": {
+        "time_allowed_seconds": 180,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Decompose the replacement of a legacy time-off request system for a company with 300 employees across 4 offices. Outline the phases, key decisions, and transition plan.",
+      "context": "[PLACEHOLDER] A company with 300 employees spread across 4 office locations currently manages time-off requests via email and shared spreadsheets. Different offices have different informal processes. Management wants a unified digital system that integrates with payroll. The transition must not cause any employees to lose accrued PTO data.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe your decomposition approach..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies need to audit and reconcile existing PTO data across all offices before migration",
+          "[PLACEHOLDER] Addresses the challenge of unifying different informal processes into a single standardized workflow",
+          "[PLACEHOLDER] Plans for payroll integration, parallel running period, and employee training across multiple locations"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 12,
+        "slow_threshold_seconds": 170
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q08",
+      "type": "open_ended",
+      "difficulty": "hard",
+      "points": 25,
+      "timer_config": {
+        "time_allowed_seconds": 180,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Decompose the unification of inventory management across 3 warehouses that currently use different tracking systems. Describe how you would plan and sequence the work, including data migration and operational continuity.",
+      "context": "[PLACEHOLDER] A distribution company operates 3 warehouses in different regions. Warehouse A uses a commercial WMS, Warehouse B uses a custom-built Access database, and Warehouse C tracks inventory in spreadsheets. Management wants a single unified inventory system. The company ships 2,000+ orders daily and cannot afford significant downtime. Products overlap across warehouses, but SKU formats and naming conventions differ.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe your decomposition approach..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Addresses SKU normalization and master data reconciliation as a prerequisite to migration",
+          "[PLACEHOLDER] Plans for phased warehouse-by-warehouse rollout to minimize operational risk",
+          "[PLACEHOLDER] Identifies data quality challenges across disparate systems and proposes validation strategies"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 12,
+        "slow_threshold_seconds": 170
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q09",
+      "type": "open_ended",
+      "difficulty": "hard",
+      "points": 25,
+      "timer_config": {
+        "time_allowed_seconds": 180,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Decompose the centralization of student enrollment across a school district with 20 schools, given a 5-month deadline. Outline the phases, critical dependencies, and how you would handle the constraints.",
+      "context": "[PLACEHOLDER] A school district with 20 schools (12 elementary, 5 middle, 3 high) currently handles enrollment independently at each school using a mix of paper forms and local databases. The district superintendent has mandated a centralized online enrollment system to be operational before the next enrollment period in 5 months. Each school has different data fields, some families have children in multiple schools, and the district must comply with state student data privacy regulations.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe your decomposition approach..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Recognizes the tight timeline constraint and structures phases to meet the 5-month deadline",
+          "[PLACEHOLDER] Addresses data standardization across 20 schools with different data fields and formats",
+          "[PLACEHOLDER] Considers multi-school families, student data privacy compliance, and stakeholder change management"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 12,
+        "slow_threshold_seconds": 170
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s2-q10",
+      "type": "drag_to_order",
+      "difficulty": "medium",
+      "points": 20,
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to transition a manufacturing company from a single supplier to a dual-supplier model for a critical component.",
+      "context": "[PLACEHOLDER] A manufacturing company currently sources a critical component from a single supplier. To reduce supply chain risk, management has decided to qualify and onboard a second supplier. Production cannot be interrupted during the transition, and the new supplier's components must meet the same quality and specification standards.",
+      "items": [
+        { "item_id": "a", "text": "[PLACEHOLDER] Step: Document current component specifications and quality acceptance criteria" },
+        { "item_id": "b", "text": "[PLACEHOLDER] Step: Identify and evaluate candidate second suppliers against specifications" },
+        { "item_id": "c", "text": "[PLACEHOLDER] Step: Request and test sample components from the top candidate supplier" },
+        { "item_id": "d", "text": "[PLACEHOLDER] Step: Negotiate contract terms including pricing, lead times, and quality guarantees" },
+        { "item_id": "e", "text": "[PLACEHOLDER] Step: Run a small production batch using the new supplier's components alongside existing supply" },
+        { "item_id": "f", "text": "[PLACEHOLDER] Step: Validate production output quality and adjust processes if needed" },
+        { "item_id": "g", "text": "[PLACEHOLDER] Step: Establish ongoing dual-supplier ordering schedule and monitoring process" }
+      ],
+      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "positional",
+        "points_per_correct_position": 2.86,
+        "partial_credit_tolerance": 1,
+        "partial_credit_multiplier": 0.5
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    }
+  ]
+}

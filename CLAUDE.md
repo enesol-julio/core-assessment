@@ -138,8 +138,8 @@ core-assessment/
 ```
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.1                   │
-│  Feature: 0.1.1 — Assessment Metadata File  │
-│  Status: In Progress                        │
+│  Feature: 0.1.3 — Question Content          │
+│  Status: Awaiting Brief                     │
 └─────────────────────────────────────────────┘
 ```
 

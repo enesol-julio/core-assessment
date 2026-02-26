@@ -1,0 +1,411 @@
+{
+  "section_id": "section-5-output-validation",
+  "name": "Output Validation",
+  "instructions": "You will evaluate 5 outputs — some produced by humans, some by AI. Your task is to identify what is wrong, missing, or misleading in each output. Select ALL issues you find on multi-select questions. Timers are running but hidden — you will receive a warning when time is almost up. You cannot go back to previous questions.",
+  "question_count": 5,
+  "selection_constraints": {
+    "method": "constrained_random",
+    "count": 5,
+    "rules": [
+      { "field": "type", "value": "multi_select", "min": 2 },
+      { "field": "type", "value": "open_ended", "min": 2 },
+      { "field": "output_source", "value": "ai", "min": 1 }
+    ]
+  },
+  "questions": [
+    {
+      "question_id": "s5-q01",
+      "type": "multi_select",
+      "difficulty": "medium",
+      "points": 15,
+      "output_source": "human",
+      "timer_config": {
+        "time_allowed_seconds": 90,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Review the support ticket leaderboard below. Select ALL issues with how this leaderboard measures team performance.",
+      "context": "[PLACEHOLDER] A team lead created a leaderboard ranking support agents by total tickets closed per week. The leaderboard shows Agent A at #1 with 47 tickets, Agent B at #2 with 38 tickets, and Agent C at #3 with 29 tickets. Agent C has the highest customer satisfaction rating (4.8/5) and handles complex escalations, while Agent A primarily handles password resets and simple FAQs.",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] Ranks volume over quality — ticket count ignores resolution complexity" },
+        { "option_id": "b", "text": "[PLACEHOLDER] Does not account for customer satisfaction scores" },
+        { "option_id": "c", "text": "[PLACEHOLDER] Incentivizes cherry-picking easy tickets over handling escalations" },
+        { "option_id": "d", "text": "[PLACEHOLDER] Uses weekly snapshot which may not reflect consistent performance" },
+        { "option_id": "e", "text": "[PLACEHOLDER] Does not weight ticket difficulty or time-to-resolution" },
+        { "option_id": "f", "text": "[PLACEHOLDER] Penalizes agents who mentor or assist teammates (collaborative work not counted)" }
+      ],
+      "correct_answers": ["a", "c", "d", "f"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 5,
+        "slow_threshold_seconds": 80
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q02",
+      "type": "multi_select",
+      "difficulty": "medium",
+      "points": 15,
+      "output_source": "human",
+      "timer_config": {
+        "time_allowed_seconds": 90,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Review the churn analysis summary below. Select ALL issues with the recommendations made in this summary.",
+      "context": "[PLACEHOLDER] A junior analyst wrote a churn summary stating: 'Customer churn increased 12% this quarter. The primary driver is poor onboarding — 68% of churned customers left within 30 days. Recommendation: Replace the entire onboarding team and invest $500K in a new onboarding platform immediately. Additionally, we should offer 50% discounts to all at-risk customers to prevent further churn.'",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] The 12% churn figure lacks a baseline or comparison period" },
+        { "option_id": "b", "text": "[PLACEHOLDER] Recommendation to replace the team is disproportionate — retraining or process review not considered" },
+        { "option_id": "c", "text": "[PLACEHOLDER] Correlation between early churn and onboarding is assumed to be causation" },
+        { "option_id": "d", "text": "[PLACEHOLDER] The churn percentage is calculated incorrectly" },
+        { "option_id": "e", "text": "[PLACEHOLDER] Blanket 50% discount ignores unit economics and may attract wrong customer segment" },
+        { "option_id": "f", "text": "[PLACEHOLDER] No cost-benefit analysis provided for the $500K platform investment" }
+      ],
+      "correct_answers": ["b", "c", "e", "f"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 5,
+        "slow_threshold_seconds": 80
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q03",
+      "type": "multi_select",
+      "difficulty": "hard",
+      "points": 15,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] An AI assistant generated the email migration plan below. Select ALL missing safeguards or issues in this plan.",
+      "context": "[PLACEHOLDER] An AI-generated migration plan for moving 2,000 employees from on-premise Exchange to Microsoft 365 states: 'Phase 1: Create M365 accounts for all users (Week 1). Phase 2: Migrate all mailboxes simultaneously over a weekend (Week 2). Phase 3: Decommission Exchange server (Week 3). Phase 4: Send company-wide email announcing the switch (Week 4). Timeline: 4 weeks total. Budget: $15,000 for licensing.'",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] No pilot group or phased rollout — migrating 2,000 mailboxes simultaneously is high-risk" },
+        { "option_id": "b", "text": "[PLACEHOLDER] No rollback plan if migration fails mid-weekend" },
+        { "option_id": "c", "text": "[PLACEHOLDER] Communication plan comes after decommissioning — users should be notified before migration" },
+        { "option_id": "d", "text": "[PLACEHOLDER] No data backup or verification step before decommissioning the old server" },
+        { "option_id": "e", "text": "[PLACEHOLDER] Budget only covers licensing — no allocation for migration tooling, overtime, or support" },
+        { "option_id": "f", "text": "[PLACEHOLDER] No mention of testing mail flow, calendar sync, or shared mailbox migration" },
+        { "option_id": "g", "text": "[PLACEHOLDER] No user training or documentation planned for the new platform" }
+      ],
+      "correct_answers": ["a", "b", "c", "d", "e", "f"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q04",
+      "type": "multi_select",
+      "difficulty": "medium",
+      "points": 15,
+      "output_source": "human",
+      "timer_config": {
+        "time_allowed_seconds": 90,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Review the vendor comparison table below. Select ALL missing criteria or issues with this evaluation.",
+      "context": "[PLACEHOLDER] A procurement analyst created a vendor comparison for CRM software with three vendors scored on: Price (Vendor A: $50/user, Vendor B: $75/user, Vendor C: $60/user), Features (A: 8/10, B: 9/10, C: 7/10), and UI Rating (A: 4/5, B: 3/5, C: 5/5). The analyst recommends Vendor A as the clear winner based on lowest price and good feature score.",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] No integration or API compatibility criteria — critical for CRM adoption" },
+        { "option_id": "b", "text": "[PLACEHOLDER] No data migration cost or effort assessment included" },
+        { "option_id": "c", "text": "[PLACEHOLDER] Missing vendor support/SLA comparison (uptime guarantees, response times)" },
+        { "option_id": "d", "text": "[PLACEHOLDER] No security or compliance evaluation (SOC2, GDPR, data residency)" },
+        { "option_id": "e", "text": "[PLACEHOLDER] Feature scoring is subjective (8/10) without defined evaluation criteria" },
+        { "option_id": "f", "text": "[PLACEHOLDER] The comparison uses different scales ($/user vs. /10 vs. /5) without normalization" }
+      ],
+      "correct_answers": ["a", "b", "c", "d", "e"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 5,
+        "slow_threshold_seconds": 80
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q05",
+      "type": "multi_select",
+      "difficulty": "hard",
+      "points": 15,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] An AI assistant generated the warehouse budget proposal below. Select ALL errors or issues in this budget.",
+      "context": "[PLACEHOLDER] An AI-generated warehouse expansion budget reads: 'Total Budget: $2.4M. Breakdown — Building lease (5-year term): $800K (listed under Operating Expenses). Racking systems and forklifts: $600K (listed under Operating Expenses). WMS software license (perpetual): $200K (listed under Capital Expenditure). Temporary staffing for peak season: $300K (listed under Capital Expenditure). Insurance and utilities: $500K (listed under Capital Expenditure). Note: All items are tax-deductible in Year 1.'",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] Building lease is classified as OpEx but a 5-year term may require capitalization under ASC 842" },
+        { "option_id": "b", "text": "[PLACEHOLDER] Racking systems and forklifts are capital assets, not operating expenses" },
+        { "option_id": "c", "text": "[PLACEHOLDER] Perpetual software license is correctly CapEx but should be amortized, not expensed in Year 1" },
+        { "option_id": "d", "text": "[PLACEHOLDER] Temporary staffing is an operating expense, not capital expenditure" },
+        { "option_id": "e", "text": "[PLACEHOLDER] Insurance and utilities are operating expenses, not capital expenditure" },
+        { "option_id": "f", "text": "[PLACEHOLDER] Claim that all items are tax-deductible in Year 1 is incorrect — CapEx is depreciated over time" },
+        { "option_id": "g", "text": "[PLACEHOLDER] No contingency budget or variance allowance included" }
+      ],
+      "correct_answers": ["a", "b", "c", "d", "e", "f"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q06",
+      "type": "open_ended",
+      "difficulty": "medium",
+      "points": 25,
+      "output_source": "human",
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Review the training completion report below. Identify what is wrong, missing, or misleading. Explain why the conclusions drawn are problematic.",
+      "context": "[PLACEHOLDER] An HR manager's quarterly report states: 'Training Compliance Update — 94% of employees completed the mandatory cybersecurity training module by the deadline. This represents a 12% improvement over last quarter. Conclusion: Our workforce is now well-prepared to handle phishing attacks and social engineering threats. Recommendation: No further cybersecurity investment needed this fiscal year.' The report includes a bar chart showing completion rates by department.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies that completion does not equal comprehension or competence",
+          "[PLACEHOLDER] Notes the absence of assessment scores or knowledge verification",
+          "[PLACEHOLDER] Recognizes that training completion does not guarantee behavioral change",
+          "[PLACEHOLDER] Questions the leap from completion rate to 'no further investment needed'",
+          "[PLACEHOLDER] Identifies missing metrics such as phishing simulation results or incident rates",
+          "[PLACEHOLDER] Notes that 6% non-completion is unaddressed and may represent high-risk individuals"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q07",
+      "type": "open_ended",
+      "difficulty": "hard",
+      "points": 25,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] An AI assistant produced the survey analysis below. Identify all flaws in the methodology, conclusions, and recommendations.",
+      "context": "[PLACEHOLDER] An AI-generated analysis of an employee engagement survey reads: 'Executive Summary: Employee satisfaction is at an all-time high. Key findings — 100% of respondents said they enjoy their work (4 responses received out of 350 employees). 75% prefer remote work (3 out of 4 respondents). Recommendation: Transition the entire company to permanent remote work immediately. Statistical confidence: High (p < 0.05). The data clearly shows our workforce is thriving under current conditions.'",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies catastrophically low response rate (4/350 = 1.1%) making results meaningless",
+          "[PLACEHOLDER] Notes that the p-value claim is fabricated or impossible with n=4",
+          "[PLACEHOLDER] Recognizes severe self-selection bias — only highly engaged employees likely responded",
+          "[PLACEHOLDER] Questions the leap from 4 responses to company-wide policy recommendation",
+          "[PLACEHOLDER] Identifies that 'all-time high' claim cannot be supported without historical comparison data",
+          "[PLACEHOLDER] Notes the absence of demographic breakdown, confidence intervals, or margin of error"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q08",
+      "type": "open_ended",
+      "difficulty": "medium",
+      "points": 25,
+      "output_source": "human",
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] Review the quarterly performance table below. Identify what is misleading about the conclusions drawn from this data.",
+      "context": "[PLACEHOLDER] A sales manager presented the following table to the board: 'Q3 Performance — Top Regions by Revenue: North: $4.2M (+18% YoY), West: $3.8M (+22% YoY), South: $2.9M (+15% YoY). Conclusion: All regions are performing excellently. The sales team deserves bonuses across the board. We should expand headcount in all three regions.' No cost, margin, or profitability data is included. The table only shows revenue, not profit. Headcount and CAC data are absent.",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies that revenue growth does not equal profitability — margins could be shrinking",
+          "[PLACEHOLDER] Notes missing cost of sales, CAC, or expense data needed to evaluate true performance",
+          "[PLACEHOLDER] Recognizes that bonus and expansion decisions require profit-based metrics, not just top-line revenue",
+          "[PLACEHOLDER] Questions whether YoY growth percentages account for market growth or inflation",
+          "[PLACEHOLDER] Identifies that only 3 regions are shown — other regions may be underperforming"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q09",
+      "type": "multi_select",
+      "difficulty": "hard",
+      "points": 15,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] An AI assistant drafted the work-from-home policy below. Select ALL missing elements or issues in this policy.",
+      "context": "[PLACEHOLDER] An AI-generated WFH policy reads: 'Effective immediately, all employees may work from home up to 3 days per week. Employees must be available during core hours (10am–3pm). All WFH requests are automatically approved. Equipment: Employees are responsible for their own internet and workspace setup. Performance will be measured by output, not hours logged. This policy applies to all employees company-wide.'",
+      "options": [
+        { "option_id": "a", "text": "[PLACEHOLDER] No exception handling for roles requiring physical presence (warehouse, lab, reception)" },
+        { "option_id": "b", "text": "[PLACEHOLDER] No mention of data security requirements for remote work (VPN, secure networks)" },
+        { "option_id": "c", "text": "[PLACEHOLDER] No manager approval or team coordination mechanism — 'automatically approved' ignores coverage needs" },
+        { "option_id": "d", "text": "[PLACEHOLDER] No ergonomic or equipment stipend policy — may create liability issues" },
+        { "option_id": "e", "text": "[PLACEHOLDER] No guidance on time zones for distributed teams — 'core hours' undefined across regions" },
+        { "option_id": "f", "text": "[PLACEHOLDER] Missing trial period or review mechanism to assess policy effectiveness" },
+        { "option_id": "g", "text": "[PLACEHOLDER] No mention of tax or legal implications for employees working from different states/countries" }
+      ],
+      "correct_answers": ["a", "b", "c", "d", "e", "f"],
+      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 8,
+        "slow_threshold_seconds": 110
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q10",
+      "type": "open_ended",
+      "difficulty": "hard",
+      "points": 25,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "[PLACEHOLDER] An AI assistant created the onboarding timeline below. Identify all issues with the plan's structure, assumptions, and success metrics.",
+      "context": "[PLACEHOLDER] An AI-generated new hire onboarding plan reads: 'Onboarding Timeline — Week 1: IT setup and HR paperwork. Week 2: Shadow a senior team member. Weeks 3–4: Begin independent work with daily check-ins. Success Metric: 30-day satisfaction survey score above 4/5. Timeline: 4 weeks. Budget: $0 (all internal resources). Note: This plan works for all roles and departments. After the 8-week probation period, the onboarding is considered complete if the survey score is met.'",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "[PLACEHOLDER] Identifies the mismatch between 4-week plan and 8-week probation — 4 weeks unaccounted for",
+          "[PLACEHOLDER] Notes that a 30-day survey measures satisfaction, not competence or productivity",
+          "[PLACEHOLDER] Recognizes that a one-size-fits-all plan ignores role-specific onboarding needs",
+          "[PLACEHOLDER] Questions the $0 budget assumption — senior team member shadowing has opportunity cost",
+          "[PLACEHOLDER] Identifies missing performance milestones or competency checkpoints throughout the timeline",
+          "[PLACEHOLDER] Notes absence of manager accountability, mentorship assignment, or escalation path for struggling hires"
+        ],
+        "levels": [
+          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
+          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
+          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
+          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
+          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
+          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+        ]
+      },
+      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 140
+      },
+      "variants": []
+    }
+  ]
+}

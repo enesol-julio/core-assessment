@@ -4,6 +4,22 @@
 
 ### v0.1 — Assessment Content & Schema
 
+## [v0.1.2] - 2026-02-26
+### Added
+- 5 section definition files in `content/sections/`
+  - `section-1-rapid-recognition.json` — 20 single_select questions (speed round, 30s visible timer)
+  - `section-2-problem-decomposition.json` — 6 drag_to_order + 4 open_ended (hidden timers)
+  - `section-3-critical-observation.json` — 8 multi_select + 4 open_ended (hidden timers)
+  - `section-4-logical-reasoning.json` — 12 single_select + 3 open_ended (mixed timers, quick/deep subtypes)
+  - `section-5-output-validation.json` — 6 multi_select + 4 open_ended (hidden timers, human/ai output_source)
+- 67 total questions with schema-complete structure and placeholder content
+- Selection constraints per section (random, constrained_random with type/subtype rules)
+- Standard 6-level rubric template on all 15 open_ended questions
+- All 8 acceptance criteria validated and passing
+
+### Removed
+- `content/sections/.gitkeep` — replaced by actual section files
+
 ## [v0.1.1] - 2026-02-25
 ### Added
 - Assessment metadata file (`content/assessment-meta.json`)
