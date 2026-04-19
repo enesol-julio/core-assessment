@@ -1,14 +1,22 @@
 {
   "section_id": "section-2-problem-decomposition",
   "name": "Problem Decomposition",
-  "instructions": "You will answer 5 problem decomposition questions. Some ask you to arrange steps in the correct order; others ask you to write a decomposition plan. Timers are running but hidden \u2014 you will receive a warning when time is almost up. You cannot go back to previous questions.",
+  "instructions": "You will be presented with complex, real-world scenarios. For ordering questions, drag the steps into the correct logical sequence. For written questions, break the problem into clear, sequenced steps. Each question is timed — you will receive a warning before time runs out. You cannot go back to previous questions.",
   "question_count": 5,
   "selection_constraints": {
     "method": "constrained_random",
     "count": 5,
     "rules": [
-      { "field": "type", "value": "drag_to_order", "min": 2 },
-      { "field": "type", "value": "open_ended", "min": 2 }
+      {
+        "field": "type",
+        "value": "drag_to_order",
+        "min": 2
+      },
+      {
+        "field": "type",
+        "value": "open_ended",
+        "min": 2
+      }
     ]
   },
   "questions": [
@@ -23,19 +31,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to relocate a 200-person office to a new building with minimal disruption.",
-      "context": "[PLACEHOLDER] A mid-size company (200 employees) is relocating its single office to a new building across town. The move must happen over a weekend to minimize business disruption. IT infrastructure, furniture, and employee seating assignments all need to transfer.",
+      "prompt": "A company is relocating its main office to a new building. Drag the following steps into the correct order.",
+      "context": "The move involves 200 employees, specialized equipment, active client projects that cannot be interrupted, and a lease that expires on a fixed date. Both buildings will be available for a 2-week overlap period.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Assess current office space and new location requirements" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Create detailed floor plan and seating assignments for new location" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Coordinate with IT to plan infrastructure migration and network setup" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Communicate move timeline and logistics to all employees" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Pack and label department equipment and materials" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Execute physical move of furniture and equipment over the weekend" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Verify IT systems, access badges, and workspace readiness on Monday morning" }
+        {
+          "item_id": "a",
+          "text": "Inventory all equipment, furniture, and materials that need to move"
+        },
+        {
+          "item_id": "b",
+          "text": "Set up workstations, network, and phone systems at the new location"
+        },
+        {
+          "item_id": "c",
+          "text": "Identify which teams and functions can move first with least disruption"
+        },
+        {
+          "item_id": "d",
+          "text": "Move the first wave of teams and verify they are fully operational"
+        },
+        {
+          "item_id": "e",
+          "text": "Communicate the move timeline and expectations to all employees"
+        },
+        {
+          "item_id": "f",
+          "text": "Move remaining teams in planned waves"
+        },
+        {
+          "item_id": "g",
+          "text": "Decommission the old office and return it per lease terms"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "a",
+        "c",
+        "e",
+        "b",
+        "d",
+        "f",
+        "g"
+      ],
+      "explanation": "You must know what you have (inventory) before deciding who moves when (prioritize). Communicate the plan before executing. Infrastructure must be ready (set up new site) before anyone moves. First wave validates the process. Remaining waves follow. Decommission is last.",
       "scoring_config": {
         "method": "positional",
         "points_per_correct_position": 2.86,
@@ -43,7 +80,7 @@
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []
@@ -59,19 +96,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to add a new menu item at a restaurant that requires sourcing from a new supplier.",
-      "context": "[PLACEHOLDER] A popular restaurant wants to add a seasonal dish that requires an ingredient not currently in their supply chain. They need to find a reliable supplier, test the dish, train kitchen staff, and launch it to customers while maintaining food safety and quality standards.",
+      "prompt": "A restaurant chain wants to add a new dish to its menu across all 30 locations. Drag the steps into the correct order.",
+      "context": "The dish requires a new ingredient from a supplier they haven't used before. It must meet nutritional labeling requirements and maintain consistency across locations. Kitchen staff will need training on preparation.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Research and identify potential suppliers for the new ingredient" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Request samples and evaluate ingredient quality from shortlisted suppliers" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Negotiate pricing, delivery schedule, and minimum order quantities" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Develop and test the recipe with the chef team" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Conduct food safety and allergen assessment for the new dish" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Train kitchen and front-of-house staff on preparation and presentation" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Launch the menu item with a soft rollout and gather customer feedback" }
+        {
+          "item_id": "a",
+          "text": "Source and vet the new supplier for quality, reliability, and cost"
+        },
+        {
+          "item_id": "b",
+          "text": "Develop and test the recipe in a test kitchen"
+        },
+        {
+          "item_id": "c",
+          "text": "Pilot the dish at 2–3 locations and gather customer feedback"
+        },
+        {
+          "item_id": "d",
+          "text": "Create nutritional labels and update menu materials"
+        },
+        {
+          "item_id": "e",
+          "text": "Train kitchen staff at all locations on preparation and plating"
+        },
+        {
+          "item_id": "f",
+          "text": "Negotiate supply agreements to cover all 30 locations"
+        },
+        {
+          "item_id": "g",
+          "text": "Launch the dish chain-wide and monitor quality and sales"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "b",
+        "a",
+        "d",
+        "c",
+        "f",
+        "e",
+        "g"
+      ],
+      "explanation": "Recipe first (you need to know what you're making before sourcing). Source the key ingredient. Create nutritional info (regulatory requirement before serving to public). Pilot at a few locations to validate. Once validated, lock in supply at scale. Train all staff. Launch everywhere and monitor.",
       "scoring_config": {
         "method": "positional",
         "points_per_correct_position": 2.86,
@@ -79,7 +145,7 @@
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []
@@ -95,28 +161,61 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to transition a hospital's patient intake process from paper forms to a digital system while maintaining patient privacy compliance.",
-      "context": "[PLACEHOLDER] A regional hospital currently uses paper-based patient intake forms across its emergency, outpatient, and specialist departments. They must transition to a digital system that complies with healthcare privacy regulations (e.g., HIPAA). The transition must not disrupt patient care during the changeover period.",
+      "prompt": "A hospital needs to switch from paper-based patient intake forms to a digital system. Drag the steps into the correct order.",
+      "context": "The hospital sees 400+ patients per day. Staff range from tech-savvy to tech-resistant. Patient data is subject to strict privacy regulations. The paper system must remain functional as a fallback until the digital system is proven reliable.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Audit current paper intake workflow and identify all data fields collected" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Map privacy and compliance requirements for digital patient data handling" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Evaluate and select a digital intake platform that meets compliance standards" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Design digital forms mirroring current data collection with privacy safeguards" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Conduct a pilot in one department with parallel paper and digital intake" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Train all intake staff and address issues identified during the pilot" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Roll out digital intake across all departments with paper backup available" },
-        { "item_id": "h", "text": "[PLACEHOLDER] Step: Decommission paper forms after confirming digital system stability and compliance audit" }
+        {
+          "item_id": "a",
+          "text": "Audit the current paper forms to identify all data fields and workflows"
+        },
+        {
+          "item_id": "b",
+          "text": "Define privacy and compliance requirements the digital system must meet"
+        },
+        {
+          "item_id": "c",
+          "text": "Select or build a digital system that meets the requirements"
+        },
+        {
+          "item_id": "d",
+          "text": "Run the digital system in parallel with paper forms in one department"
+        },
+        {
+          "item_id": "e",
+          "text": "Train staff on the new system with role-specific instructions"
+        },
+        {
+          "item_id": "f",
+          "text": "Migrate historical patient records into the digital system"
+        },
+        {
+          "item_id": "g",
+          "text": "Roll out to remaining departments based on pilot results"
+        },
+        {
+          "item_id": "h",
+          "text": "Retire the paper system once digital reliability is confirmed"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g", "h"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "a",
+        "b",
+        "c",
+        "f",
+        "e",
+        "d",
+        "g",
+        "h"
+      ],
+      "explanation": "Audit current state first (know what exists). Define regulatory requirements (constraints before solution). Select/build the system. Migrate existing data (system needs data to be useful). Train staff (before they use it). Pilot in one department with parallel paper fallback. Expand to remaining departments. Retire paper only after proven reliability.",
       "scoring_config": {
         "method": "positional",
-        "points_per_correct_position": 2.50,
+        "points_per_correct_position": 2.5,
         "partial_credit_tolerance": 1,
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -132,19 +231,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to plan and execute a corporate conference for 500 attendees.",
-      "context": "[PLACEHOLDER] A company is organizing its annual corporate conference for 500 employees across multiple offices. The event includes keynote speakers, breakout sessions, catering, and AV requirements. It must be planned within a fixed budget and a 4-month timeline.",
+      "prompt": "An event planning team needs to organize a 500-person corporate conference. Drag the steps into the correct order.",
+      "context": "The conference is 6 months away. It includes keynote speakers, breakout sessions, catering, and live-streaming for remote attendees. The budget has already been approved.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Define conference objectives, budget, and target attendance" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Select and book venue with required capacity and AV capabilities" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Confirm keynote speakers and plan breakout session topics" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Arrange catering, transportation, and accommodation logistics" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Send invitations and open registration for attendees" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Conduct final walkthrough and rehearsal at the venue" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Execute the conference and collect attendee feedback post-event" }
+        {
+          "item_id": "a",
+          "text": "Secure the venue and confirm the date"
+        },
+        {
+          "item_id": "b",
+          "text": "Define the conference agenda, themes, and session formats"
+        },
+        {
+          "item_id": "c",
+          "text": "Confirm keynote speakers and session presenters"
+        },
+        {
+          "item_id": "d",
+          "text": "Open registration and begin marketing"
+        },
+        {
+          "item_id": "e",
+          "text": "Arrange catering, A/V equipment, and live-streaming setup"
+        },
+        {
+          "item_id": "f",
+          "text": "Conduct a full run-through and technical rehearsal"
+        },
+        {
+          "item_id": "g",
+          "text": "Execute the event and manage day-of logistics"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "Venue and date first (everything depends on location and timing). Define agenda (need content structure before recruiting speakers). Confirm speakers (need them before marketing). Open registration (need agenda and speakers to advertise). Arrange logistics (catering needs headcount estimates from registration). Rehearse. Execute.",
       "scoring_config": {
         "method": "positional",
         "points_per_correct_position": 2.86,
@@ -152,7 +280,7 @@
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []
@@ -168,28 +296,61 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to unify customer accounts after a bank merger.",
-      "context": "[PLACEHOLDER] Two regional banks are merging. Each has its own core banking system, account numbering scheme, and customer database. Customers of both banks must end up with unified accounts accessible through a single online banking platform. Regulatory requirements mandate uninterrupted access to funds throughout the transition.",
+      "prompt": "A regional bank is merging with another bank. The combined entity needs to unify customer accounts from both systems into a single system. Drag the steps into the correct order.",
+      "context": "Both banks have active customers who must experience no disruption. Account numbers, balances, and transaction histories must be preserved. Regulatory reporting must continue uninterrupted throughout the process.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Inventory both banks' account types, numbering schemes, and data formats" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Define the unified account structure and mapping rules between legacy systems" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Obtain regulatory approval for the account migration plan" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Build and test the data migration pipeline with synthetic account data" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Communicate migration timeline and changes to all affected customers" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Execute phased account migration with parallel system access during transition" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Validate migrated accounts and reconcile balances against source systems" },
-        { "item_id": "h", "text": "[PLACEHOLDER] Step: Decommission legacy systems after confirmation period and final audit" }
+        {
+          "item_id": "a",
+          "text": "Map data fields and account structures between the two systems"
+        },
+        {
+          "item_id": "b",
+          "text": "Choose which system will be the target and define the unified data model"
+        },
+        {
+          "item_id": "c",
+          "text": "Inventory all account types, products, and data formats in both systems"
+        },
+        {
+          "item_id": "d",
+          "text": "Run a pilot migration with a small batch of low-risk accounts"
+        },
+        {
+          "item_id": "e",
+          "text": "Build and test data transformation and migration tools"
+        },
+        {
+          "item_id": "f",
+          "text": "Migrate remaining accounts in planned batches with verification after each"
+        },
+        {
+          "item_id": "g",
+          "text": "Notify customers and provide guidance on any changes to their accounts"
+        },
+        {
+          "item_id": "h",
+          "text": "Decommission the retired system after a monitoring period"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g", "h"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "c",
+        "b",
+        "a",
+        "e",
+        "d",
+        "g",
+        "f",
+        "h"
+      ],
+      "explanation": "Inventory both systems first (understand what exists). Choose the target system and unified model (strategic decision before mapping). Map fields between systems (translation layer). Build migration tools (automate the transformation). Pilot with low-risk accounts (validate before scale). Notify customers (before their accounts change). Migrate remaining accounts in batches with verification. Decommission retired system only after monitoring confirms success.",
       "scoring_config": {
         "method": "positional",
-        "points_per_correct_position": 2.50,
+        "points_per_correct_position": 2.5,
         "partial_credit_tolerance": 1,
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -205,34 +366,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Decompose the launch of a new customer loyalty program for a retail chain with 150 physical stores and an online store. Describe the key phases, dependencies, and potential risks.",
-      "context": "[PLACEHOLDER] A national retail chain with 150 brick-and-mortar stores and an e-commerce platform wants to launch a unified loyalty program. Customers should earn and redeem points both in-store and online. The chain currently has no loyalty program and uses separate POS and e-commerce systems.",
+      "prompt": "Break this task into implementation steps (aim for 4–7 steps). Focus on the right sequence and key dependencies.",
+      "context": "A national retail chain wants to launch a customer loyalty program. Customers earn points on purchases and can redeem them for discounts. The program needs to work in all 150 physical stores and on the online store. Staff at each location need to be able to explain and enroll customers in the program.",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe your decomposition approach..."
+        "placeholder_text": "List your implementation steps in order. For each step, briefly note why it comes at that point in the sequence..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies key phases including system integration, staff training, and customer communication",
-          "[PLACEHOLDER] Recognizes dependencies between POS integration, e-commerce integration, and unified customer database",
-          "[PLACEHOLDER] Addresses risks such as data synchronization failures, customer confusion, and staff adoption challenges"
+          "Identifies a design/definition phase (rules, earn rates, redemption mechanics)",
+          "Addresses the system/tooling needed to track points across channels (in-store + online)",
+          "Includes a staff training or enablement step before launch",
+          "Sequences a pilot or phased rollout before full-scale launch",
+          "Considers customer communication or marketing as a distinct step",
+          "Accounts for testing or validation before going live",
+          "Correct dependency ordering — does not place downstream steps before their prerequisites"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 12,
+        "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
       },
       "variants": []
@@ -248,34 +437,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Decompose the replacement of a legacy time-off request system for a company with 300 employees across 4 offices. Outline the phases, key decisions, and transition plan.",
-      "context": "[PLACEHOLDER] A company with 300 employees spread across 4 office locations currently manages time-off requests via email and shared spreadsheets. Different offices have different informal processes. Management wants a unified digital system that integrates with payroll. The transition must not cause any employees to lose accrued PTO data.",
+      "prompt": "Break this task into implementation steps (aim for 4–7 steps). Focus on the right sequence and key dependencies.",
+      "context": "A mid-size company currently tracks employee time-off requests via email and spreadsheets. They want to replace this with a structured process where employees submit requests, managers approve or deny them, and remaining balances update automatically. The company has 300 employees across 4 offices in different time zones.",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe your decomposition approach..."
+        "placeholder_text": "List your implementation steps in order. For each step, briefly note why it comes at that point in the sequence..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies need to audit and reconcile existing PTO data across all offices before migration",
-          "[PLACEHOLDER] Addresses the challenge of unifying different informal processes into a single standardized workflow",
-          "[PLACEHOLDER] Plans for payroll integration, parallel running period, and employee training across multiple locations"
+          "Identifies a requirements/discovery phase (current policies, leave types, approval chains)",
+          "Addresses tool selection or system design as a distinct step",
+          "Accounts for migrating existing balance/history data into the new system",
+          "Includes training or change management for employees and managers",
+          "Sequences a pilot or phased rollout before company-wide deployment",
+          "Considers timezone or cross-office implications",
+          "Correct dependency ordering — discovery before design, design before build, training before launch"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 12,
+        "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
       },
       "variants": []
@@ -291,34 +508,63 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Decompose the unification of inventory management across 3 warehouses that currently use different tracking systems. Describe how you would plan and sequence the work, including data migration and operational continuity.",
-      "context": "[PLACEHOLDER] A distribution company operates 3 warehouses in different regions. Warehouse A uses a commercial WMS, Warehouse B uses a custom-built Access database, and Warehouse C tracks inventory in spreadsheets. Management wants a single unified inventory system. The company ships 2,000+ orders daily and cannot afford significant downtime. Products overlap across warehouses, but SKU formats and naming conventions differ.",
+      "prompt": "Break this task into implementation steps (aim for 4–7 steps). Focus on the right sequence and key dependencies.",
+      "context": "A logistics company has 3 regional warehouses that each manage inventory independently using their own tracking methods. They want to unify inventory visibility so that any warehouse can see real-time stock levels at the other two. Orders should be fulfillable from whichever warehouse has stock, rather than only from the warehouse closest to the customer. The warehouses operate on different schedules and use different labeling conventions.",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe your decomposition approach..."
+        "placeholder_text": "List your implementation steps in order. For each step, briefly note why it comes at that point in the sequence..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Addresses SKU normalization and master data reconciliation as a prerequisite to migration",
-          "[PLACEHOLDER] Plans for phased warehouse-by-warehouse rollout to minimize operational risk",
-          "[PLACEHOLDER] Identifies data quality challenges across disparate systems and proposes validation strategies"
+          "Identifies an audit/discovery step to understand each warehouse's current tracking method and labeling system",
+          "Addresses standardization of product labeling or SKU conventions across warehouses",
+          "Includes selection or design of a unified inventory visibility system",
+          "Considers data migration or synchronization of current inventory into the unified system",
+          "Addresses the order routing or fulfillment logic change (which warehouse ships?)",
+          "Includes testing or pilot phase before full rollout",
+          "Accounts for operational differences (schedules, processes) across warehouses",
+          "Sequences dependencies correctly — standardize before unifying, unify before rerouting fulfillment"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 12,
+        "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
       },
       "variants": []
@@ -334,34 +580,63 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Decompose the centralization of student enrollment across a school district with 20 schools, given a 5-month deadline. Outline the phases, critical dependencies, and how you would handle the constraints.",
-      "context": "[PLACEHOLDER] A school district with 20 schools (12 elementary, 5 middle, 3 high) currently handles enrollment independently at each school using a mix of paper forms and local databases. The district superintendent has mandated a centralized online enrollment system to be operational before the next enrollment period in 5 months. Each school has different data fields, some families have children in multiple schools, and the district must comply with state student data privacy regulations.",
+      "prompt": "Break this task into implementation steps (aim for 4–7 steps). Focus on the right sequence and key dependencies.",
+      "context": "A school district with 20 schools currently handles student enrollment on paper. Each school maintains its own waitlists and manually tracks which students have been accepted, declined, or are pending. The district wants a centralized enrollment process where parents apply once and are matched to available spots across all schools based on preferences, proximity, and sibling priority. The transition must happen before the next enrollment cycle in 5 months.",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe your decomposition approach..."
+        "placeholder_text": "List your implementation steps in order. For each step, briefly note why it comes at that point in the sequence..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Recognizes the tight timeline constraint and structures phases to meet the 5-month deadline",
-          "[PLACEHOLDER] Addresses data standardization across 20 schools with different data fields and formats",
-          "[PLACEHOLDER] Considers multi-school families, student data privacy compliance, and stakeholder change management"
+          "Identifies need to define the matching/priority rules before building anything",
+          "Addresses data gathering — current enrollment, capacity, waitlists from each school",
+          "Includes system design or selection to handle centralized applications and matching",
+          "Accounts for parent/family communication and enrollment instructions",
+          "Includes training for school staff who will use or support the new process",
+          "Considers a testing or simulation phase (dry run of the matching algorithm/logic)",
+          "Recognizes the hard deadline as a constraint that shapes the plan",
+          "Correct dependency ordering — rules before system, system before testing, communication before enrollment opens"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 12,
+        "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
       },
       "variants": []
@@ -377,19 +652,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Arrange the following steps in the correct order to transition a manufacturing company from a single supplier to a dual-supplier model for a critical component.",
-      "context": "[PLACEHOLDER] A manufacturing company currently sources a critical component from a single supplier. To reduce supply chain risk, management has decided to qualify and onboard a second supplier. Production cannot be interrupted during the transition, and the new supplier's components must meet the same quality and specification standards.",
+      "prompt": "A manufacturing company wants to switch from a single supplier to a dual-supplier model for a critical raw material. Drag the steps into the correct order.",
+      "context": "The current supplier provides 100% of the material. The company cannot risk any supply gap during the transition. Quality standards are strict — the new supplier's material must pass the same specifications. Existing contracts have 90-day termination notice requirements.",
       "items": [
-        { "item_id": "a", "text": "[PLACEHOLDER] Step: Document current component specifications and quality acceptance criteria" },
-        { "item_id": "b", "text": "[PLACEHOLDER] Step: Identify and evaluate candidate second suppliers against specifications" },
-        { "item_id": "c", "text": "[PLACEHOLDER] Step: Request and test sample components from the top candidate supplier" },
-        { "item_id": "d", "text": "[PLACEHOLDER] Step: Negotiate contract terms including pricing, lead times, and quality guarantees" },
-        { "item_id": "e", "text": "[PLACEHOLDER] Step: Run a small production batch using the new supplier's components alongside existing supply" },
-        { "item_id": "f", "text": "[PLACEHOLDER] Step: Validate production output quality and adjust processes if needed" },
-        { "item_id": "g", "text": "[PLACEHOLDER] Step: Establish ongoing dual-supplier ordering schedule and monitoring process" }
+        {
+          "item_id": "a",
+          "text": "Identify and evaluate potential second suppliers"
+        },
+        {
+          "item_id": "b",
+          "text": "Request and test samples from the top candidate suppliers"
+        },
+        {
+          "item_id": "c",
+          "text": "Negotiate terms and contracts with the chosen second supplier"
+        },
+        {
+          "item_id": "d",
+          "text": "Run a small production batch using the new supplier's material"
+        },
+        {
+          "item_id": "e",
+          "text": "Renegotiate the existing supplier's contract to reflect reduced volume"
+        },
+        {
+          "item_id": "f",
+          "text": "Gradually shift a percentage of orders to the new supplier"
+        },
+        {
+          "item_id": "g",
+          "text": "Monitor quality and delivery performance from both suppliers"
+        }
       ],
-      "correct_order": ["a", "b", "c", "d", "e", "f", "g"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_order": [
+        "a",
+        "b",
+        "d",
+        "c",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "Identify candidates first. Test samples before committing. Run a production trial to validate real-world performance. Only then negotiate contracts (you have leverage and confidence). Renegotiate existing contract (adjust volume). Gradually shift orders (don't flip overnight). Monitor both suppliers ongoing.",
       "scoring_config": {
         "method": "positional",
         "points_per_correct_position": 2.86,
@@ -397,7 +701,7 @@
         "partial_credit_multiplier": 0.5
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []

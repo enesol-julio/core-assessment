@@ -1,15 +1,27 @@
 {
   "section_id": "section-4-logical-reasoning",
   "name": "Logical Reasoning Under Constraints",
-  "instructions": "You will answer 8 logical reasoning questions. Some are quick (30 seconds, visible timer); others are deeper problems with more time. You cannot go back to previous questions.",
+  "instructions": "This section tests your ability to reason through conditional rules, constraints, and multi-step logic. Some questions are quick deductions with a visible timer — trust your reasoning and commit. Others are deeper problems with more time. For written questions, briefly explain your reasoning. You cannot go back to previous questions.",
   "question_count": 8,
   "selection_constraints": {
     "method": "constrained_random",
     "count": 8,
     "rules": [
-      { "field": "subtype", "value": "quick", "min": 3 },
-      { "field": "subtype", "value": "deep", "min": 3 },
-      { "field": "type", "value": "open_ended", "min": 2 }
+      {
+        "field": "subtype",
+        "value": "quick",
+        "min": 3
+      },
+      {
+        "field": "subtype",
+        "value": "deep",
+        "min": 3
+      },
+      {
+        "field": "type",
+        "value": "open_ended",
+        "min": 2
+      }
     ]
   },
   "questions": [
@@ -25,16 +37,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Policy threshold: A company policy states that any single expense over $500 requires manager approval, and any expense over $2,000 requires VP approval. An employee submits a $1,800 expense. What approval is needed?",
+      "prompt": "A company policy states: 'All expenses over $200 require manager approval.' Jamie submitted a $180 expense without manager approval. Which statement is true?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] No approval needed" },
-        { "option_id": "b", "text": "[B] Manager approval only" },
-        { "option_id": "c", "text": "[C] VP approval only" },
-        { "option_id": "d", "text": "[D] Both manager and VP approval" }
+        {
+          "option_id": "a",
+          "text": "Jamie violated the policy"
+        },
+        {
+          "option_id": "b",
+          "text": "Jamie followed the policy"
+        },
+        {
+          "option_id": "c",
+          "text": "Jamie should have gotten approval to be safe"
+        },
+        {
+          "option_id": "d",
+          "text": "Not enough information to determine if Jamie followed the policy"
+        }
       ],
       "correct_answer": "b",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "explanation": "The policy requires approval for expenses OVER $200. $180 is not over $200, so no approval is required. Jamie followed the policy as stated. Option (c) is practical advice, not a logical evaluation of the policy. Option (d) is wrong because the policy is clearly stated.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -53,16 +77,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Contrapositive reasoning: Company policy states 'If a project exceeds $50K, it must undergo executive review.' A project did not undergo executive review. What can you conclude?",
+      "prompt": "If the following is true: 'Every project that is behind schedule gets a status review,' and Project X did NOT get a status review — what can you conclude?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] The project did not exceed $50K" },
-        { "option_id": "b", "text": "[B] The project exceeded $50K but was exempt" },
-        { "option_id": "c", "text": "[C] The project may or may not have exceeded $50K" },
-        { "option_id": "d", "text": "[D] The policy was not enforced" }
+        {
+          "option_id": "a",
+          "text": "Project X is on schedule"
+        },
+        {
+          "option_id": "b",
+          "text": "Project X is not behind schedule"
+        },
+        {
+          "option_id": "c",
+          "text": "Project X was cancelled"
+        },
+        {
+          "option_id": "d",
+          "text": "The review process is broken"
+        }
       ],
-      "correct_answer": "a",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "b",
+      "explanation": "This is contrapositive reasoning: if behind schedule → status review. No status review → not behind schedule. We can only conclude it's NOT behind schedule — we can't say it's 'on schedule' because it could be ahead of schedule or in some other state. Option (b) is the precise logical conclusion.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -81,16 +117,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Correlation vs. causation: A company notices that departments that hired more people last quarter also had higher revenue growth. A manager concludes that hiring more people causes revenue to grow. What is the best critique?",
+      "prompt": "A manager argues: 'We hired 10 new people last quarter and revenue went up. Therefore, hiring more people increases revenue.' What is the flaw in this reasoning?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] The sample size is too small to draw any conclusion" },
-        { "option_id": "b", "text": "[B] Revenue growth may have caused the departments to hire more, not the other way around" },
-        { "option_id": "c", "text": "[C] Correlation does not establish causation; a third factor could drive both hiring and revenue" },
-        { "option_id": "d", "text": "[D] The manager should have used a different metric instead of revenue" }
+        {
+          "option_id": "a",
+          "text": "10 people is too small a sample to draw conclusions"
+        },
+        {
+          "option_id": "b",
+          "text": "Correlation does not prove causation — revenue may have increased for other reasons"
+        },
+        {
+          "option_id": "c",
+          "text": "Revenue always goes up over time due to inflation"
+        },
+        {
+          "option_id": "d",
+          "text": "The manager should have compared revenue per employee"
+        }
       ],
-      "correct_answer": "c",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "b",
+      "explanation": "The reasoning assumes that because two things happened together (hiring + revenue increase), one caused the other. Revenue could have risen due to seasonal trends, a new product, market conditions, or many other factors. This is a classic post hoc ergo propter hoc fallacy.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -109,16 +157,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Necessary vs. sufficient: Company policy states 'Employees must sign an NDA before accessing confidential project files.' Jordan has signed an NDA. Can Jordan access confidential project files?",
+      "prompt": "Rule: 'Documents marked Confidential can only be shared with employees who have signed an NDA.' Lee has signed an NDA. Can Lee access a Confidential document?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] Yes, signing the NDA grants access" },
-        { "option_id": "b", "text": "[B] No, signing the NDA is not related to access" },
-        { "option_id": "c", "text": "[C] Yes, but only for projects Jordan is assigned to" },
-        { "option_id": "d", "text": "[D] Not enough information to decide" }
+        {
+          "option_id": "a",
+          "text": "Yes — Lee meets the requirement"
+        },
+        {
+          "option_id": "b",
+          "text": "No — signing an NDA is necessary but may not be sufficient"
+        },
+        {
+          "option_id": "c",
+          "text": "Yes — anyone with an NDA automatically gets access"
+        },
+        {
+          "option_id": "d",
+          "text": "Not enough information"
+        }
       ],
       "correct_answer": "d",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "explanation": "The rule says Confidential documents CAN ONLY be shared with NDA-signed employees — meaning NDA is a necessary condition. But the rule doesn't say NDA is sufficient on its own. There might be additional requirements (need-to-know, role-based access, manager approval). We cannot conclude that Lee CAN access the document — only that Lee hasn't been excluded by this particular rule.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -137,16 +197,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Constraint filtering: A team must select a vendor proposal. Requirements: budget under $100K, delivery within 6 months, and at least 3 references. Proposal A: $95K, 5 months, 2 references. Proposal B: $88K, 4 months, 4 references. Proposal C: $105K, 3 months, 5 references. Proposal D: $92K, 7 months, 3 references. Which proposal meets all requirements?",
+      "prompt": "Three teams submitted proposals. The rules state: 'The proposal with the lowest cost wins, unless it scores below 70 on quality, in which case it is disqualified.' Team A: $50K, quality 65. Team B: $80K, quality 90. Team C: $60K, quality 75. Who wins?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] Proposal A" },
-        { "option_id": "b", "text": "[B] Proposal B" },
-        { "option_id": "c", "text": "[C] Proposal C" },
-        { "option_id": "d", "text": "[D] Proposal D" }
+        {
+          "option_id": "a",
+          "text": "Team A — lowest cost"
+        },
+        {
+          "option_id": "b",
+          "text": "Team B — highest quality"
+        },
+        {
+          "option_id": "c",
+          "text": "Team C — lowest cost among qualified proposals"
+        },
+        {
+          "option_id": "d",
+          "text": "No winner can be determined from this information"
+        }
       ],
-      "correct_answer": "b",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "c",
+      "explanation": "Team A is disqualified (quality 65 < 70). Among remaining qualified proposals, Team C ($60K, quality 75) has a lower cost than Team B ($80K, quality 90). The rule selects lowest cost among qualified entries.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -165,18 +237,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Multi-rule eligibility: Based on the training program rules described in the scenario, which employee is eligible for the Advanced Leadership Program?",
-      "context": "[PLACEHOLDER] Scenario: A company's Advanced Leadership Program has the following eligibility rules: (1) Must have at least 3 years of tenure. (2) Must have received a 'Meets Expectations' or higher rating in the last two review cycles. (3) Must be nominated by their direct manager. (4) Employees currently on a Performance Improvement Plan are ineligible regardless of other criteria. Four candidates: Alex (4 years, 'Exceeds' both cycles, nominated, not on PIP), Bailey (2 years, 'Exceeds' both cycles, nominated, not on PIP), Casey (5 years, 'Meets' and 'Below Expectations', nominated, not on PIP), Dana (3 years, 'Meets' both cycles, nominated, currently on PIP).",
+      "prompt": "Given the following rules for a training program, which employee is eligible to attend?",
+      "context": "Rules:\n1. Employees must have been with the company for at least 1 year.\n2. Employees must have completed the online prerequisite course.\n3. Managers can nominate employees who haven't completed the prerequisite, but only if the employee has 3+ years of experience.\n4. Contractors are not eligible regardless of tenure.\n\nEmployees:\n- Dana: 2 years tenure, completed prerequisite, full-time employee\n- Eli: 4 years tenure, did NOT complete prerequisite, full-time employee, nominated by manager\n- Fran: 6 months tenure, completed prerequisite, full-time employee\n- Glen: 3 years tenure, completed prerequisite, contractor",
       "options": [
-        { "option_id": "a", "text": "[A] Alex and Bailey" },
-        { "option_id": "b", "text": "[B] Alex and Dana" },
-        { "option_id": "c", "text": "[C] Alex only" },
-        { "option_id": "d", "text": "[D] Alex and Casey" }
+        {
+          "option_id": "a",
+          "text": "Dana and Eli only"
+        },
+        {
+          "option_id": "b",
+          "text": "Dana only"
+        },
+        {
+          "option_id": "c",
+          "text": "Dana, Eli, and Glen"
+        },
+        {
+          "option_id": "d",
+          "text": "All four employees"
+        }
       ],
-      "correct_answer": "c",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "a",
+      "explanation": "Dana: 2 years (✓ rule 1), prerequisite done (✓ rule 2), full-time (✓ rule 4) → ELIGIBLE. Eli: 4 years (✓ rule 1), no prerequisite but 3+ years + manager nomination (✓ rule 3), full-time (✓ rule 4) → ELIGIBLE. Fran: 6 months (✗ rule 1) → NOT ELIGIBLE. Glen: contractor (✗ rule 4) → NOT ELIGIBLE regardless of other qualifications.",
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []
@@ -193,18 +277,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Constraint satisfaction: Given the project assignment constraints in the scenario, which assignment is the only valid one?",
-      "context": "[PLACEHOLDER] Scenario: A company must assign four employees (W, X, Y, Z) to four projects (P1, P2, P3, P4), one employee per project. Constraints: (1) W cannot be assigned to P2 or P4. (2) X must be assigned to either P1 or P3. (3) If Y is assigned to P1, then Z must be assigned to P3. (4) Z cannot be assigned to P2. Given that X is assigned to P3, determine the full valid assignment.",
+      "prompt": "A company is assigning 4 employees (Kim, Leo, Mia, Noor) to 4 different projects (P1, P2, P3, P4). Given the constraints below, which assignment is valid?",
+      "context": "Constraints:\n1. Kim cannot work on P2 or P4.\n2. Leo must work on either P1 or P3.\n3. If Mia works on P2, then Noor must work on P3.\n4. Each person works on exactly one project, and each project has exactly one person.",
       "options": [
-        { "option_id": "a", "text": "[A] W→P1, X→P3, Y→P2, Z→P4" },
-        { "option_id": "b", "text": "[B] W→P3, X→P1, Y→P4, Z→P2" },
-        { "option_id": "c", "text": "[C] W→P1, X→P3, Y→P4, Z→P2" },
-        { "option_id": "d", "text": "[D] W→P2, X→P3, Y→P1, Z→P4" }
+        {
+          "option_id": "a",
+          "text": "Kim→P1, Leo→P3, Mia→P2, Noor→P4"
+        },
+        {
+          "option_id": "b",
+          "text": "Kim→P3, Leo→P1, Mia→P2, Noor→P4"
+        },
+        {
+          "option_id": "c",
+          "text": "Kim→P1, Leo→P3, Mia→P4, Noor→P2"
+        },
+        {
+          "option_id": "d",
+          "text": "Kim→P4, Leo→P1, Mia→P2, Noor→P3"
+        }
       ],
-      "correct_answer": "a",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "c",
+      "explanation": "Option (a): Mia→P2 triggers constraint 3 (Noor must be on P3), but Noor is on P4. VIOLATES constraint 3. Option (b): Mia→P2 triggers constraint 3 (Noor must be on P3), but Noor is on P4. VIOLATES constraint 3. Option (c): Kim→P1 (not P2/P4 ✓), Leo→P3 (P1 or P3 ✓), Mia→P4 (not P2, so constraint 3 doesn't trigger ✓). ALL CONSTRAINTS MET. Option (d): Kim→P4. VIOLATES constraint 1 (Kim cannot work on P2 or P4).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -221,18 +317,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Contradiction detection: Review the shipping rules in the scenario. Which rule creates a contradiction that makes it impossible to fulfill the described order?",
-      "context": "[PLACEHOLDER] Scenario: A warehouse has the following shipping rules: (Rule 1) All fragile items must ship via Ground. (Rule 2) Orders over $200 qualify for free Express shipping. (Rule 3) Express shipments cannot contain fragile items. (Rule 4) Orders containing both fragile and non-fragile items must ship together in one package. A customer places a $250 order containing both fragile glassware and non-fragile clothing. Identify which rule, when combined with the others, creates the contradiction.",
+      "prompt": "Based on the following statements, what can you conclude?",
+      "context": "Statements:\n1. All orders placed before noon are shipped the same day.\n2. Orders requiring custom packaging are never shipped the same day.\n3. Order #445 was placed at 10:30 AM and requires custom packaging.",
       "options": [
-        { "option_id": "a", "text": "[A] Rule 1, because Ground shipping is too slow for premium orders" },
-        { "option_id": "b", "text": "[B] Rule 4, because requiring a single package forces fragile and non-fragile items into the same shipment method, conflicting with Rules 1 and 3" },
-        { "option_id": "c", "text": "[C] Rule 2, because free Express should override fragile restrictions" },
-        { "option_id": "d", "text": "[D] Rule 3, because Express should be able to handle any item type" }
+        {
+          "option_id": "a",
+          "text": "Order #445 will be shipped the same day because it was placed before noon"
+        },
+        {
+          "option_id": "b",
+          "text": "Order #445 will NOT be shipped the same day because of custom packaging"
+        },
+        {
+          "option_id": "c",
+          "text": "The statements contain a contradiction — the rules conflict for Order #445"
+        },
+        {
+          "option_id": "d",
+          "text": "Not enough information to determine when Order #445 ships"
+        }
       ],
-      "correct_answer": "b",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "c",
+      "explanation": "Statement 1 says Order #445 MUST ship same day (placed before noon). Statement 2 says it CANNOT ship same day (custom packaging). Both rules apply to Order #445 and they produce contradictory requirements. The correct observation is that the rules as stated are internally inconsistent for this case. This tests the ability to recognize logical contradictions rather than trying to resolve them by picking one rule over another.",
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
+        "suspicious_fast_seconds": 15,
         "slow_threshold_seconds": 110
       },
       "variants": []
@@ -249,18 +357,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Committee selection: Based on the constraints in the scenario, which group of 3 people can form a valid committee?",
-      "context": "[PLACEHOLDER] Scenario: A company must form a 3-person committee from 6 candidates: F, G, H, J, K, L. Constraints: (1) F and G cannot both serve on the committee. (2) If H is selected, then J must also be selected. (3) K and L must either both be selected or neither selected. (4) At least one of F or H must be on the committee.",
+      "prompt": "A committee must select exactly 3 members from a group of 6 candidates. Given the constraints, which team is valid?",
+      "context": "Candidates: Ava, Ben, Cal, Dee, Eve, Fin\n\nConstraints:\n1. If Ava is selected, Ben must also be selected.\n2. If Cal is selected, Dee cannot be selected.\n3. Eve and Fin cannot both be selected.\n4. Ben and Cal cannot both be selected.",
       "options": [
-        { "option_id": "a", "text": "[A] F, G, H" },
-        { "option_id": "b", "text": "[B] H, K, L" },
-        { "option_id": "c", "text": "[C] F, K, L" },
-        { "option_id": "d", "text": "[D] H, J, F" }
+        {
+          "option_id": "a",
+          "text": "Ava, Ben, Eve"
+        },
+        {
+          "option_id": "b",
+          "text": "Ben, Cal, Eve"
+        },
+        {
+          "option_id": "c",
+          "text": "Ava, Cal, Dee"
+        },
+        {
+          "option_id": "d",
+          "text": "Cal, Dee, Fin"
+        }
       ],
-      "correct_answer": "d",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "a",
+      "explanation": "Option (a): Ava selected → Ben must be selected (✓ rule 1). Cal not selected (rule 2 doesn't apply). Eve selected, Fin not (✓ rule 3). Ben and Cal not both selected (✓ rule 4). ALL CONSTRAINTS MET. Option (b): Ben and Cal both selected (✗ rule 4). Option (c): Ava selected but Ben not selected (✗ rule 1). Option (d): Cal and Dee both selected (✗ rule 2).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -277,16 +397,28 @@
         "show_timer": "visible",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Logical fallacy: A risk analyst argues: 'We have never experienced a data breach, therefore our security systems are effective and we don't need additional investment.' What is the primary flaw in this reasoning?",
+      "prompt": "A team lead says: 'None of our delayed projects had a risk assessment done upfront. So if we do risk assessments, our projects won't be delayed.' Is this reasoning valid?",
       "context": null,
       "options": [
-        { "option_id": "a", "text": "[A] Appeal to authority — the analyst's role doesn't qualify them to assess security" },
-        { "option_id": "b", "text": "[B] Straw man — the argument misrepresents the opposing position" },
-        { "option_id": "c", "text": "[C] Absence of evidence is not evidence of absence — no breach doesn't prove systems are effective" },
-        { "option_id": "d", "text": "[D] False dilemma — the argument presents only two options when there are more" }
+        {
+          "option_id": "a",
+          "text": "Yes — the evidence shows risk assessments prevent delays"
+        },
+        {
+          "option_id": "b",
+          "text": "No — the absence of risk assessments in delayed projects doesn't prove they would have prevented delays"
+        },
+        {
+          "option_id": "c",
+          "text": "Yes — it's a reasonable precaution based on the data"
+        },
+        {
+          "option_id": "d",
+          "text": "No — risk assessments cause delays because they take time"
+        }
       ],
-      "correct_answer": "c",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "b",
+      "explanation": "This is the fallacy of denying the antecedent / affirming the consequent in reverse. Just because all delayed projects lacked risk assessments doesn't mean risk assessments would have prevented the delays. There could be other causes. Also, projects WITH risk assessments might also get delayed — we have no data on those. Option (c) is a pragmatic argument, not a logical evaluation. Option (d) introduces an unrelated claim.",
       "speed_flags": {
         "suspicious_fast_seconds": 3,
         "slow_threshold_seconds": 25
@@ -305,18 +437,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Priority queue ordering: Based on the warehouse priority rules in the scenario, what is the correct shipping order for the five pending orders?",
-      "context": "[PLACEHOLDER] Scenario: A warehouse processes shipping orders using these priority rules (applied in order): (1) Express orders ship before Standard orders. (2) Within the same shipping tier, orders with perishable items ship first. (3) Within the same tier and perishability, older orders ship first. (4) If two orders have identical priority, the higher-value order ships first. Five pending orders: Order A (Standard, perishable, placed 9am, $150), Order B (Express, non-perishable, placed 10am, $80), Order C (Express, perishable, placed 11am, $200), Order D (Standard, non-perishable, placed 8am, $300), Order E (Express, non-perishable, placed 9am, $120).",
+      "prompt": "A warehouse processes orders in priority order. Given the rules and the current queue, which order ships next?",
+      "context": "Priority rules (applied in order — first rule that differentiates wins):\n1. Express orders ship before standard orders.\n2. Among same-speed orders, orders with perishable items ship first.\n3. Among orders still tied, the earliest order placed ships first.\n\nCurrent queue:\n- Order A: Standard, non-perishable, placed 9:00 AM\n- Order B: Express, non-perishable, placed 10:30 AM\n- Order C: Standard, perishable, placed 8:15 AM\n- Order D: Express, perishable, placed 11:00 AM\n- Order E: Express, non-perishable, placed 9:45 AM",
       "options": [
-        { "option_id": "a", "text": "[A] C, E, B, A, D" },
-        { "option_id": "b", "text": "[B] C, B, E, A, D" },
-        { "option_id": "c", "text": "[C] B, C, E, A, D" },
-        { "option_id": "d", "text": "[D] C, E, B, D, A" }
+        {
+          "option_id": "a",
+          "text": "Order B"
+        },
+        {
+          "option_id": "b",
+          "text": "Order D"
+        },
+        {
+          "option_id": "c",
+          "text": "Order E"
+        },
+        {
+          "option_id": "d",
+          "text": "Order C"
+        }
       ],
-      "correct_answer": "a",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answer": "b",
+      "explanation": "Step 1: Express orders first → B, D, E are express. A and C are eliminated. Step 2: Among B, D, E — perishable first → D is perishable. B and E are not. D ships next. The full priority order would be: D, E (earliest express non-perishable), B, C (perishable standard), A.",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -333,34 +477,59 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Evaluate causation argument: A support team lead claims the new support page redesign caused a 20% drop in support tickets. Evaluate this causal claim. What alternative explanations should be considered? What additional data would you need to validate or refute the claim?",
-      "context": "[PLACEHOLDER] Scenario: Last quarter, the company redesigned its customer support page with a new FAQ layout and search function. Support ticket volume dropped 20% compared to the previous quarter. The support team lead presented this to leadership as proof that the redesign is working and recommended expanding the same approach to other product pages. However, during the same quarter, the company also released a major product update that fixed several commonly reported bugs, and it was the holiday season when overall product usage typically dips 15%.",
+      "prompt": "Read the argument below. In 2–4 sentences, explain whether the conclusion follows logically from the evidence — and if not, identify the flaw.",
+      "context": "Argument: 'Our customer complaints dropped by 40% after we redesigned the support page on our website. This proves the new design is better at resolving customer issues.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Explain your reasoning..."
+        "placeholder_text": "State whether the conclusion is logically valid and explain why or why not..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies confounding variables (bug fix, seasonal dip) that weaken the causal claim",
-          "[PLACEHOLDER] Proposes specific alternative explanations or hypotheses",
-          "[PLACEHOLDER] Suggests concrete data or methods to isolate the redesign's actual impact"
+          "Identifies that correlation (redesign + fewer complaints) doesn't prove causation",
+          "Suggests alternative explanations (fewer customers, harder to find complaint form, seasonal variation, other changes happened simultaneously)",
+          "Distinguishes between 'fewer complaints' and 'better issue resolution' — complaints could drop for reasons unrelated to resolution quality",
+          "Notes the possibility that the redesign made it harder to complain, not easier to resolve issues"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -377,34 +546,60 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Critique flawed A/B test conclusion: The product team ran an A/B test and concluded that the new checkout flow increases conversions by 12%. Review the test details in the scenario and identify the logical and methodological flaws in their conclusion. Explain what they should have done differently.",
-      "context": "[PLACEHOLDER] Scenario: The product team tested a new checkout flow (Variant B) against the existing flow (Variant A). Test details: (1) Variant A had 10,000 users; Variant B had 1,200 users. (2) The test ran for 3 days, starting on Black Friday. (3) Variant B users were sourced from a retargeting campaign (users who previously abandoned carts). (4) Conversion rate: A = 3.2%, B = 3.58%, reported as a '12% lift.' (5) No statistical significance was reported. The team recommends immediately rolling out Variant B to all users.",
+      "prompt": "Read the scenario and the proposed conclusion. In 2–4 sentences, explain whether the conclusion is justified — and what additional information you would need to be confident in it.",
+      "context": "Scenario: A company tested two versions of its checkout page. Version A (the original) had a 3.2% conversion rate over 4 weeks with 50,000 visitors. Version B (the new design) had a 3.8% conversion rate over 1 week with 5,000 visitors.\n\nConclusion: 'Version B is better. We should switch to it immediately.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Explain your reasoning..."
+        "placeholder_text": "Evaluate the conclusion and explain what's missing..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies sample size imbalance and lack of statistical significance",
-          "[PLACEHOLDER] Recognizes selection bias from retargeting campaign sourcing",
-          "[PLACEHOLDER] Identifies timing bias (Black Friday) and proposes corrective experimental design"
+          "Identifies the sample size disparity (50K vs 5K) as a concern for statistical significance",
+          "Notes the time period difference (4 weeks vs 1 week) — weekly fluctuations, day-of-week effects, or promotions could skew results",
+          "Questions whether the difference (3.2% vs 3.8%) is statistically significant or within normal variation",
+          "Suggests running Version B for a longer period or with a larger sample before concluding",
+          "Considers whether other variables changed between the two periods (marketing campaigns, seasonality, traffic source mix)"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 12,
+        "suspicious_fast_seconds": 25,
         "slow_threshold_seconds": 170
       },
       "variants": []
@@ -421,34 +616,60 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Policy ambiguity analysis: Read the overtime pre-approval policy in the scenario. Identify the ambiguities and logical gaps that could lead to disputes or inconsistent enforcement. For each issue, explain the problem and suggest a specific revision.",
-      "context": "[PLACEHOLDER] Scenario: Company overtime policy states: 'All overtime must be pre-approved by a manager. Employees who work overtime without approval may not be compensated. Emergency situations are exempt from the pre-approval requirement. Overtime is defined as any work beyond 40 hours in a week. Managers should respond to overtime requests within a reasonable timeframe.'",
+      "prompt": "Read the policy and the situation below. In 2–4 sentences, explain whether the action taken was correct according to the rules, and identify any ambiguity in the policy that makes this hard to determine.",
+      "context": "Policy: 'Employees who work more than 8 hours in a single day are entitled to overtime pay at 1.5x their hourly rate. Overtime must be pre-approved by a supervisor.'\n\nSituation: Alex worked 10 hours on Tuesday to meet a client deadline. Alex's supervisor was out sick and unreachable. Alex did not get pre-approval. Alex's manager denied the overtime pay, citing lack of pre-approval.",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Explain your reasoning..."
+        "placeholder_text": "Evaluate the situation against the policy and identify any ambiguity..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies key ambiguities (e.g., 'emergency,' 'reasonable timeframe,' 'may not be compensated')",
-          "[PLACEHOLDER] Explains practical consequences of each ambiguity for employees and managers",
-          "[PLACEHOLDER] Proposes specific, actionable revisions that resolve the identified gaps"
+          "Identifies the tension between the entitlement ('are entitled to') and the pre-approval requirement — these can conflict",
+          "Notes the ambiguity: is pre-approval a condition for receiving pay, or a procedural expectation that doesn't eliminate the entitlement?",
+          "Recognizes the edge case: supervisor unavailability makes compliance with the pre-approval rule impossible",
+          "Considers whether the policy accounts for emergency or unavoidable overtime situations",
+          "Identifies that the policy as written could be interpreted either way — the manager's denial is defensible but not necessarily correct"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []
@@ -465,18 +686,30 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Task dependency chain: Based on the task dependencies in the scenario, what is the earliest position in the sequence at which Task F can be scheduled?",
-      "context": "[PLACEHOLDER] Scenario: A project has 7 tasks (A through G) with the following dependencies: Task A has no dependencies. Task B depends on A. Task C depends on A. Task D depends on B and C. Task E depends on C. Task F depends on D. Task G depends on E and F. Each task takes exactly one time slot. Tasks that share no dependency can run in parallel.",
+      "prompt": "Five tasks (T1–T5) need to be completed. Given the dependency rules, what is the earliest position T4 can occupy in the sequence?",
+      "context": "Dependencies:\n- T1 must be completed before T2.\n- T3 must be completed before T4.\n- T2 must be completed before T5.\n- T1 must be completed before T3.\n- T4 has no other dependencies beyond T3.",
       "options": [
-        { "option_id": "a", "text": "[A] Position 3 (third time slot)" },
-        { "option_id": "b", "text": "[B] Position 4 (fourth time slot)" },
-        { "option_id": "c", "text": "[C] Position 5 (fifth time slot)" },
-        { "option_id": "d", "text": "[D] Position 2 (second time slot)" }
+        {
+          "option_id": "a",
+          "text": "Position 2"
+        },
+        {
+          "option_id": "b",
+          "text": "Position 3"
+        },
+        {
+          "option_id": "c",
+          "text": "Position 4"
+        },
+        {
+          "option_id": "d",
+          "text": "Position 5"
+        }
       ],
       "correct_answer": "b",
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "explanation": "T4 requires T3 to be done first. T3 requires T1 to be done first. So the minimum chain is: T1 → T3 → T4. That puts T4 at position 3 at the earliest. The full valid sequence could be: T1, T3, T4, T2, T5 — this satisfies all dependencies. T4 cannot be earlier than position 3 because it has a dependency chain of length 2 before it.",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
+        "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
       },
       "variants": []

@@ -1,15 +1,27 @@
 {
   "section_id": "section-5-output-validation",
   "name": "Output Validation",
-  "instructions": "You will evaluate 5 outputs — some produced by humans, some by AI. Your task is to identify what is wrong, missing, or misleading in each output. Select ALL issues you find on multi-select questions. Timers are running but hidden — you will receive a warning when time is almost up. You cannot go back to previous questions.",
+  "instructions": "In this section, you will be shown a stated goal and an output that was produced to meet that goal. The outputs may look correct at first glance, but contain issues. For multi-select questions, select ALL issues you can identify. For written questions, explain what's wrong and why it matters. Each question is timed — you will receive a warning before time runs out. You cannot go back to previous questions.",
   "question_count": 5,
   "selection_constraints": {
     "method": "constrained_random",
     "count": 5,
     "rules": [
-      { "field": "type", "value": "multi_select", "min": 2 },
-      { "field": "type", "value": "open_ended", "min": 2 },
-      { "field": "output_source", "value": "ai", "min": 1 }
+      {
+        "field": "type",
+        "value": "multi_select",
+        "min": 2
+      },
+      {
+        "field": "type",
+        "value": "open_ended",
+        "min": 2
+      },
+      {
+        "field": "output_source",
+        "value": "ai",
+        "min": 1
+      }
     ]
   },
   "questions": [
@@ -25,25 +37,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the support ticket leaderboard below. Select ALL issues with how this leaderboard measures team performance.",
-      "context": "[PLACEHOLDER] A team lead created a leaderboard ranking support agents by total tickets closed per week. The leaderboard shows Agent A at #1 with 47 tickets, Agent B at #2 with 38 tickets, and Agent C at #3 with 29 tickets. Agent C has the highest customer satisfaction rating (4.8/5) and handles complex escalations, while Agent A primarily handles password resets and simple FAQs.",
+      "prompt": "A manager asked for a report. Review the goal and the output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Show me how many support tickets each team member closed last month, so I can identify who might need additional help or training.'\n\n**Output produced:** A bar chart showing total tickets closed per team member for last month. The chart is sorted from highest to lowest. The team member with the most closed tickets is highlighted in green, and the one with the fewest is highlighted in red.",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Ranks volume over quality — ticket count ignores resolution complexity" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Does not account for customer satisfaction scores" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Incentivizes cherry-picking easy tickets over handling escalations" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Uses weekly snapshot which may not reflect consistent performance" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Does not weight ticket difficulty or time-to-resolution" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Penalizes agents who mentor or assist teammates (collaborative work not counted)" }
+        {
+          "option_id": "a",
+          "text": "The red/green highlighting frames this as a performance ranking rather than identifying who needs help — it could feel punitive"
+        },
+        {
+          "option_id": "b",
+          "text": "The chart doesn't account for ticket complexity — someone closing fewer but harder tickets may be performing well"
+        },
+        {
+          "option_id": "c",
+          "text": "No comparison to average or expected volume — 'fewest' doesn't mean 'underperforming' without a baseline"
+        },
+        {
+          "option_id": "d",
+          "text": "The chart should use a line graph instead of a bar chart"
+        },
+        {
+          "option_id": "e",
+          "text": "The report doesn't show whether low-closers are new hires, part-time, or on leave — context that directly affects the manager's goal"
+        },
+        {
+          "option_id": "f",
+          "text": "The chart should include tickets opened, not just tickets closed"
+        }
       ],
-      "correct_answers": ["a", "c", "d", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "The red/green framing misaligns with the stated intent of 'identifying who needs help' — it creates a leaderboard instead (a). Raw closure count ignores complexity, which distorts the picture (b). Without a baseline or expected volume, 'fewest' is meaningless (c). Missing context like hire date, hours worked, or leave status makes it impossible to draw the intended conclusions (e). Option (d) is a chart-type preference, not a fitness-for-purpose issue. Option (f) is additional data that might be useful but wasn't part of the stated goal.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -59,25 +94,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the churn analysis summary below. Select ALL issues with the recommendations made in this summary.",
-      "context": "[PLACEHOLDER] A junior analyst wrote a churn summary stating: 'Customer churn increased 12% this quarter. The primary driver is poor onboarding — 68% of churned customers left within 30 days. Recommendation: Replace the entire onboarding team and invest $500K in a new onboarding platform immediately. Additionally, we should offer 50% discounts to all at-risk customers to prevent further churn.'",
+      "prompt": "A team produced a summary document. Review the goal and the output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Summarize last quarter's customer churn so leadership can decide whether to invest in a retention program.'\n\n**Output produced:** A one-page summary stating: 'We lost 340 customers last quarter, representing a 12% churn rate. The majority of cancellations occurred in the first 30 days of subscription. Common reasons cited in exit surveys include pricing (45%), lack of features (30%), and poor support (25%). We recommend investing in a retention program immediately.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] The 12% churn figure lacks a baseline or comparison period" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Recommendation to replace the team is disproportionate — retraining or process review not considered" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Correlation between early churn and onboarding is assumed to be causation" },
-        { "option_id": "d", "text": "[PLACEHOLDER] The churn percentage is calculated incorrectly" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Blanket 50% discount ignores unit economics and may attract wrong customer segment" },
-        { "option_id": "f", "text": "[PLACEHOLDER] No cost-benefit analysis provided for the $500K platform investment" }
+        {
+          "option_id": "a",
+          "text": "The recommendation is premature — the goal was to provide data for leadership to decide, not to make the decision for them"
+        },
+        {
+          "option_id": "b",
+          "text": "No comparison to previous quarters — leadership can't tell if 12% is improving, stable, or worsening"
+        },
+        {
+          "option_id": "c",
+          "text": "The exit survey percentages add up to 100%, suggesting these were forced single-choice — customers may have had multiple reasons"
+        },
+        {
+          "option_id": "d",
+          "text": "12% churn is too high and indicates a serious problem"
+        },
+        {
+          "option_id": "e",
+          "text": "No breakdown of the revenue impact — losing 340 low-value customers is different from losing 340 enterprise accounts"
+        },
+        {
+          "option_id": "f",
+          "text": "The summary should include charts and visualizations"
+        }
       ],
-      "correct_answers": ["b", "c", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e"
+      ],
+      "explanation": "The output makes a recommendation when the goal was to inform a decision — it overstepped (a). No historical comparison makes the 12% figure meaningless as a trend indicator (b). The survey percentages summing to exactly 100% suggests single-select methodology, which may miss multi-factor churn drivers (c). No revenue impact means leadership can't assess the financial case for investment (e). Option (d) is a judgment about the number — whether 12% is 'too high' depends on industry benchmarks not provided. Option (f) is a format preference, not a content gap.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -93,26 +151,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] An AI assistant generated the email migration plan below. Select ALL missing safeguards or issues in this plan.",
-      "context": "[PLACEHOLDER] An AI-generated migration plan for moving 2,000 employees from on-premise Exchange to Microsoft 365 states: 'Phase 1: Create M365 accounts for all users (Week 1). Phase 2: Migrate all mailboxes simultaneously over a weekend (Week 2). Phase 3: Decommission Exchange server (Week 3). Phase 4: Send company-wide email announcing the switch (Week 4). Timeline: 4 weeks total. Budget: $15,000 for licensing.'",
+      "prompt": "An AI tool was used to generate an implementation plan. Review the goal and the AI's output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Create a plan for migrating our company's email system from the current provider to a new one. We have 800 employees across 3 offices. The migration must happen over a holiday weekend to minimize disruption.'\n\n**AI-generated plan:**\n1. Set up accounts for all 800 employees on the new system.\n2. Export all mailbox data (emails, contacts, calendars) from the current system.\n3. Import all data into the new system.\n4. Switch the company's domain to point to the new email provider.\n5. Send an all-staff email announcing the new system is live.\n6. Provide a quick-start guide for employees.\n7. Deactivate the old email system.",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] No pilot group or phased rollout — migrating 2,000 mailboxes simultaneously is high-risk" },
-        { "option_id": "b", "text": "[PLACEHOLDER] No rollback plan if migration fails mid-weekend" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Communication plan comes after decommissioning — users should be notified before migration" },
-        { "option_id": "d", "text": "[PLACEHOLDER] No data backup or verification step before decommissioning the old server" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Budget only covers licensing — no allocation for migration tooling, overtime, or support" },
-        { "option_id": "f", "text": "[PLACEHOLDER] No mention of testing mail flow, calendar sync, or shared mailbox migration" },
-        { "option_id": "g", "text": "[PLACEHOLDER] No user training or documentation planned for the new platform" }
+        {
+          "option_id": "a",
+          "text": "No testing or verification step — the plan goes straight from import to production switch"
+        },
+        {
+          "option_id": "b",
+          "text": "Step 5 sends the announcement via the new system — but employees haven't been told how to access it yet (step 6 comes after)"
+        },
+        {
+          "option_id": "c",
+          "text": "No rollback plan — if the migration fails during the holiday weekend, there's no way to revert"
+        },
+        {
+          "option_id": "d",
+          "text": "The plan should use a phased approach instead of migrating everyone at once"
+        },
+        {
+          "option_id": "e",
+          "text": "No mention of verifying data integrity after import — emails, contacts, or calendar items could be missing or corrupted"
+        },
+        {
+          "option_id": "f",
+          "text": "Step 7 deactivates the old system immediately — no overlap period to catch anything missed in migration"
+        },
+        {
+          "option_id": "g",
+          "text": "No communication before the migration — employees will arrive after the weekend to a system they weren't warned about"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "No testing after import means going live blind (a). The announcement email goes out before the how-to guide — sequencing error (b). No rollback for a holiday weekend migration is extremely risky (c). No data verification could mean data loss goes undetected (e). Immediate deactivation with no overlap period is reckless (f). No advance communication means 800 people are surprised (g). Option (d) is a valid strategic alternative, but the goal explicitly states 'over a holiday weekend' — the plan follows the stated constraint. The issue isn't the approach, it's the missing safeguards within that approach.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -128,25 +214,49 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the vendor comparison table below. Select ALL missing criteria or issues with this evaluation.",
-      "context": "[PLACEHOLDER] A procurement analyst created a vendor comparison for CRM software with three vendors scored on: Price (Vendor A: $50/user, Vendor B: $75/user, Vendor C: $60/user), Features (A: 8/10, B: 9/10, C: 7/10), and UI Rating (A: 4/5, B: 3/5, C: 5/5). The analyst recommends Vendor A as the clear winner based on lowest price and good feature score.",
+      "prompt": "An analyst produced a comparison to inform a vendor selection decision. Review the goal and the output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Compare three catering vendors for our annual company event (200 people) and recommend the best option based on cost, quality, and reliability.'\n\n**Output produced:** A table showing:\n| Vendor | Cost per person | Online rating |\n|--------|----------------|---------------|\n| Vendor A | $45 | 4.2/5 |\n| Vendor B | $38 | 4.5/5 |\n| Vendor C | $52 | 4.8/5 |\n\nRecommendation: 'Vendor B offers the best combination of low cost and high rating.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] No integration or API compatibility criteria — critical for CRM adoption" },
-        { "option_id": "b", "text": "[PLACEHOLDER] No data migration cost or effort assessment included" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Missing vendor support/SLA comparison (uptime guarantees, response times)" },
-        { "option_id": "d", "text": "[PLACEHOLDER] No security or compliance evaluation (SOC2, GDPR, data residency)" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Feature scoring is subjective (8/10) without defined evaluation criteria" },
-        { "option_id": "f", "text": "[PLACEHOLDER] The comparison uses different scales ($/user vs. /10 vs. /5) without normalization" }
+        {
+          "option_id": "a",
+          "text": "Online rating is a proxy for quality, not a direct measure — it doesn't tell you about the type of events they've catered"
+        },
+        {
+          "option_id": "b",
+          "text": "Reliability was a stated criterion but is completely absent from the comparison"
+        },
+        {
+          "option_id": "c",
+          "text": "No information about what's included in the per-person cost — some vendors may include setup, staff, and equipment while others don't"
+        },
+        {
+          "option_id": "d",
+          "text": "The table should include more than three vendors for a thorough comparison"
+        },
+        {
+          "option_id": "e",
+          "text": "The recommendation doesn't justify why cost and rating are weighted equally — the goal didn't prioritize one over the other"
+        },
+        {
+          "option_id": "f",
+          "text": "No mention of whether any vendor has capacity for 200 people or availability on the event date"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e",
+        "f"
+      ],
+      "explanation": "Online ratings don't equal quality for a specific use case (a). Reliability was explicitly requested but not measured (b). Cost comparison without scope of service is misleading (c). The recommendation implicitly weights cost and quality but doesn't explain why — the original goal listed three criteria and the analysis should address how they're balanced (e). Capacity and availability are prerequisites that weren't verified (f). Option (d) is a preference — three vendors is a reasonable shortlist for a recommendation.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -162,26 +272,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] An AI assistant generated the warehouse budget proposal below. Select ALL errors or issues in this budget.",
-      "context": "[PLACEHOLDER] An AI-generated warehouse expansion budget reads: 'Total Budget: $2.4M. Breakdown — Building lease (5-year term): $800K (listed under Operating Expenses). Racking systems and forklifts: $600K (listed under Operating Expenses). WMS software license (perpetual): $200K (listed under Capital Expenditure). Temporary staffing for peak season: $300K (listed under Capital Expenditure). Insurance and utilities: $500K (listed under Capital Expenditure). Note: All items are tax-deductible in Year 1.'",
+      "prompt": "An AI assistant was asked to create a budget estimate. Review the goal and the AI's output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Estimate the annual cost of opening a second warehouse location, so we can include it in next year's budget proposal.'\n\n**AI-generated estimate:**\n- Lease: $180,000/year (based on average industrial lease rates)\n- Staffing: $520,000/year (10 warehouse workers at $52K average)\n- Utilities: $36,000/year\n- Insurance: $24,000/year\n- Equipment: $150,000 (one-time purchase)\n- **Total annual cost: $910,000**\n\nNote: 'Figures are based on national averages and may vary by region.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Building lease is classified as OpEx but a 5-year term may require capitalization under ASC 842" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Racking systems and forklifts are capital assets, not operating expenses" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Perpetual software license is correctly CapEx but should be amortized, not expensed in Year 1" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Temporary staffing is an operating expense, not capital expenditure" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Insurance and utilities are operating expenses, not capital expenditure" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Claim that all items are tax-deductible in Year 1 is incorrect — CapEx is depreciated over time" },
-        { "option_id": "g", "text": "[PLACEHOLDER] No contingency budget or variance allowance included" }
+        {
+          "option_id": "a",
+          "text": "The total incorrectly adds the one-time equipment cost ($150K) into the annual figure — conflating capital expenditure with operating expenses"
+        },
+        {
+          "option_id": "b",
+          "text": "Using national averages for a location-specific decision is too imprecise — the budget should use the actual target region's costs"
+        },
+        {
+          "option_id": "c",
+          "text": "No mention of management or supervisory staff — 10 warehouse workers with no oversight is unrealistic"
+        },
+        {
+          "option_id": "d",
+          "text": "The estimate is too high — warehouse operations don't cost this much"
+        },
+        {
+          "option_id": "e",
+          "text": "Missing ongoing costs like maintenance, supplies, security, and technology/systems for the new location"
+        },
+        {
+          "option_id": "f",
+          "text": "No ramp-up timeline — the first year likely has partial costs as the warehouse isn't fully operational from day one"
+        },
+        {
+          "option_id": "g",
+          "text": "Staffing should include benefits and payroll taxes on top of salary — $52K per worker likely understates the true cost"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "The one-time equipment cost is added to annual costs — a budgeting error (a). National averages are inappropriate for a specific location decision (b). No supervisory staff is a structural gap (c). Missing common operational costs like maintenance, security, and systems (e). No ramp-up consideration means the first-year estimate is likely wrong (f). Salary without total compensation (benefits, taxes) understates staffing cost by 25–40% typically (g). Option (d) is a subjective judgment without evidence — the estimate could be reasonable depending on location and scale.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -197,38 +335,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the training completion report below. Identify what is wrong, missing, or misleading. Explain why the conclusions drawn are problematic.",
-      "context": "[PLACEHOLDER] An HR manager's quarterly report states: 'Training Compliance Update — 94% of employees completed the mandatory cybersecurity training module by the deadline. This represents a 12% improvement over last quarter. Conclusion: Our workforce is now well-prepared to handle phishing attacks and social engineering threats. Recommendation: No further cybersecurity investment needed this fiscal year.' The report includes a bar chart showing completion rates by department.",
+      "prompt": "Review the goal and the output below. Explain what's wrong with this output and why it doesn't actually accomplish the stated goal.",
+      "context": "**Goal:** 'Create a training completion report so we can confirm all employees in the customer-facing team have completed the mandatory compliance training before the regulatory deadline.'\n\n**Output produced:** A spreadsheet showing:\n- Column A: Employee name\n- Column B: Department\n- Column C: Training module name\n- Column D: Completion date\n\nThe spreadsheet contains 142 rows of completed training records. A note at the top says: '142 training completions recorded as of today.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+        "placeholder_text": "Explain what issues exist in this output and why they prevent it from meeting the stated goal..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that completion does not equal comprehension or competence",
-          "[PLACEHOLDER] Notes the absence of assessment scores or knowledge verification",
-          "[PLACEHOLDER] Recognizes that training completion does not guarantee behavioral change",
-          "[PLACEHOLDER] Questions the leap from completion rate to 'no further investment needed'",
-          "[PLACEHOLDER] Identifies missing metrics such as phishing simulation results or incident rates",
-          "[PLACEHOLDER] Notes that 6% non-completion is unaddressed and may represent high-risk individuals"
+          "Identifies that completions ≠ people — 142 rows could be fewer employees who completed multiple modules",
+          "Notes the report shows who DID complete, but doesn't show who DIDN'T — the goal is to confirm ALL employees have completed",
+          "Recognizes there's no total headcount for the customer-facing team to compare against",
+          "Points out there's no filter for the specific mandatory compliance module vs. other training",
+          "Notes the deadline isn't referenced — no way to see if completions were before or after the cutoff",
+          "Identifies that the report doesn't answer the yes/no question the goal implies: 'Are we compliant?'"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -244,38 +406,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] An AI assistant produced the survey analysis below. Identify all flaws in the methodology, conclusions, and recommendations.",
-      "context": "[PLACEHOLDER] An AI-generated analysis of an employee engagement survey reads: 'Executive Summary: Employee satisfaction is at an all-time high. Key findings — 100% of respondents said they enjoy their work (4 responses received out of 350 employees). 75% prefer remote work (3 out of 4 respondents). Recommendation: Transition the entire company to permanent remote work immediately. Statistical confidence: High (p < 0.05). The data clearly shows our workforce is thriving under current conditions.'",
+      "prompt": "An AI assistant was asked to analyze data and produced the output below. Explain what's wrong with this analysis and why the conclusion may be misleading.",
+      "context": "**Goal:** 'Analyze our employee satisfaction survey results and tell us which department has the biggest morale problem so we can prioritize intervention.'\n\n**AI-generated analysis:**\n'After analyzing the survey results, the Marketing department has the lowest average satisfaction score at 3.1 out of 5. All other departments scored between 3.6 and 4.2. Marketing's score is 0.5 points below the next lowest department.\n\nRecommendation: Focus intervention efforts on the Marketing department immediately.'\n\n**Additional context you can see (the AI had access to this data):**\n- Marketing department: 4 employees responded (out of 6 total)\n- Engineering: 45 employees responded (out of 50 total)\n- Sales: 38 employees responded (out of 40 total)\n- Operations: 30 employees responded (out of 32 total)",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+        "placeholder_text": "Explain what's wrong with this analysis and why the conclusion may be misleading..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies catastrophically low response rate (4/350 = 1.1%) making results meaningless",
-          "[PLACEHOLDER] Notes that the p-value claim is fabricated or impossible with n=4",
-          "[PLACEHOLDER] Recognizes severe self-selection bias — only highly engaged employees likely responded",
-          "[PLACEHOLDER] Questions the leap from 4 responses to company-wide policy recommendation",
-          "[PLACEHOLDER] Identifies that 'all-time high' claim cannot be supported without historical comparison data",
-          "[PLACEHOLDER] Notes the absence of demographic breakdown, confidence intervals, or margin of error"
+          "Identifies the critical sample size issue — 4 responses is far too few to draw reliable conclusions",
+          "Notes that one or two outlier responses in a group of 4 would dramatically skew the average",
+          "Points out that the AI didn't mention response counts or sample sizes in its analysis — a major omission",
+          "Questions whether the 2 non-respondents in Marketing might have the lowest satisfaction (response bias)",
+          "Suggests the recommendation is premature given the unreliable data",
+          "Notes that a proper comparison requires acknowledging confidence levels or margin of error across different-sized groups"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -291,37 +477,61 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the quarterly performance table below. Identify what is misleading about the conclusions drawn from this data.",
-      "context": "[PLACEHOLDER] A sales manager presented the following table to the board: 'Q3 Performance — Top Regions by Revenue: North: $4.2M (+18% YoY), West: $3.8M (+22% YoY), South: $2.9M (+15% YoY). Conclusion: All regions are performing excellently. The sales team deserves bonuses across the board. We should expand headcount in all three regions.' No cost, margin, or profitability data is included. The table only shows revenue, not profit. Headcount and CAC data are absent.",
+      "prompt": "Review the goal and the output below. Explain what's wrong with this output and why it fails to meet the stated goal.",
+      "context": "**Goal:** 'Identify which of our 5 product lines is the most profitable so we can decide where to increase investment.'\n\n**Output produced:** A table showing:\n| Product Line | Total Revenue (Last Year) |\n|-------------|-------------------------|\n| Product A | $2.4M |\n| Product B | $1.8M |\n| Product C | $3.1M |\n| Product D | $950K |\n| Product E | $2.7M |\n\nConclusion: 'Product C is the most profitable product line at $3.1M.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+        "placeholder_text": "Explain what issues exist in this output and why they prevent it from meeting the stated goal..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that revenue growth does not equal profitability — margins could be shrinking",
-          "[PLACEHOLDER] Notes missing cost of sales, CAC, or expense data needed to evaluate true performance",
-          "[PLACEHOLDER] Recognizes that bonus and expansion decisions require profit-based metrics, not just top-line revenue",
-          "[PLACEHOLDER] Questions whether YoY growth percentages account for market growth or inflation",
-          "[PLACEHOLDER] Identifies that only 3 regions are shown — other regions may be underperforming"
+          "Identifies the fundamental flaw: revenue is not the same as profitability — costs are entirely missing",
+          "Notes that the highest-revenue product could have the lowest margin (e.g., high production or delivery costs)",
+          "Points out that the conclusion equates revenue with profit, which is a conceptual error not just a data gap",
+          "Suggests what data IS needed: cost of goods, operating expenses, margins per product line",
+          "May note that the investment decision also needs growth trends, market potential, or capacity constraints — not just a snapshot"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -337,26 +547,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] An AI assistant drafted the work-from-home policy below. Select ALL missing elements or issues in this policy.",
-      "context": "[PLACEHOLDER] An AI-generated WFH policy reads: 'Effective immediately, all employees may work from home up to 3 days per week. Employees must be available during core hours (10am–3pm). All WFH requests are automatically approved. Equipment: Employees are responsible for their own internet and workspace setup. Performance will be measured by output, not hours logged. This policy applies to all employees company-wide.'",
+      "prompt": "An AI was asked to draft a policy. Review the goal and the AI's output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Draft a work-from-home policy for our company. We have 200 employees across engineering, sales, operations, and support. We want flexibility but need to ensure collaboration and accountability.'\n\n**AI-generated policy:**\n'All employees may work from home up to 3 days per week. Employees must be available online during core hours (10am–3pm). Managers may require in-office attendance for team meetings. Performance will be evaluated based on output, not hours logged. Employees must have a reliable internet connection and a dedicated workspace at home.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] No exception handling for roles requiring physical presence (warehouse, lab, reception)" },
-        { "option_id": "b", "text": "[PLACEHOLDER] No mention of data security requirements for remote work (VPN, secure networks)" },
-        { "option_id": "c", "text": "[PLACEHOLDER] No manager approval or team coordination mechanism — 'automatically approved' ignores coverage needs" },
-        { "option_id": "d", "text": "[PLACEHOLDER] No ergonomic or equipment stipend policy — may create liability issues" },
-        { "option_id": "e", "text": "[PLACEHOLDER] No guidance on time zones for distributed teams — 'core hours' undefined across regions" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Missing trial period or review mechanism to assess policy effectiveness" },
-        { "option_id": "g", "text": "[PLACEHOLDER] No mention of tax or legal implications for employees working from different states/countries" }
+        {
+          "option_id": "a",
+          "text": "No timezone specified for core hours — problematic if the company has employees in different timezones"
+        },
+        {
+          "option_id": "b",
+          "text": "No distinction between roles — operations and support may need more in-office presence than engineering"
+        },
+        {
+          "option_id": "c",
+          "text": "The policy should require employees to work from the office 5 days a week for better collaboration"
+        },
+        {
+          "option_id": "d",
+          "text": "'Output-based evaluation' is stated but no framework exists for measuring it — this could create inconsistency across managers"
+        },
+        {
+          "option_id": "e",
+          "text": "No mention of how to handle days when someone is required in-office but has already scheduled their WFH days"
+        },
+        {
+          "option_id": "f",
+          "text": "No mention of equipment, ergonomics, or whether the company provides anything for the home workspace"
+        },
+        {
+          "option_id": "g",
+          "text": "No process for requesting exceptions — what if someone needs more than 3 WFH days due to a medical condition or caregiving?"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "Timezone ambiguity creates confusion for distributed teams (a). One-size-fits-all across very different roles ignores operational reality (b). Output-based evaluation without a framework is unenforceable and subjective (d). Conflict between manager-required in-office days and pre-planned WFH is unaddressed (e). 'Dedicated workspace' is required but no support is offered (f). No exception process excludes legitimate needs like disability or caregiving accommodations (g). Option (c) contradicts the stated goal of flexibility — it's an opinion, not a gap.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -372,38 +610,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] An AI assistant created the onboarding timeline below. Identify all issues with the plan's structure, assumptions, and success metrics.",
-      "context": "[PLACEHOLDER] An AI-generated new hire onboarding plan reads: 'Onboarding Timeline — Week 1: IT setup and HR paperwork. Week 2: Shadow a senior team member. Weeks 3–4: Begin independent work with daily check-ins. Success Metric: 30-day satisfaction survey score above 4/5. Timeline: 4 weeks. Budget: $0 (all internal resources). Note: This plan works for all roles and departments. After the 8-week probation period, the onboarding is considered complete if the survey score is met.'",
+      "prompt": "An AI assistant produced the following project timeline. Explain what's wrong with it and what risks the flaws create.",
+      "context": "**Goal:** 'Create a timeline for launching our new customer onboarding program. We need it live in 8 weeks. The program includes training materials, a welcome email sequence, an onboarding checklist for account managers, and a feedback survey sent 30 days after onboarding.'\n\n**AI-generated timeline:**\n- Week 1–2: Write training materials and welcome email sequence.\n- Week 3–4: Design onboarding checklist and feedback survey.\n- Week 5–6: Review all materials with stakeholders and incorporate feedback.\n- Week 7: Pilot with 5 new customers.\n- Week 8: Launch to all new customers.\n\nNote: 'All tasks can be completed within the 8-week window.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe what is wrong, missing, or misleading in this output..."
+        "placeholder_text": "Explain what issues exist in this timeline and what risks they create..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies the mismatch between 4-week plan and 8-week probation — 4 weeks unaccounted for",
-          "[PLACEHOLDER] Notes that a 30-day survey measures satisfaction, not competence or productivity",
-          "[PLACEHOLDER] Recognizes that a one-size-fits-all plan ignores role-specific onboarding needs",
-          "[PLACEHOLDER] Questions the $0 budget assumption — senior team member shadowing has opportunity cost",
-          "[PLACEHOLDER] Identifies missing performance milestones or competency checkpoints throughout the timeline",
-          "[PLACEHOLDER] Notes absence of manager accountability, mentorship assignment, or escalation path for struggling hires"
+          "Identifies that the 30-day feedback survey can't be evaluated within 8 weeks — results won't exist until at least week 11",
+          "Notes that the pilot (week 7) leaves only 1 week to incorporate learnings before full launch — effectively no buffer for iteration",
+          "Points out that account manager training is not included — the checklist exists but nobody is trained on using it",
+          "Recognizes that the timeline is entirely sequential with no parallel work — writing and designing could overlap",
+          "Notes there's no buffer or contingency — one stakeholder delay in week 5–6 cascades everything",
+          "Identifies that the welcome email sequence may need technical setup (email platform, triggers, testing) which isn't accounted for"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     }

@@ -1,14 +1,22 @@
 {
   "section_id": "section-3-critical-observation",
   "name": "Critical Observation",
-  "instructions": "You will answer 6 critical observation questions. Some present a scenario and ask you to identify all the issues; others ask you to write your analysis. Select ALL answers you believe are correct on multi-select questions. Timers are running but hidden \u2014 you will receive a warning when time is almost up. You cannot go back to previous questions.",
+  "instructions": "You will be presented with business requirements, project briefs, or specifications that appear complete at first glance — but contain gaps, contradictions, or ambiguities. For multi-select questions, select ALL issues you can identify. For written questions, list the questions you would ask before starting work. Each question is timed — you will receive a warning before time runs out. You cannot go back to previous questions.",
   "question_count": 6,
   "selection_constraints": {
     "method": "constrained_random",
     "count": 6,
     "rules": [
-      { "field": "type", "value": "multi_select", "min": 3 },
-      { "field": "type", "value": "open_ended", "min": 2 }
+      {
+        "field": "type",
+        "value": "multi_select",
+        "min": 3
+      },
+      {
+        "field": "type",
+        "value": "open_ended",
+        "min": 2
+      }
     ]
   },
   "questions": [
@@ -23,25 +31,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the order confirmation and approval workflow described below. Identify ALL issues, gaps, or contradictions present in the process.",
-      "context": "[PLACEHOLDER] Scenario: A company uses an automated order confirmation system. When a customer places an order over $500, the system sends an immediate confirmation email stating the order is approved. However, orders over $500 also require a manager's manual approval before fulfillment. The confirmation email contains a delivery date estimate. The approval process takes 1\u20133 business days. There is no follow-up communication if the order is rejected after confirmation.",
+      "prompt": "Review the following requirement and select ALL issues you can identify.",
+      "context": "Requirement: 'When a customer places an order, send them a confirmation email immediately. If the order total exceeds $500, it must be manually approved by a manager before processing. All orders should be shipped within 24 hours.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: The order confirmation email states the order is approved before manager approval has occurred" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: The delivery date estimate is provided before the approval delay is factored in" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: The system font used in confirmation emails is not brand-compliant" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: There is no communication path for notifying the customer if the order is rejected" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: The 1\u20133 business day approval window contradicts the immediate confirmation of approval" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: The order confirmation email does not mention the pending approval requirement" }
+        {
+          "option_id": "a",
+          "text": "The confirmation email is sent before manager approval — the customer may think the order is confirmed when it isn't"
+        },
+        {
+          "option_id": "b",
+          "text": "No definition of what happens if the manager doesn't approve in time to meet the 24-hour shipping window"
+        },
+        {
+          "option_id": "c",
+          "text": "$500 is too low a threshold for manual approval"
+        },
+        {
+          "option_id": "d",
+          "text": "No mention of what the confirmation email should contain"
+        },
+        {
+          "option_id": "e",
+          "text": "The 24-hour shipping commitment conflicts with the manual approval step — approval could take longer than 24 hours"
+        },
+        {
+          "option_id": "f",
+          "text": "No specification for what happens if the customer's email address is invalid"
+        }
       ],
-      "correct_answers": ["a", "b", "d", "e"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "e",
+        "f"
+      ],
+      "explanation": "The immediate confirmation before approval is misleading (a). There's no timeout or escalation for manager approval (b). The 24-hour shipping guarantee contradicts the open-ended approval process (e). Invalid email handling is missing (f). Option (c) is a business judgment, not a specification gap. Option (d) is a nice-to-have detail, not a functional issue — the requirement says 'confirmation email' which implies standard content.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -56,25 +87,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the employee scheduling system described below. Identify ALL issues, gaps, or contradictions in the design.",
-      "context": "[PLACEHOLDER] Scenario: A retail store uses an automated scheduling system. Employees submit availability weekly by Thursday. The system generates the next week's schedule on Friday and posts it. Employees can swap shifts with any colleague without manager approval. The system enforces a maximum of 40 hours per week per employee. However, shift swaps are not validated against the 40-hour cap. Part-time employees are in the same scheduling pool as full-time employees despite having different hour limits.",
+      "prompt": "Review the following requirement and select ALL issues you can identify.",
+      "context": "Requirement: 'The employee scheduling system should allow managers to create weekly schedules. Employees can request time off, which managers can approve or deny. The system should prevent scheduling conflicts. Schedules are finalized every Friday for the following week.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: Shift swaps bypass the 40-hour weekly maximum enforcement" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: The schedule background color is not configurable per department" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: Part-time and full-time employees share a scheduling pool without differentiated hour caps" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: There is no manager oversight on shift swaps that could create compliance issues" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: One-day turnaround between availability deadline and schedule posting leaves no time for conflict resolution" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: The system does not account for employees who fail to submit availability by the Thursday deadline" }
+        {
+          "option_id": "a",
+          "text": "No definition of what constitutes a 'scheduling conflict'"
+        },
+        {
+          "option_id": "b",
+          "text": "No deadline for when time-off requests must be submitted relative to the Friday finalization"
+        },
+        {
+          "option_id": "c",
+          "text": "Weekly schedules are too rigid — some businesses need daily flexibility"
+        },
+        {
+          "option_id": "d",
+          "text": "No mention of what happens if a manager is unavailable to approve a request before Friday"
+        },
+        {
+          "option_id": "e",
+          "text": "No specification for how to handle schedule changes after finalization (e.g., sick calls, emergencies)"
+        },
+        {
+          "option_id": "f",
+          "text": "No mention of notification when a time-off request is approved or denied"
+        }
       ],
-      "correct_answers": ["a", "c", "d", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "d",
+        "e"
+      ],
+      "explanation": "What counts as a conflict is undefined — same time? same role? same department? (a). No request deadline creates chaos near Friday (b). No fallback for unavailable managers creates bottlenecks (d). Post-finalization changes are inevitable and unaddressed (e). Option (c) is a design opinion, not a gap. Option (f) is a reasonable UX concern but not a functional specification issue — the core workflow is intact without it.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -89,25 +143,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the customer satisfaction survey process described below. Identify ALL issues, gaps, or contradictions in the approach.",
-      "context": "[PLACEHOLDER] Scenario: A SaaS company sends a satisfaction survey to all customers 24 hours after they contact support. The survey asks customers to rate their experience on a 1\u20135 scale and includes an open comment box. Results are averaged monthly and reported to leadership. The survey is only sent via email. Customers who contact support multiple times in a week receive multiple surveys. The survey does not distinguish between resolved and unresolved tickets. Response rates hover around 12%.",
+      "prompt": "Review the following requirement and select ALL issues you can identify.",
+      "context": "Requirement: 'Create a customer satisfaction survey that is sent after every completed service call. The survey should use a 1–5 star rating. Results should be shared with the service team weekly. Customers who rate 1 or 2 stars should receive a follow-up call within 24 hours.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: Multiple surveys sent to repeat contacts creates survey fatigue and skews data" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: No distinction between resolved and unresolved tickets makes the satisfaction data unreliable" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: The survey button color does not match the company brand guidelines" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Email-only distribution excludes customers who prefer other communication channels" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: A 12% response rate introduces significant non-response bias into the monthly averages" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: Monthly averaging obscures trends and spikes in dissatisfaction that require immediate action" }
+        {
+          "option_id": "a",
+          "text": "No definition of what 'completed' means — does the customer confirm completion, or does the agent close the ticket?"
+        },
+        {
+          "option_id": "b",
+          "text": "A 1–5 star rating is too simplistic — should use a 1–10 scale"
+        },
+        {
+          "option_id": "c",
+          "text": "No mention of who makes the follow-up call or what they should say"
+        },
+        {
+          "option_id": "d",
+          "text": "No handling for customers who receive multiple surveys in a short period (e.g., frequent callers)"
+        },
+        {
+          "option_id": "e",
+          "text": "24-hour follow-up commitment doesn't account for weekends or holidays"
+        },
+        {
+          "option_id": "f",
+          "text": "No specification for how long the customer has to respond to the survey before the data is considered stale"
+        }
       ],
-      "correct_answers": ["a", "b", "d", "e"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "c",
+        "d",
+        "e"
+      ],
+      "explanation": "The trigger for sending the survey is ambiguous (a). The follow-up call has no owner or script guidance (c). Survey fatigue for frequent callers is unaddressed (d). The 24-hour window ignores non-business days (e). Option (b) is an opinion about scale design, not a gap. Option (f) is a data quality concern but not a functional specification gap — surveys are commonly left open-ended.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -122,26 +199,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the automated invoice processing workflow described below. Identify ALL issues, gaps, or contradictions in the system.",
-      "context": "[PLACEHOLDER] Scenario: A company uses an automated invoice processing system. Invoices received via email are scanned by OCR and matched against purchase orders. Matched invoices are auto-approved if under $10,000. Invoices over $10,000 require manual review. The OCR system has a 94% accuracy rate. Duplicate invoice numbers are flagged, but invoices from different vendors with the same amount are not cross-checked. The system processes invoices in batch every 4 hours. Payment terms start from the invoice date, not the processing date. There is no escalation path for invoices that fail OCR parsing.",
+      "prompt": "Review the following project brief and select ALL issues you can identify.",
+      "context": "Project brief: 'We need an automated system to process incoming invoices. Vendors email invoices as PDF attachments. The system should extract the key fields (vendor name, amount, due date), match them to existing purchase orders, and route them to the appropriate department head for approval. Approved invoices are sent to the finance team for payment. The system must process invoices within 4 hours of receipt.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: 94% OCR accuracy means 6% of invoices may have incorrect data auto-approved under $10,000" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: No escalation path for OCR parse failures creates a black hole for unprocessable invoices" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: 4-hour batch processing introduces delays that could cause payment term violations" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Payment terms starting from invoice date rather than processing date disadvantages the company" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: Same-amount invoices from different vendors are not cross-checked, enabling potential fraud" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: No validation step between OCR output and auto-approval for invoices under $10,000" },
-        { "option_id": "g", "text": "[PLACEHOLDER] Issue: The invoice PDF rendering quality could be improved for archival purposes" }
+        {
+          "option_id": "a",
+          "text": "No specification for how to handle invoices that don't match any existing purchase order"
+        },
+        {
+          "option_id": "b",
+          "text": "No mention of what happens when invoices arrive in formats other than PDF (e.g., images, Word docs)"
+        },
+        {
+          "option_id": "c",
+          "text": "No process for handling duplicate invoices from the same vendor"
+        },
+        {
+          "option_id": "d",
+          "text": "The 4-hour processing window includes human approval — which the system can't control"
+        },
+        {
+          "option_id": "e",
+          "text": "No specification for what 'appropriate department head' means — how is routing determined?"
+        },
+        {
+          "option_id": "f",
+          "text": "PDF extraction is unreliable — this approach won't work"
+        },
+        {
+          "option_id": "g",
+          "text": "No mention of handling partial matches (e.g., amount on invoice differs from purchase order)"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "g"
+      ],
+      "explanation": "Unmatched invoices need an exception path (a). Non-PDF formats are likely in practice (b). Duplicate detection is critical for financial systems (c). The 4-hour SLA includes a human step the system can't guarantee (d). Routing logic is unspecified (e). Partial matches (amount discrepancies) are extremely common and need a tolerance or escalation rule (g). Option (f) is a blanket technology judgment, not a specification issue — PDF extraction is a known capability with limitations that can be designed around.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -156,26 +261,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the meeting room reservation system described below. Identify ALL issues, gaps, or contradictions in the design.",
-      "context": "[PLACEHOLDER] Scenario: A corporate office uses an online meeting room reservation system. Employees can book rooms up to 2 weeks in advance. Bookings are first-come, first-served with no priority levels. Recurring meetings can be set up for up to 6 months. The system allows double-booking if one reservation is marked as 'tentative.' Rooms are auto-released if no one checks in within 15 minutes, but there is no check-in mechanism integrated into the system. Cancelled meetings do not automatically free the room in the calendar. VIP executives and interns have identical booking privileges.",
+      "prompt": "Review the following requirement and select ALL issues you can identify.",
+      "context": "Requirement: 'Build a system where company employees can reserve meeting rooms. Rooms are available from 8am to 6pm. Bookings can be made up to 2 weeks in advance. If a room is not checked into within 10 minutes of the reservation start time, the booking is automatically cancelled. Recurring meetings should be supported.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: Double-booking allowed for tentative reservations creates scheduling conflicts" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: Auto-release after 15 minutes is unenforceable without an integrated check-in mechanism" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: Cancelled meetings not auto-freeing rooms creates phantom bookings that waste space" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Recurring meetings for 6 months with a 2-week booking window creates a policy contradiction" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: No priority levels means critical client meetings compete equally with informal gatherings" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: No mechanism to handle conflicts when a tentative booking becomes confirmed against an existing booking" },
-        { "option_id": "g", "text": "[PLACEHOLDER] Issue: The room listing page should display floor plans for better navigation" }
+        {
+          "option_id": "a",
+          "text": "No definition of what 'checked in' means — physical sensor, button press, or manual confirmation?"
+        },
+        {
+          "option_id": "b",
+          "text": "8am to 6pm doesn't specify a timezone — problematic if the company has multiple offices"
+        },
+        {
+          "option_id": "c",
+          "text": "No mention of maximum booking duration — someone could block a room for the entire day"
+        },
+        {
+          "option_id": "d",
+          "text": "Recurring meetings with the auto-cancel rule could create problems — a recurring booking could be cancelled every week if the organizer is a few minutes late"
+        },
+        {
+          "option_id": "e",
+          "text": "No specification for who can cancel or modify someone else's booking"
+        },
+        {
+          "option_id": "f",
+          "text": "2 weeks in advance is too short for long-term planning"
+        },
+        {
+          "option_id": "g",
+          "text": "No mention of what happens when a recurring booking conflicts with a one-time booking — which has priority?"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "g"
+      ],
+      "explanation": "Check-in mechanism is undefined (a). Timezone ambiguity matters for multi-office companies (b). No max duration allows room hoarding (c). Auto-cancel + recurring is a problematic combination (d). Booking modification permissions are missing (e). Priority between recurring and one-time bookings must be defined (g). Option (f) is a business preference, not a specification gap.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -190,25 +323,48 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the product return policy described below. Identify ALL issues, gaps, or contradictions in the policy.",
-      "context": "[PLACEHOLDER] Scenario: An online retailer offers a 30-day return policy. Customers must initiate returns through the website portal. The portal requires uploading a photo of the item. Refunds are processed within 5\u20137 business days after the item is received at the warehouse. The policy states 'all items are eligible for return' but the FAQ page lists electronics and perishables as non-returnable. Return shipping is free for defective items, but the system does not ask the reason for the return until after the shipping label is generated. Items on clearance are marked as 'final sale' only on the product page, not at checkout.",
+      "prompt": "Review the following requirement and select ALL issues you can identify.",
+      "context": "Requirement: 'Customers can return any product within 30 days of purchase for a full refund. Returns must include the original receipt. Refunds are processed to the original payment method within 5 business days. Items must be in their original packaging.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: The return shipping label font size is too small to scan at some facilities" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: Contradiction between 'all items eligible' policy and FAQ exclusions for electronics and perishables" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: Return reason collected after label generation prevents conditional free shipping for defective items" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Clearance 'final sale' marking only on product page, not at checkout, creates disputes" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: Photo upload requirement may prevent returns for items with non-visible defects" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: No mechanism to validate that the returned item matches the order before processing refund" }
+        {
+          "option_id": "a",
+          "text": "No mention of how to handle returns when the original payment method is no longer valid (e.g., expired card, closed account)"
+        },
+        {
+          "option_id": "b",
+          "text": "The policy should offer exchanges, not just refunds"
+        },
+        {
+          "option_id": "c",
+          "text": "No exception handling for defective products — should a defective item still require original packaging?"
+        },
+        {
+          "option_id": "d",
+          "text": "No specification for whether the 30-day window is from purchase date or delivery date"
+        },
+        {
+          "option_id": "e",
+          "text": "'Original receipt' is ambiguous — does a digital receipt or bank statement count?"
+        },
+        {
+          "option_id": "f",
+          "text": "5 business days is too slow for refund processing"
+        }
       ],
-      "correct_answers": ["b", "c", "d", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "c",
+        "d",
+        "e"
+      ],
+      "explanation": "Invalid original payment method is a common edge case (a). Defective products shouldn't require original packaging — this creates a contradiction in the policy (c). Purchase date vs. delivery date matters significantly for shipped items (d). 'Original receipt' needs clarification for digital-first customers (e). Option (b) is a feature suggestion, not a gap. Option (f) is a subjective judgment — 5 business days is industry-standard.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 5,
-        "slow_threshold_seconds": 80
+        "suspicious_fast_seconds": 10,
+        "slow_threshold_seconds": 85
       },
       "variants": []
     },
@@ -223,26 +379,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the automated hiring pipeline described below. Identify ALL issues, gaps, or contradictions in the process.",
-      "context": "[PLACEHOLDER] Scenario: A tech company uses an automated hiring pipeline. Resumes are parsed by an AI system that scores candidates 0\u2013100 based on keyword matching. Candidates scoring above 70 are auto-invited to a coding assessment. The coding assessment is timed at 90 minutes and auto-graded. Candidates scoring above 80% on the assessment are scheduled for interviews. The AI resume parser was trained on data from the company's last 5 years of hires. The system does not accommodate candidates who request accessibility accommodations for the timed assessment. Rejection emails are sent instantly for candidates scoring below 70, with no human review. There is no appeals process. The keyword matching gives higher scores to candidates who list more technologies, regardless of depth of experience.",
+      "prompt": "Review the following project brief and select ALL issues you can identify.",
+      "context": "Project brief: 'We want to automate our hiring pipeline. Candidates apply through our website. The system should screen resumes against the job requirements, rank candidates by fit, and automatically schedule interviews with the top 10 candidates. Hiring managers receive a daily summary of new applications. The system should respond to every applicant within 48 hours.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: AI trained on historical hire data perpetuates existing biases in hiring patterns" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: Keyword quantity over quality scoring rewards resume padding over genuine expertise" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: No accessibility accommodations for timed assessment creates legal and ethical liability" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Instant rejection below 70 with no human review eliminates potentially strong candidates with non-traditional backgrounds" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: No appeals process violates fair hiring practice standards and reduces candidate trust" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: The 70-point threshold is applied uniformly without adjusting for role-specific requirements" },
-        { "option_id": "g", "text": "[PLACEHOLDER] Issue: The career portal should have a darker color scheme for better readability" }
+        {
+          "option_id": "a",
+          "text": "No definition of how 'fit' is determined or what criteria are used for ranking"
+        },
+        {
+          "option_id": "b",
+          "text": "Automatically scheduling interviews doesn't account for candidate or interviewer availability"
+        },
+        {
+          "option_id": "c",
+          "text": "'Top 10' is a fixed number that doesn't scale — a niche role might have 8 applicants total, while a popular role might have 500"
+        },
+        {
+          "option_id": "d",
+          "text": "The daily summary could be outdated by the time the manager reads it — should be real-time"
+        },
+        {
+          "option_id": "e",
+          "text": "The 48-hour response requirement doesn't specify what the response contains — rejection, acknowledgment, or next steps?"
+        },
+        {
+          "option_id": "f",
+          "text": "No mention of bias safeguards in the automated screening and ranking process"
+        },
+        {
+          "option_id": "g",
+          "text": "No handling for internal candidates or referrals — do they go through the same pipeline?"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "Ranking criteria are undefined (a). Auto-scheduling without availability creates conflicts (b). Fixed top-10 doesn't adapt to applicant pool size (c). The 48-hour response content is ambiguous (e). Automated screening without bias safeguards is a legal and ethical risk (f). Internal candidates and referrals may need different handling (g). Option (d) is a preference — daily summaries are standard practice and not inherently flawed.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     },
@@ -257,38 +441,62 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] A product manager has written the brief below for a real-time sales dashboard. Review the brief and describe all the issues, gaps, missing requirements, or unstated assumptions you can identify.",
-      "context": "[PLACEHOLDER] Scenario: Brief excerpt \u2014 'Build a real-time sales dashboard that shows revenue by region, top-selling products, and sales rep performance. The dashboard should update every 5 seconds. It needs to support 500 concurrent users. Data comes from the existing CRM. Launch deadline is 3 weeks. The design should be clean and modern. Mobile support is nice to have.'",
+      "prompt": "What questions would you ask the project owner before starting work on this?",
+      "context": "Feature brief: 'Build a dashboard that shows real-time sales performance for our regional managers. It should update automatically and be accessible on mobile devices.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe the issues, gaps, or assumptions you observe..."
+        "placeholder_text": "List the questions you would ask, and briefly explain why each matters..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that 5-second refresh with 500 concurrent users has significant infrastructure implications",
-          "[PLACEHOLDER] Notes the absence of defined data latency and staleness requirements",
-          "[PLACEHOLDER] Identifies missing access control and role-based visibility requirements",
-          "[PLACEHOLDER] Recognizes that 'clean and modern' is not an actionable design specification",
-          "[PLACEHOLDER] Questions the 3-week deadline feasibility given the technical requirements",
-          "[PLACEHOLDER] Notes that 'nice to have' mobile support is vague and could become a scope creep risk"
+          "Identifies scope ambiguities (what metrics? which regions? what time ranges?)",
+          "Questions data source and freshness (what does 'real-time' mean — seconds? minutes? hourly?)",
+          "Asks about access control (which managers see which regions? can they see each other's data?)",
+          "Considers edge cases (no data available, partial data, timezone handling across regions)",
+          "Asks about existing systems (is there a current solution? what's wrong with it?)",
+          "Questions mobile requirements (responsive web? native app? offline access?)"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -303,39 +511,63 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] A warehouse operations lead has described the low-stock alert system below. Review the description and identify all the issues, gaps, missing requirements, or unstated assumptions.",
-      "context": "[PLACEHOLDER] Scenario: Description excerpt \u2014 'When inventory for any SKU drops below 50 units, the system sends an email alert to the purchasing team. The team then manually creates a purchase order. Alerts are sent once per day in a batch at 6 AM. The threshold of 50 units applies to all SKUs regardless of sales velocity. Suppliers have varying lead times from 2 days to 6 weeks. The system tracks current stock but not incoming shipments or pending orders. There is no integration with the sales forecast system.'",
+      "prompt": "What questions would you ask the project owner before starting work on this?",
+      "context": "Feature brief: 'We need an alert system that notifies warehouse supervisors when inventory levels for any product fall below the reorder threshold. Alerts should go out immediately via text message.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe the issues, gaps, or assumptions you observe..."
+        "placeholder_text": "List the questions you would ask, and briefly explain why each matters..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that a flat 50-unit threshold ignores vastly different sales velocities across SKUs",
-          "[PLACEHOLDER] Notes that daily batch alerts at 6 AM could miss critical stockouts occurring during the day",
-          "[PLACEHOLDER] Recognizes the gap between 2-day and 6-week supplier lead times and the uniform alert threshold",
-          "[PLACEHOLDER] Identifies that not tracking incoming shipments or pending orders leads to duplicate purchasing",
-          "[PLACEHOLDER] Notes the lack of sales forecast integration means the system is purely reactive, not predictive",
-          "[PLACEHOLDER] Questions the manual purchase order creation as a bottleneck in the restocking process",
-          "[PLACEHOLDER] Identifies missing escalation path for SKUs that remain below threshold after initial alert"
+          "Asks who defines reorder thresholds and whether they differ by product or warehouse",
+          "Questions what 'immediately' means — is inventory tracked in real-time or updated in batches?",
+          "Asks whether supervisors can acknowledge, snooze, or act on alerts directly",
+          "Considers alert fatigue — what if dozens of products hit threshold at once?",
+          "Asks about escalation — what happens if the supervisor doesn't respond?",
+          "Questions whether the alert should include context (current level, reorder quantity, supplier info)",
+          "Considers edge cases (new products without thresholds, seasonal inventory fluctuations)"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -350,40 +582,64 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] The HR director has announced the performance review cycle change described below. Review the announcement and identify all the issues, gaps, risks, unstated assumptions, and missing considerations.",
-      "context": "[PLACEHOLDER] Scenario: Announcement excerpt \u2014 'Effective next quarter, we are moving from annual to quarterly performance reviews. Managers will complete reviews for all direct reports within a 2-week window at the end of each quarter. Reviews will use a new 1\u20135 rating scale replacing the current narrative format. Compensation adjustments will be tied to quarterly ratings. The new system will be implemented company-wide simultaneously. HR will provide a 1-hour training session for managers. The review platform vendor has been selected but integration with payroll is still in progress. Employees were informed via a company-wide email last week.'",
+      "prompt": "What questions would you ask before starting work on this? Focus on gaps, ambiguities, and risks.",
+      "context": "Project brief: 'We're switching our employee performance reviews from an annual cycle to quarterly reviews. Managers will rate employees on a 1–5 scale across several competencies. Results will be visible to the employee, their manager, and HR. The new process starts next quarter.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe the issues, gaps, or assumptions you observe..."
+        "placeholder_text": "List the questions you would ask, and briefly explain why each matters..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that quarterly compensation adjustments tied to ratings create volatility and short-term thinking",
-          "[PLACEHOLDER] Notes that a 2-week review window for all direct reports creates an intense workload burden on managers",
-          "[PLACEHOLDER] Recognizes that replacing narrative format with numeric scale loses qualitative context and nuance",
-          "[PLACEHOLDER] Questions whether 1-hour training is sufficient for a fundamental change in review methodology",
-          "[PLACEHOLDER] Identifies the risk of launching company-wide without a pilot phase to identify issues",
-          "[PLACEHOLDER] Notes the payroll integration being incomplete while the launch date is set creates a dependency risk",
-          "[PLACEHOLDER] Identifies that employee communication via email only, with no feedback channel, lacks change management rigor",
-          "[PLACEHOLDER] Recognizes the absence of a transition plan for how current-cycle reviews will be handled during the switchover"
+          "Asks what competencies are being rated and who defines them (role-specific or universal?)",
+          "Questions calibration — how is consistency across managers ensured?",
+          "Asks about the relationship between reviews and compensation, promotion, or performance improvement actions",
+          "Considers the transition — how are existing annual review data and timelines handled?",
+          "Asks about employee self-assessment or 360 feedback as part of the process",
+          "Questions historical access — can employees see trends across quarters?",
+          "Considers the training and communication needed for managers and employees on the new cadence",
+          "Questions what 'visible' means — read-only? can employees dispute or comment?"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -398,40 +654,64 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] The operations team has proposed the document approval policy described below. Review the policy and identify all the issues, gaps, risks, unstated assumptions, and missing considerations.",
-      "context": "[PLACEHOLDER] Scenario: Policy excerpt \u2014 'All external-facing documents must be approved before distribution. Documents are submitted to a shared inbox for review. The legal team reviews within 3 business days. Marketing reviews within 2 business days. Both approvals are required. If either team rejects, the document is returned to the author with comments. There is no version tracking during the review cycle. Approved documents are stored in a shared drive folder. Urgent documents can bypass the process with VP approval, but there is no definition of what qualifies as urgent. The policy applies to all departments but was drafted without input from Sales, Engineering, or Customer Success. There is no periodic review schedule for the policy itself.'",
+      "prompt": "What questions would you ask before starting work on this? Focus on gaps, ambiguities, and risks.",
+      "context": "Project brief: 'Our company wants to implement a policy where all client-facing documents must be reviewed and approved by a senior team member before being sent out. This applies to proposals, contracts, reports, and presentations. The goal is to improve quality and consistency.'",
       "constraints": {
         "char_limit": 5000,
         "word_limit": 1000,
-        "placeholder_text": "Describe the issues, gaps, or assumptions you observe..."
+        "placeholder_text": "List the questions you would ask, and briefly explain why each matters..."
       },
       "rubric": {
         "scale_min": 0,
         "scale_max": 5,
         "scoring_method": "ai_evaluation",
         "criteria": [
-          "[PLACEHOLDER] Identifies that sequential legal + marketing review creates a 5-day minimum bottleneck for every document",
-          "[PLACEHOLDER] Notes the lack of version tracking during review cycles creates confusion about which draft is current",
-          "[PLACEHOLDER] Recognizes that the shared inbox model has no assignment, prioritization, or SLA tracking mechanism",
-          "[PLACEHOLDER] Questions the undefined 'urgent' bypass criteria as a loophole that undermines the entire policy",
-          "[PLACEHOLDER] Identifies that drafting the policy without cross-departmental input reduces buy-in and may miss critical workflows",
-          "[PLACEHOLDER] Notes the absence of a periodic policy review schedule means the process will become outdated",
-          "[PLACEHOLDER] Identifies the lack of an audit trail for approvals and rejections creates compliance risk",
-          "[PLACEHOLDER] Recognizes that storing approved documents in a shared drive without access controls or retention policies is a governance gap"
+          "Asks who qualifies as a 'senior team member' and whether this varies by document type",
+          "Questions turnaround time — what is the expected review SLA?",
+          "Considers bottleneck risk — what if a single senior person becomes a chokepoint?",
+          "Asks what 'reviewed and approved' means — stylistic feedback? accuracy check? legal compliance?",
+          "Questions urgency exceptions — what happens when a client needs a document within an hour?",
+          "Asks how this is tracked and enforced — honor system or tooling?",
+          "Considers the volume impact — how many documents per day/week go to clients?",
+          "Questions whether templates or standards exist that could reduce review burden"
         ],
         "levels": [
-          { "score": 5, "label": "Exceptional", "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking." },
-          { "score": 4, "label": "Strong", "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning." },
-          { "score": 3, "label": "Adequate", "description": "Identifies obvious issues/steps but lacks depth or misses important considerations." },
-          { "score": 2, "label": "Weak", "description": "Superficial or partially correct. Shows some reasoning but significant gaps." },
-          { "score": 1, "label": "Poor", "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking." },
-          { "score": 0, "label": "No Response", "description": "Blank or completely off-topic." }
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
         ]
       },
-      "sample_strong_response": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
       "speed_flags": {
-        "suspicious_fast_seconds": 10,
-        "slow_threshold_seconds": 140
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
       },
       "variants": []
     },
@@ -446,26 +726,54 @@
         "show_timer": "hidden_with_warning",
         "auto_advance": true
       },
-      "prompt": "[PLACEHOLDER] Review the support channel consolidation plan described below. Identify ALL issues, gaps, or contradictions in the proposal.",
-      "context": "[PLACEHOLDER] Scenario: A company currently handles customer support through email, live chat, phone, and social media, each managed by separate teams. The proposal is to consolidate all channels into a single ticketing platform within 6 weeks. All agents will be cross-trained to handle any channel. The existing knowledge base will be migrated but not updated. Current SLAs differ by channel: email is 24 hours, chat is 2 minutes, phone is immediate, social media is 4 hours. The new system will apply a uniform 4-hour SLA across all channels. Historical ticket data from each channel will not be migrated. The project has no dedicated change management or communication plan for customers.",
+      "prompt": "Review the following project brief and select ALL issues you can identify.",
+      "context": "Project brief: 'We want to consolidate our three customer support channels (phone, email, and live chat) into a single ticketing system. All incoming requests become tickets. Tickets are assigned to agents based on availability. Customers receive automatic updates when their ticket status changes. Average response time must be under 2 hours. Agents handle tickets in order of arrival.'",
       "options": [
-        { "option_id": "a", "text": "[PLACEHOLDER] Issue: Uniform 4-hour SLA degrades chat and phone response expectations from minutes/immediate to hours" },
-        { "option_id": "b", "text": "[PLACEHOLDER] Issue: Cross-training all agents on all channels in 6 weeks risks quality degradation during the transition" },
-        { "option_id": "c", "text": "[PLACEHOLDER] Issue: Not migrating historical ticket data eliminates context for ongoing and recurring customer issues" },
-        { "option_id": "d", "text": "[PLACEHOLDER] Issue: Migrating an outdated knowledge base without updating it transfers inaccurate information to the new system" },
-        { "option_id": "e", "text": "[PLACEHOLDER] Issue: No customer communication plan means customers will encounter changed processes without warning" },
-        { "option_id": "f", "text": "[PLACEHOLDER] Issue: 6-week timeline for a multi-channel consolidation with cross-training is unrealistically aggressive" },
-        { "option_id": "g", "text": "[PLACEHOLDER] Issue: The new ticketing platform login page should support dark mode for agent comfort" }
+        {
+          "option_id": "a",
+          "text": "No priority system — a critical outage ticket and a general question are treated the same under 'order of arrival'"
+        },
+        {
+          "option_id": "b",
+          "text": "No distinction between response time and resolution time — 'response' could mean an acknowledgment or a solution"
+        },
+        {
+          "option_id": "c",
+          "text": "Assigning by availability doesn't account for agent specialization — a billing question may go to a technical agent"
+        },
+        {
+          "option_id": "d",
+          "text": "Live chat has different customer expectations than email — applying a single SLA to both channels may not make sense"
+        },
+        {
+          "option_id": "e",
+          "text": "The system should use AI to auto-resolve simple tickets"
+        },
+        {
+          "option_id": "f",
+          "text": "No mention of what happens to in-progress conversations during the transition from the old channels to the new system"
+        },
+        {
+          "option_id": "g",
+          "text": "No specification for what 'status changes' trigger customer updates — every internal reassignment or only meaningful progress?"
+        }
       ],
-      "correct_answers": ["a", "b", "c", "d", "e", "f"],
-      "explanation": "[PLACEHOLDER] To be authored in Feature 0.1.3.",
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "f",
+        "g"
+      ],
+      "explanation": "No priority means urgent and trivial are treated identically (a). Response vs. resolution is a critical ambiguity in SLAs (b). Availability-only routing ignores skill matching (c). Different channels have different urgency expectations (d). Transition handling for in-progress conversations is missing (f). Over-notifying on every status change would be disruptive (g). Option (e) is a feature suggestion, not a gap in the current specification.",
       "scoring_config": {
         "method": "partial_credit",
         "penalty_factor": 0.25
       },
       "speed_flags": {
-        "suspicious_fast_seconds": 8,
-        "slow_threshold_seconds": 110
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     }
