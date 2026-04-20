@@ -161,9 +161,9 @@ core-assessment/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.3                   │
-│  Feature: 0.3.1 — Pipeline Orchestrator     │
-│  Status: v0.2 milestone closed              │
+│  CURRENTLY BUILDING: v0.4                   │
+│  Feature: 0.4.1 — DataProvider Interface    │
+│  Status: v0.3 milestone closed              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -183,15 +183,22 @@ core-assessment/
 - 0.2.5 — Role-Based Route Protection ✅
 - 0.2.6 — Multilingual Support (EN+ES overlay) ✅
 
-**v0.3 scope (AI Evaluation Pipeline):**
-- 0.3.1 — Pipeline Orchestrator (3-step chain)
-- 0.3.2 — Model Abstraction Layer (LLMProvider)
-- 0.3.3 — Open-Ended Scoring Rubric & Prompt Template
-- 0.3.4 — Responder Profile Generation (Step 3)
-- 0.3.5 — Calibration Parameter Generation
-- 0.3.6 — Audit Trail
-- 0.3.7 — Golden Test Framework
-- 0.3.8 — Re-Evaluation & Pipeline API Endpoints
+**v0.3 scope (AI Evaluation Pipeline) — ✅ COMPLETE:**
+- 0.3.1 — Pipeline Orchestrator (3-step chain) ✅
+- 0.3.2 — Model Abstraction Layer (LLMProvider + Fixture fallback) ✅
+- 0.3.3 — Open-Ended Scoring Rubric & Prompt Template ✅
+- 0.3.4 — Responder Profile Generation (Step 3) ✅
+- 0.3.5 — Calibration Parameter Generation ✅
+- 0.3.6 — Audit Trail ✅
+- 0.3.7 — Golden Test Framework ✅
+- 0.3.8 — Re-Evaluation & Pipeline API Endpoints ✅
+
+**v0.4 scope (Dashboard & Reporting):**
+- 0.4.1 — DataProvider Interface + PostgresProvider
+- 0.4.2 — Transform Layer (ranking, distributions, heatmap, individual, operations)
+- 0.4.3 — Manager/Admin Dashboard View
+- 0.4.4 — Operational Dashboard View
+- 0.4.5 — Dashboard API Endpoints
 
 ---
 

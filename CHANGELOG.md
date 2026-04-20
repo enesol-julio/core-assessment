@@ -9,6 +9,20 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.3.5, 0.3.7, 0.3.8 — Calibration, Golden Tests, Pipeline API
+- Calibration (`src/services/pipeline/calibration/params.ts`): `MIN_CALIBRATION_SAMPLE=10`; computes composite stats (mean, median, std_dev, quartiles) + per-section stats + per-section raw score distributions (used by step 2 percentiles). `updateCalibrationSnapshot()` is transactional and maintains exactly one `is_current = true` snapshot
+- Calibration auto-updates after every successful pipeline run once `countProfiles() >= 10` — `batch_rescore` triggers are excluded to avoid snapshot storms
+- Batch re-scoring (`src/services/pipeline/calibration/batch-rescore.ts`) supports `scope="all"` or explicit response_ids with configurable concurrency; reports per-response failures
+- Golden tests (`src/services/pipeline/golden-test/runner.ts`, `seed.ts`): seeds 10 bootstrap responses from authored `sample_strong_response` fields with synthetic degradation across quality tiers 5→1; runs parallel scoring under the audited provider; computes MAD, range compliance rate, extreme-miss count; passes iff `MAD ≤ 0.5`, `range ≥ 90%`, `extreme_miss = 0`; `goldenStatus()` derives drift alert from trailing-10-run MAD average
+- Pipeline API endpoints (all admin-only):
+  - `POST /api/evaluate` — trigger pipeline for a response_id
+  - `GET /api/evaluate/{response_id}/status` — status + profile count
+  - `POST /api/evaluate/{response_id}/re-evaluate` — full 3-step re-run
+  - `POST /api/calibration/rescore` — batch re-score
+  - `POST /api/golden-test/run` (`?seed=true` seeds first), `GET /api/golden-test/runs`, `GET /api/golden-test/runs/{id}`, `GET /api/golden-test/status`
+- Smoke `npm run smoke:v03` validates: calibration stays null below n=10, snapshot created at exactly n=10, subsequent snapshots supersede with exactly one is_current row, re-evaluated profile picks up percentile_rank + relative_fitness_tier, batch-rescore succeeds, golden test runs materialize with all three metrics computed
+- `next build` succeeds with 20 routes registered
+
 ### v0.3.1–0.3.4, 0.3.6 — Pipeline Core (orchestrator + providers + audit + steps + synthesis)
 - Added `src/services/pipeline/providers/` — `LLMProvider` interface, `AnthropicProvider` (native SDK, auto-cost by model), `FixtureProvider` (deterministic synthetic scores + profiles for dev/test without API keys), `AuditedProvider` wrapper that logs every call to `data/audit/{date}/{audit_id}.json` with retry (3 attempts, exponential backoff) and SHA-256 prompt hash for exact-reproduction reference
 - `detectProvider()` picks `fixture` when `ANTHROPIC_API_KEY` is unset/placeholder or `PIPELINE_PROVIDER=fixture`; otherwise `anthropic`

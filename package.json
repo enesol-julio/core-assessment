@@ -19,7 +19,8 @@
     "smoke:auth-gate": "tsx scripts/validate/auth-gate-smoke.mjs",
     "smoke:content": "tsx scripts/validate/content-loader-smoke.mjs",
     "smoke:assess": "tsx scripts/validate/assess-submit-smoke.mjs",
-    "smoke:pipeline": "tsx scripts/validate/pipeline-smoke.mjs"
+    "smoke:pipeline": "tsx scripts/validate/pipeline-smoke.mjs",
+    "smoke:v03": "tsx scripts/validate/v03-smoke.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",

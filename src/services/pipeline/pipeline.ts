@@ -19,6 +19,11 @@ import {
   type ResponderProfile,
 } from "./schemas/responder-profile.ts";
 import type { ScoreResult } from "./schemas/score-result.ts";
+import {
+  MIN_CALIBRATION_SAMPLE,
+  countProfiles,
+  updateCalibrationSnapshot,
+} from "./calibration/params.ts";
 
 export type PipelineTrigger = "submission" | "re-evaluation" | "batch_rescore";
 
@@ -196,6 +201,18 @@ export async function runPipeline(
       relativeFitnessTier: validated.scores.relative_fitness_tier,
       profileData: validated,
     });
+
+    // Opportunistically update calibration snapshot once we have enough samples.
+    if (trigger !== "batch_rescore") {
+      try {
+        const total = await countProfiles();
+        if (total >= MIN_CALIBRATION_SAMPLE) {
+          await updateCalibrationSnapshot();
+        }
+      } catch (err) {
+        console.warn("[pipeline] calibration update skipped:", err);
+      }
+    }
 
     await updateRunStatus(runId, {
       status: "complete",
