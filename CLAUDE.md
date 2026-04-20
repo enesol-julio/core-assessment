@@ -162,16 +162,16 @@ core-assessment/
 ```
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.1                   │
-│  Feature: 0.1.3 — Question Content          │
-│  Status: Awaiting Brief                     │
+│  Feature: 0.1.5 — Schema Validation Tooling │
+│  Status: Next Up                            │
 └─────────────────────────────────────────────┘
 ```
 
 **v0.1 scope (Assessment Content & Schema):**
 - 0.1.1 — `assessment-meta.json` (root config) ✅
 - 0.1.2 — 5 section definition files (`content/sections/`) ✅
-- 0.1.3 — Question content authoring (70 base questions)
-- 0.1.4 — Assessment response schema definition
+- 0.1.3 — Question content authoring (70 base questions) ✅
+- 0.1.4 — Assessment response schema definition ✅
 - 0.1.5 — Schema validation tooling (dev/CI tool)
 - 0.1.6 — Database schema & migrations (Drizzle ORM)
 

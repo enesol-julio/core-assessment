@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### v0.1.3 — Question Content Authoring (Confirmed Complete)
+- Audit: 70 base questions across 5 sections (s1-q01 … s5-q13)
+- Type distribution: single_select=32, multi_select=16, drag_to_order=6, open_ended=16
+- Difficulty distribution: easy=6, medium=35, hard=29
+- All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
+- All multi_select questions have more options than correct answers
+
+### v0.1.4 — Assessment Response Schema
+- Added `src/lib/types/assessment-response.ts` with Zod schemas
+- Discriminated union on `type` for `single_select`/`multi_select`/`drag_to_order`/`open_ended` question responses
+- Response-level invariants: 5 sections exactly, UUID `response_id`, session `completed_at >= started_at`
+- `ai_evaluation` slot typed to accept pipeline Step 1 score results (null at submission)
+- Includes `session.language` (`en`/`es`) for multilingual session context
+- Installed `zod@^4.3.6`
+
 ### Spec Updates — April 2026 (Pre-Build)
 
 #### Architecture: PostgreSQL from Day One
