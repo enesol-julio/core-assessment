@@ -31,6 +31,15 @@
 - **CORE UI Experience Specification v1.1** — Screen-by-screen test-taker experience, timer behavior, accessibility, responsive design, edge cases
 - **CORE Sample Response Authoring Guide v1.0** — Worked examples, authoring checklist, golden test connection
 
+#### Multilingual (English + Spanish)
+- **Translation overlay architecture** — English is canonical single source of truth; Spanish stored as overlay files in `content/translations/es/` with only translated fields, merged at runtime
+- **UI string externalization** — all user-facing text in `content/ui-strings/{lang}.json`, never hardcoded in components
+- **Domain-based language defaults** — `evaluacion.datacracy.co` → Spanish, others → English. User can override at login.
+- **Language selector on login screen** — choose language before authentication, locked for duration of assessment
+- **AI scoring handles Spanish responses** — same English rubric, cross-language evaluation by Claude
+- **New Feature 0.2.6** added to v0.2 scope: Multilingual Support
+- **`assessment-meta.json` updated** with `supported_languages`, `default_language`, `domain_language_defaults`
+
 #### Spec Version Bumps
 - Functional Spec: v2.2 → v2.4
 - AI Evaluation Technical Spec: v1.3 → v1.5

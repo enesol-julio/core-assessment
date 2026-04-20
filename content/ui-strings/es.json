@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "email_label": "Correo electrónico",
+    "email_placeholder": "tu@empresa.com",
+    "otp_sent": "Se envió un código de verificación a tu correo electrónico.",
+    "otp_label": "Código de verificación",
+    "otp_submit": "Verificar",
+    "otp_expired": "El código ha expirado. Solicita uno nuevo.",
+    "otp_invalid": "Código inválido. Inténtalo de nuevo.",
+    "domain_rejected": "Esta evaluación está disponible actualmente para miembros del equipo de {domains}. Contacta a tu administrador si crees que deberías tener acceso.",
+    "login_button": "Iniciar sesión",
+    "logout_button": "Cerrar sesión"
+  },
+  "briefing": {
+    "welcome_title": "Bienvenido/a a la Evaluación CORE",
+    "welcome_message": "Esta evaluación mide cómo piensas, no lo que sabes. No hay preguntas capciosas ni se requiere conocimiento especializado.",
+    "what_to_expect_title": "Qué esperar",
+    "what_to_expect_sections": "5 secciones, aproximadamente 34 preguntas en total",
+    "what_to_expect_formats": "Combinación de formatos: selección única, selección múltiple, ordenar arrastrando y respuestas escritas breves",
+    "what_to_expect_duration": "Duración aproximada: 45–50 minutos",
+    "rules_title": "Antes de comenzar",
+    "rule_no_back": "No puedes volver a preguntas anteriores una vez que avances",
+    "rule_timers": "Algunas preguntas tienen temporizadores visibles; otras tienen un límite de tiempo oculto — recibirás un aviso breve antes de que se agote",
+    "rule_auto_advance": "Si el tiempo se agota en una pregunta, tu respuesta actual se envía automáticamente",
+    "rule_single_sitting": "La evaluación debe completarse en una sola sesión",
+    "rule_no_resources": "No utilices recursos externos ni herramientas de IA durante la evaluación",
+    "begin_button": "Comenzar evaluación"
+  },
+  "section_intro": {
+    "questions_count": "Esta sección tiene {count} preguntas y toma aproximadamente {minutes} minutos.",
+    "format_note": "Verás preguntas de tipo {types} en esta sección.",
+    "begin_section": "Comenzar sección",
+    "tone_s1": "Son preguntas rápidas — confía en tu instinto.",
+    "tone_s4": "Algunas preguntas son rápidas, otras requieren un análisis más detallado.",
+    "tone_s3": "Lee con atención — los detalles importan.",
+    "tone_s2": "Tómate tu tiempo. Piensa en el panorama completo antes de responder.",
+    "tone_s5": "Compara lo que se pidió con lo que se produjo."
+  },
+  "question": {
+    "next_button": "Siguiente",
+    "select_all": "Selecciona TODAS las opciones que correspondan",
+    "drag_instruction": "Arrastra los pasos en el orden correcto",
+    "word_counter": "{count} / {limit} palabras",
+    "char_limit_reached": "Límite alcanzado",
+    "selected_count": "{count} seleccionadas",
+    "position_label": "Posición {n}"
+  },
+  "timer": {
+    "seconds_remaining": "{seconds} segundos restantes",
+    "time_warning": "El tiempo está por agotarse"
+  },
+  "section_transition": {
+    "section_complete": "Sección completada.",
+    "take_a_moment": "Tómate un momento. Cuando estés listo/a, la siguiente sección es {section_name}.",
+    "continue_button": "Continuar"
+  },
+  "completion": {
+    "submitted_title": "Tu evaluación ha sido enviada.",
+    "submitted_message": "Tus respuestas están siendo evaluadas. Los resultados serán revisados por tu administrador.",
+    "no_scores_note": "No verás puntuaciones en esta pantalla.",
+    "thank_you": "Gracias por completar la Evaluación CORE.",
+    "return_button": "Volver al inicio"
+  },
+  "errors": {
+    "connection_lost": "Conexión perdida — tus respuestas están guardadas localmente y se sincronizarán cuando se restablezca la conexión.",
+    "session_timeout": "Tu sesión de evaluación expiró y se envió con las respuestas que completaste.",
+    "resuming": "Reanudando tu evaluación...",
+    "leave_warning": "Tu evaluación está en progreso. ¿Estás seguro/a de que deseas salir?",
+    "server_error": "Estamos teniendo problemas para enviar tu respuesta. Se guardó localmente. Espera un momento e inténtalo de nuevo.",
+    "other_device": "Esta evaluación ya está en progreso en otro dispositivo."
+  },
+  "language": {
+    "selector_label": "Idioma",
+    "en": "English",
+    "es": "Español"
+  }
+}

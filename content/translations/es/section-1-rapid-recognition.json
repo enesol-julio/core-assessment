@@ -1,0 +1,207 @@
+{
+  "section_id": "section-1-rapid-recognition",
+  "name": "Reconocimiento Rápido de Patrones",
+  "instructions": "Responderás 10 preguntas de reconocimiento de patrones. Cada pregunta tiene un temporizador visible de 30 segundos. El temporizador es intencional — confía en tu instinto. No puedes volver a preguntas anteriores. Selecciona la mejor respuesta y avanza.",
+  "questions": [
+    {
+      "question_id": "s1-q01",
+      "prompt": "¿Qué número sigue en la secuencia: 2, 6, 12, 20, 30, ?",
+      "options": [
+        { "option_id": "a", "text": "36" },
+        { "option_id": "b", "text": "40" },
+        { "option_id": "c", "text": "42" },
+        { "option_id": "d", "text": "44" }
+      ]
+    },
+    {
+      "question_id": "s1-q02",
+      "prompt": "¿Cuál de los siguientes NO pertenece al grupo?",
+      "options": [
+        { "option_id": "a", "text": "Plano" },
+        { "option_id": "b", "text": "Receta" },
+        { "option_id": "c", "text": "Itinerario" },
+        { "option_id": "d", "text": "Recuerdo" }
+      ]
+    },
+    {
+      "question_id": "s1-q03",
+      "prompt": "Si todos los Blooms son Tinks, y algunos Tinks son Warps, ¿cuál de las siguientes afirmaciones DEBE ser verdadera?",
+      "options": [
+        { "option_id": "a", "text": "Algunos Blooms son Warps" },
+        { "option_id": "b", "text": "Todos los Tinks son Blooms" },
+        { "option_id": "c", "text": "Algunos Warps son Tinks" },
+        { "option_id": "d", "text": "Ningún Bloom es Warp" }
+      ]
+    },
+    {
+      "question_id": "s1-q04",
+      "prompt": "Completa la analogía: Esquema es a Ensayo como Esqueleto es a ___",
+      "options": [
+        { "option_id": "a", "text": "Hueso" },
+        { "option_id": "b", "text": "Cuerpo" },
+        { "option_id": "c", "text": "Radiografía" },
+        { "option_id": "d", "text": "Fósil" }
+      ]
+    },
+    {
+      "question_id": "s1-q05",
+      "prompt": "¿Qué letra sigue en la secuencia: E, F, M, A, M, J, J, ?",
+      "options": [
+        { "option_id": "a", "text": "A" },
+        { "option_id": "b", "text": "S" },
+        { "option_id": "c", "text": "K" },
+        { "option_id": "d", "text": "J" }
+      ]
+    },
+    {
+      "question_id": "s1-q06",
+      "prompt": "Una reunión fue programada para 3 días después de anteayer. Hoy es miércoles. ¿Qué día es la reunión?",
+      "options": [
+        { "option_id": "a", "text": "Jueves" },
+        { "option_id": "b", "text": "Viernes" },
+        { "option_id": "c", "text": "Sábado" },
+        { "option_id": "d", "text": "Domingo" }
+      ]
+    },
+    {
+      "question_id": "s1-q07",
+      "prompt": "Si las letras de 'LÁMINA' se reordenan, forman el nombre de un/una:",
+      "options": [
+        { "option_id": "a", "text": "Ciudad" },
+        { "option_id": "b", "text": "Profesión" },
+        { "option_id": "c", "text": "Animal" },
+        { "option_id": "d", "text": "Color" }
+      ]
+    },
+    {
+      "question_id": "s1-q08",
+      "prompt": "¿Qué número reemplaza el signo de interrogación?\n\n3 → 9\n5 → 25\n7 → 49\n9 → ?",
+      "options": [
+        { "option_id": "a", "text": "72" },
+        { "option_id": "b", "text": "81" },
+        { "option_id": "c", "text": "63" },
+        { "option_id": "d", "text": "90" }
+      ]
+    },
+    {
+      "question_id": "s1-q09",
+      "prompt": "En un grupo de 5 personas, cada una le da la mano a todas las demás exactamente una vez. ¿Cuántos apretones de manos ocurren?",
+      "options": [
+        { "option_id": "a", "text": "5" },
+        { "option_id": "b", "text": "10" },
+        { "option_id": "c", "text": "15" },
+        { "option_id": "d", "text": "20" }
+      ]
+    },
+    {
+      "question_id": "s1-q10",
+      "prompt": "¿Cuál de los siguientes NO pertenece al grupo?",
+      "options": [
+        { "option_id": "a", "text": "Revisar un informe" },
+        { "option_id": "b", "text": "Inspeccionar un producto terminado" },
+        { "option_id": "c", "text": "Diseñar un nuevo proceso" },
+        { "option_id": "d", "text": "Auditar un registro financiero" }
+      ]
+    },
+    {
+      "question_id": "s1-q11",
+      "prompt": "Una tarea requiere 6 personas durante 4 días para completarse. Suponiendo que el trabajo se divide equitativamente, ¿cuántos días tomaría con 8 personas?",
+      "options": [
+        { "option_id": "a", "text": "2 días" },
+        { "option_id": "b", "text": "3 días" },
+        { "option_id": "c", "text": "4 días" },
+        { "option_id": "d", "text": "5 días" }
+      ]
+    },
+    {
+      "question_id": "s1-q12",
+      "prompt": "¿Qué par tiene la MISMA relación que: Causa → Efecto?",
+      "options": [
+        { "option_id": "a", "text": "Pregunta → Respuesta" },
+        { "option_id": "b", "text": "Síntoma → Enfermedad" },
+        { "option_id": "c", "text": "Sequía → Hambruna" },
+        { "option_id": "d", "text": "Capítulo → Libro" }
+      ]
+    },
+    {
+      "question_id": "s1-q13",
+      "prompt": "Si el patrón es: 1=R, 2=RB, 3=RBR, 4=RBRB — ¿qué es 7?",
+      "options": [
+        { "option_id": "a", "text": "RBRBRBR" },
+        { "option_id": "b", "text": "RBRBRB" },
+        { "option_id": "c", "text": "RRRBBB" },
+        { "option_id": "d", "text": "RBRRBRR" }
+      ]
+    },
+    {
+      "question_id": "s1-q14",
+      "prompt": "Sara es más alta que Tom. Tom es más alto que Uwe. Vera es más baja que Tom pero más alta que Uwe. ¿Quién es la persona más baja?",
+      "options": [
+        { "option_id": "a", "text": "Sara" },
+        { "option_id": "b", "text": "Tom" },
+        { "option_id": "c", "text": "Uwe" },
+        { "option_id": "d", "text": "Vera" }
+      ]
+    },
+    {
+      "question_id": "s1-q15",
+      "prompt": "¿Qué número sigue: 1, 1, 2, 3, 5, 8, 13, ?",
+      "options": [
+        { "option_id": "a", "text": "18" },
+        { "option_id": "b", "text": "20" },
+        { "option_id": "c", "text": "21" },
+        { "option_id": "d", "text": "26" }
+      ]
+    },
+    {
+      "question_id": "s1-q16",
+      "prompt": "Un reloj marca las 3:15. ¿Cuál es el ángulo aproximado entre las manecillas de hora y minuto?",
+      "options": [
+        { "option_id": "a", "text": "0 grados" },
+        { "option_id": "b", "text": "7.5 grados" },
+        { "option_id": "c", "text": "45 grados" },
+        { "option_id": "d", "text": "90 grados" }
+      ]
+    },
+    {
+      "question_id": "s1-q17",
+      "prompt": "Si A=1, B=2, C=3... Z=26, ¿cuánto suma la palabra 'ACE'?",
+      "options": [
+        { "option_id": "a", "text": "8" },
+        { "option_id": "b", "text": "9" },
+        { "option_id": "c", "text": "10" },
+        { "option_id": "d", "text": "11" }
+      ]
+    },
+    {
+      "question_id": "s1-q18",
+      "prompt": "En una fila de 5 casas, la casa roja está a la izquierda de la casa verde. La casa azul está en el centro. La casa amarilla está en un extremo. La casa blanca está junto a la casa azul. ¿Dónde está la casa verde?",
+      "options": [
+        { "option_id": "a", "text": "Posición 1" },
+        { "option_id": "b", "text": "Posición 2" },
+        { "option_id": "c", "text": "Posición 4" },
+        { "option_id": "d", "text": "Posición 5" }
+      ]
+    },
+    {
+      "question_id": "s1-q19",
+      "prompt": "Afirmación: 'Cada vez que llueve, el suelo se moja. El suelo está mojado.' ¿Cuál es la conclusión lógicamente válida?",
+      "options": [
+        { "option_id": "a", "text": "Debe estar lloviendo" },
+        { "option_id": "b", "text": "Llovió recientemente" },
+        { "option_id": "c", "text": "Es posible que haya llovido" },
+        { "option_id": "d", "text": "Alguien regó el suelo" }
+      ]
+    },
+    {
+      "question_id": "s1-q20",
+      "prompt": "¿Qué número NO encaja en el patrón: 2, 3, 5, 7, 11, 14, 17?",
+      "options": [
+        { "option_id": "a", "text": "3" },
+        { "option_id": "b", "text": "7" },
+        { "option_id": "c", "text": "14" },
+        { "option_id": "d", "text": "17" }
+      ]
+    }
+  ]
+}

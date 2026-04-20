@@ -1,0 +1,125 @@
+{
+  "section_id": "section-2-problem-decomposition",
+  "name": "Descomposición de Problemas",
+  "instructions": "Se te presentarán escenarios complejos del mundo real. En las preguntas de ordenamiento, arrastra los pasos en la secuencia lógica correcta. En las preguntas escritas, descompón el problema en pasos claros y ordenados. Cada pregunta tiene un tiempo límite — recibirás un aviso antes de que se agote. No puedes volver a preguntas anteriores.",
+  "questions": [
+    {
+      "question_id": "s2-q01",
+      "prompt": "Una empresa está reubicando su oficina principal a un nuevo edificio. Arrastra los siguientes pasos en el orden correcto.",
+      "context": "La mudanza involucra a 200 empleados, equipos especializados, proyectos activos con clientes que no pueden interrumpirse y un contrato de arrendamiento que vence en una fecha fija. Ambos edificios estarán disponibles durante un período de superposición de 2 semanas.",
+      "items": [
+        { "item_id": "a", "text": "Inventariar todos los equipos, mobiliario y materiales que necesitan trasladarse" },
+        { "item_id": "b", "text": "Instalar estaciones de trabajo, red y sistemas telefónicos en la nueva ubicación" },
+        { "item_id": "c", "text": "Identificar qué equipos y funciones pueden mudarse primero con menor impacto" },
+        { "item_id": "d", "text": "Mudar la primera ola de equipos y verificar que estén completamente operativos" },
+        { "item_id": "e", "text": "Comunicar el cronograma de mudanza y las expectativas a todos los empleados" },
+        { "item_id": "f", "text": "Mudar los equipos restantes en olas planificadas" },
+        { "item_id": "g", "text": "Desmantelar la oficina anterior y entregarla según los términos del contrato" }
+      ]
+    },
+    {
+      "question_id": "s2-q02",
+      "prompt": "Una cadena de restaurantes quiere agregar un nuevo plato a su menú en sus 30 ubicaciones. Arrastra los pasos en el orden correcto.",
+      "context": "El plato requiere un ingrediente nuevo de un proveedor con el que no han trabajado antes. Debe cumplir con los requisitos de etiquetado nutricional y mantener consistencia entre ubicaciones. El personal de cocina necesitará capacitación en la preparación.",
+      "items": [
+        { "item_id": "a", "text": "Buscar y evaluar al nuevo proveedor en calidad, confiabilidad y costo" },
+        { "item_id": "b", "text": "Desarrollar y probar la receta en una cocina de prueba" },
+        { "item_id": "c", "text": "Pilotear el plato en 2–3 ubicaciones y recopilar comentarios de los clientes" },
+        { "item_id": "d", "text": "Crear etiquetas nutricionales y actualizar los materiales del menú" },
+        { "item_id": "e", "text": "Capacitar al personal de cocina en todas las ubicaciones sobre preparación y presentación" },
+        { "item_id": "f", "text": "Negociar acuerdos de suministro para cubrir las 30 ubicaciones" },
+        { "item_id": "g", "text": "Lanzar el plato en toda la cadena y monitorear calidad y ventas" }
+      ]
+    },
+    {
+      "question_id": "s2-q03",
+      "prompt": "Un hospital necesita cambiar de formularios de admisión de pacientes en papel a un sistema digital. Arrastra los pasos en el orden correcto.",
+      "context": "El hospital atiende a más de 400 pacientes por día. El personal varía desde personas con alta competencia tecnológica hasta personas resistentes a la tecnología. Los datos de pacientes están sujetos a estrictas regulaciones de privacidad. El sistema en papel debe seguir funcionando como respaldo hasta que el sistema digital demuestre ser confiable.",
+      "items": [
+        { "item_id": "a", "text": "Auditar los formularios en papel actuales para identificar todos los campos de datos y flujos de trabajo" },
+        { "item_id": "b", "text": "Definir los requisitos de privacidad y cumplimiento que debe satisfacer el sistema digital" },
+        { "item_id": "c", "text": "Seleccionar o construir un sistema digital que cumpla con los requisitos" },
+        { "item_id": "d", "text": "Ejecutar el sistema digital en paralelo con los formularios en papel en un departamento" },
+        { "item_id": "e", "text": "Capacitar al personal en el nuevo sistema con instrucciones específicas por rol" },
+        { "item_id": "f", "text": "Migrar los registros históricos de pacientes al sistema digital" },
+        { "item_id": "g", "text": "Implementar en los departamentos restantes basándose en los resultados del piloto" },
+        { "item_id": "h", "text": "Retirar el sistema en papel una vez confirmada la confiabilidad del digital" }
+      ]
+    },
+    {
+      "question_id": "s2-q04",
+      "prompt": "Un equipo de planificación de eventos necesita organizar una conferencia corporativa para 500 personas. Arrastra los pasos en el orden correcto.",
+      "context": "La conferencia es en 6 meses. Incluye ponentes principales, sesiones paralelas, catering y transmisión en vivo para asistentes remotos. El presupuesto ya ha sido aprobado.",
+      "items": [
+        { "item_id": "a", "text": "Asegurar el lugar y confirmar la fecha" },
+        { "item_id": "b", "text": "Definir la agenda de la conferencia, los temas y los formatos de las sesiones" },
+        { "item_id": "c", "text": "Confirmar ponentes principales y presentadores de sesiones" },
+        { "item_id": "d", "text": "Abrir inscripciones y comenzar la difusión" },
+        { "item_id": "e", "text": "Coordinar catering, equipos audiovisuales y configuración de transmisión en vivo" },
+        { "item_id": "f", "text": "Realizar un ensayo general y prueba técnica completa" },
+        { "item_id": "g", "text": "Ejecutar el evento y gestionar la logística del día" }
+      ]
+    },
+    {
+      "question_id": "s2-q05",
+      "prompt": "Un banco regional se está fusionando con otro banco. La entidad combinada necesita unificar las cuentas de clientes de ambos sistemas en un solo sistema. Arrastra los pasos en el orden correcto.",
+      "context": "Ambos bancos tienen clientes activos que no deben experimentar ninguna interrupción. Los números de cuenta, saldos e historiales de transacciones deben preservarse. Los reportes regulatorios deben continuar sin interrupción durante todo el proceso.",
+      "items": [
+        { "item_id": "a", "text": "Mapear los campos de datos y estructuras de cuentas entre los dos sistemas" },
+        { "item_id": "b", "text": "Elegir qué sistema será el destino y definir el modelo de datos unificado" },
+        { "item_id": "c", "text": "Inventariar todos los tipos de cuentas, productos y formatos de datos en ambos sistemas" },
+        { "item_id": "d", "text": "Ejecutar una migración piloto con un lote pequeño de cuentas de bajo riesgo" },
+        { "item_id": "e", "text": "Construir y probar las herramientas de transformación y migración de datos" },
+        { "item_id": "f", "text": "Migrar las cuentas restantes en lotes planificados con verificación después de cada uno" },
+        { "item_id": "g", "text": "Notificar a los clientes y proporcionar orientación sobre cualquier cambio en sus cuentas" },
+        { "item_id": "h", "text": "Desmantelar el sistema retirado después de un período de monitoreo" }
+      ]
+    },
+    {
+      "question_id": "s2-q06",
+      "prompt": "Descompón esta tarea en pasos de implementación (apunta a 4–7 pasos). Enfócate en la secuencia correcta y las dependencias clave.",
+      "context": "Una cadena nacional de tiendas minoristas quiere lanzar un programa de lealtad para clientes. Los clientes acumulan puntos con sus compras y pueden canjearlos por descuentos. El programa necesita funcionar en las 150 tiendas físicas y en la tienda en línea. El personal de cada ubicación debe poder explicar e inscribir clientes en el programa.",
+      "constraints": {
+        "placeholder_text": "Enumera tus pasos de implementación en orden. Para cada paso, indica brevemente por qué va en ese punto de la secuencia..."
+      }
+    },
+    {
+      "question_id": "s2-q07",
+      "prompt": "Descompón esta tarea en pasos de implementación (apunta a 4–7 pasos). Enfócate en la secuencia correcta y las dependencias clave.",
+      "context": "Una empresa mediana actualmente gestiona las solicitudes de tiempo libre de sus empleados por correo electrónico y hojas de cálculo. Quieren reemplazar esto con un proceso estructurado donde los empleados envíen solicitudes, los gerentes las aprueben o rechacen, y los saldos restantes se actualicen automáticamente. La empresa tiene 300 empleados en 4 oficinas en diferentes zonas horarias.",
+      "constraints": {
+        "placeholder_text": "Enumera tus pasos de implementación en orden. Para cada paso, indica brevemente por qué va en ese punto de la secuencia..."
+      }
+    },
+    {
+      "question_id": "s2-q08",
+      "prompt": "Descompón esta tarea en pasos de implementación (apunta a 4–7 pasos). Enfócate en la secuencia correcta y las dependencias clave.",
+      "context": "Una empresa de logística tiene 3 almacenes regionales que gestionan su inventario de forma independiente, cada uno con sus propios métodos de seguimiento. Quieren unificar la visibilidad del inventario para que cualquier almacén pueda ver los niveles de stock en tiempo real de los otros dos. Los pedidos deben poder cumplirse desde cualquier almacén que tenga stock, en lugar de solo desde el almacén más cercano al cliente. Los almacenes operan en horarios diferentes y usan convenciones de etiquetado distintas.",
+      "constraints": {
+        "placeholder_text": "Enumera tus pasos de implementación en orden. Para cada paso, indica brevemente por qué va en ese punto de la secuencia..."
+      }
+    },
+    {
+      "question_id": "s2-q09",
+      "prompt": "Descompón esta tarea en pasos de implementación (apunta a 4–7 pasos). Enfócate en la secuencia correcta y las dependencias clave.",
+      "context": "Un distrito escolar con 20 escuelas actualmente gestiona la inscripción de estudiantes en papel. Cada escuela mantiene sus propias listas de espera y registra manualmente qué estudiantes han sido aceptados, rechazados o están pendientes. El distrito quiere un proceso de inscripción centralizado donde los padres apliquen una sola vez y sean asignados a los cupos disponibles en todas las escuelas según preferencias, proximidad y prioridad por hermanos. La transición debe completarse antes del próximo ciclo de inscripción en 5 meses.",
+      "constraints": {
+        "placeholder_text": "Enumera tus pasos de implementación en orden. Para cada paso, indica brevemente por qué va en ese punto de la secuencia..."
+      }
+    },
+    {
+      "question_id": "s2-q10",
+      "prompt": "Una empresa manufacturera quiere pasar de un proveedor único a un modelo de doble proveedor para una materia prima crítica. Arrastra los pasos en el orden correcto.",
+      "context": "El proveedor actual suministra el 100% del material. La empresa no puede arriesgarse a ninguna interrupción del suministro durante la transición. Los estándares de calidad son estrictos — el material del nuevo proveedor debe cumplir las mismas especificaciones. Los contratos existentes requieren un aviso de terminación de 90 días.",
+      "items": [
+        { "item_id": "a", "text": "Identificar y evaluar posibles segundos proveedores" },
+        { "item_id": "b", "text": "Solicitar y probar muestras de los proveedores candidatos principales" },
+        { "item_id": "c", "text": "Negociar términos y contratos con el segundo proveedor seleccionado" },
+        { "item_id": "d", "text": "Ejecutar un lote de producción pequeño usando el material del nuevo proveedor" },
+        { "item_id": "e", "text": "Renegociar el contrato del proveedor existente para reflejar el volumen reducido" },
+        { "item_id": "f", "text": "Transferir gradualmente un porcentaje de los pedidos al nuevo proveedor" },
+        { "item_id": "g", "text": "Monitorear la calidad y el desempeño de entrega de ambos proveedores" }
+      ]
+    }
+  ]
+}

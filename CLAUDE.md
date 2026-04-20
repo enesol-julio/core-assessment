@@ -67,7 +67,12 @@ core-assessment/
 │       └── useAuth.ts
 ├── content/                             # Static assessment content (version-controlled)
 │   ├── assessment-meta.json
-│   └── sections/                        # 5 section JSON files
+│   ├── sections/                        # 5 section JSON files (English canonical)
+│   ├── translations/                    # Language overlays (translated fields only)
+│   │   └── es/                          # Spanish overlays (one file per section + meta)
+│   └── ui-strings/                      # UI chrome translations
+│       ├── en.json                      # English UI text
+│       └── es.json                      # Spanish UI text
 ├── drizzle/                             # Auto-generated migration files (committed)
 │   ├── 0000_initial_schema.sql
 │   └── meta/
@@ -93,6 +98,8 @@ core-assessment/
 **Hard rules:**
 - `content/` = static, version-controlled. `data/` = runtime operational artifacts, gitignored.
 - Structured queryable data → **PostgreSQL**. Append-only operational artifacts → `data/`.
+- English content in `content/sections/` is the **single source of truth**. Spanish in `content/translations/es/` is an overlay — translated fields only, merged at runtime. If a translation is missing, fall back to English.
+- All user-facing text in the assessment UI comes from `content/ui-strings/{lang}.json`, never hardcoded in components.
 - Never create new top-level directories. If a file doesn't fit, ask.
 - Components in `src/components/`, business logic in `src/services/`, utilities in `src/lib/`, database in `src/db/`.
 - API routes under `src/app/api/`. Migration files in `drizzle/`. Scripts in `scripts/{purpose}/`.
@@ -268,6 +275,7 @@ AUTH_BYPASS_ROLE=admin
 - ❌ **Don't bypass DataProvider.** No direct queries in routes or components.
 - ❌ **Don't populate `variants[]`.** Empty in v1.
 - ❌ **Don't hardcode section order.** Read `order` from `assessment-meta.json`.
+- ❌ **Don't hardcode user-facing text in components.** All strings come from `content/ui-strings/{lang}.json`. No English literals in React components.
 
 ---
 
@@ -317,6 +325,7 @@ AUTH_BYPASS_ROLE=admin
 | Question types | `single_select` (32), `multi_select` (16), `drag_to_order` (6), `open_ended` (16) |
 | Section order | S1→S4→S3→S2→S5 |
 | Database | PostgreSQL 16, Drizzle ORM, JSONB + indexed scalars |
+| Languages | English (default), Spanish. Domain defaults: `evaluacion.datacracy.co` → es, others → en. User can switch at login. |
 
 ---
 

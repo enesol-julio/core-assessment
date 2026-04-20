@@ -1,0 +1,37 @@
+{
+  "name": "Evaluación CORE",
+  "full_name": "Observación Crítica, Razonamiento y Ejecución",
+  "description": "Evalúa las habilidades fundamentales de pensamiento para entornos de trabajo asistidos por IA. Mide reconocimiento de patrones, descomposición de problemas, observación crítica, razonamiento lógico y validación de resultados.",
+  "sections": [
+    {
+      "section_id": "section-1-rapid-recognition",
+      "name": "Reconocimiento Rápido de Patrones",
+      "short_name": "Ronda Rápida",
+      "description": "Razonamiento lógico instintivo y detección de patrones bajo presión de tiempo."
+    },
+    {
+      "section_id": "section-4-logical-reasoning",
+      "name": "Razonamiento Lógico Bajo Restricciones",
+      "short_name": "Lógica",
+      "description": "Razonamiento deductivo y condicional, manejo de restricciones, cadenas lógicas de múltiples pasos."
+    },
+    {
+      "section_id": "section-3-critical-observation",
+      "name": "Observación Crítica",
+      "short_name": "El Ojo Analítico",
+      "description": "Detectar ambigüedades, requisitos faltantes, suposiciones implícitas y contradicciones."
+    },
+    {
+      "section_id": "section-2-problem-decomposition",
+      "name": "Descomposición de Problemas",
+      "short_name": "Descomposición",
+      "description": "Dividir problemas complejos en pasos lógicos y secuenciados con dependencias correctas."
+    },
+    {
+      "section_id": "section-5-output-validation",
+      "name": "Validación de Resultados",
+      "short_name": "El Ojo de QA",
+      "description": "Evaluar si los resultados satisfacen la intención original — no solo si se ven bien."
+    }
+  ]
+}

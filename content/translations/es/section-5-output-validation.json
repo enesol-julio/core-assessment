@@ -1,0 +1,156 @@
+{
+  "section_id": "section-5-output-validation",
+  "name": "Validación de Resultados",
+  "instructions": "En esta sección, se te mostrará un objetivo declarado y un resultado producido para cumplir ese objetivo. Los resultados pueden parecer correctos a primera vista, pero contienen problemas. En las preguntas de selección múltiple, selecciona TODOS los problemas que puedas identificar. En las preguntas escritas, explica qué está mal y por qué importa. Cada pregunta tiene un tiempo límite — recibirás un aviso antes de que se agote. No puedes volver a preguntas anteriores.",
+  "questions": [
+    {
+      "question_id": "s5-q01",
+      "prompt": "Un gerente solicitó un informe. Revisa el objetivo y el resultado producido, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Muéstrame cuántos tickets de soporte cerró cada miembro del equipo el mes pasado, para que pueda identificar quién podría necesitar ayuda adicional o capacitación.'\n\n**Resultado producido:** Un gráfico de barras que muestra el total de tickets cerrados por miembro del equipo el mes pasado. El gráfico está ordenado de mayor a menor. El miembro del equipo con más tickets cerrados está resaltado en verde, y el que tiene menos está resaltado en rojo.",
+      "options": [
+        { "option_id": "a", "text": "El resaltado rojo/verde enmarca esto como un ranking de desempeño en lugar de identificar quién necesita ayuda — podría percibirse como punitivo" },
+        { "option_id": "b", "text": "El gráfico no considera la complejidad de los tickets — alguien que cierra menos pero más difíciles podría estar desempeñándose bien" },
+        { "option_id": "c", "text": "No hay comparación con un promedio o volumen esperado — 'menor cantidad' no significa 'bajo rendimiento' sin una línea base" },
+        { "option_id": "d", "text": "El gráfico debería usar una gráfica de líneas en lugar de barras" },
+        { "option_id": "e", "text": "El informe no muestra si quienes cerraron menos son nuevos, trabajan medio tiempo o están de licencia — contexto que afecta directamente el objetivo del gerente" },
+        { "option_id": "f", "text": "El gráfico debería incluir tickets abiertos, no solo tickets cerrados" }
+      ]
+    },
+    {
+      "question_id": "s5-q02",
+      "prompt": "Un equipo produjo un documento resumen. Revisa el objetivo y el resultado, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Resumir la pérdida de clientes del último trimestre para que la dirección pueda decidir si invertir en un programa de retención.'\n\n**Resultado producido:** Un resumen de una página que dice: 'Perdimos 340 clientes el trimestre pasado, lo que representa una tasa de abandono del 12%. La mayoría de las cancelaciones ocurrieron en los primeros 30 días de suscripción. Las razones más citadas en las encuestas de salida incluyen precio (45%), falta de funcionalidades (30%) y soporte deficiente (25%). Recomendamos invertir en un programa de retención de inmediato.'",
+      "options": [
+        { "option_id": "a", "text": "La recomendación es prematura — el objetivo era proporcionar datos para que la dirección decida, no tomar la decisión por ellos" },
+        { "option_id": "b", "text": "No hay comparación con trimestres anteriores — la dirección no puede saber si el 12% está mejorando, es estable o está empeorando" },
+        { "option_id": "c", "text": "Los porcentajes de la encuesta de salida suman 100%, lo que sugiere que fueron opciones de selección única — los clientes podrían haber tenido múltiples razones" },
+        { "option_id": "d", "text": "Un 12% de abandono es demasiado alto e indica un problema serio" },
+        { "option_id": "e", "text": "No hay desglose del impacto en ingresos — perder 340 clientes de bajo valor es diferente a perder 340 cuentas empresariales" },
+        { "option_id": "f", "text": "El resumen debería incluir gráficos y visualizaciones" }
+      ]
+    },
+    {
+      "question_id": "s5-q03",
+      "prompt": "Se utilizó una herramienta de IA para generar un plan de implementación. Revisa el objetivo y el resultado de la IA, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Crear un plan para migrar el sistema de correo electrónico de nuestra empresa del proveedor actual a uno nuevo. Tenemos 800 empleados en 3 oficinas. La migración debe realizarse durante un fin de semana festivo para minimizar la interrupción.'\n\n**Plan generado por IA:**\n1. Crear cuentas para los 800 empleados en el nuevo sistema.\n2. Exportar todos los datos de buzones (correos, contactos, calendarios) del sistema actual.\n3. Importar todos los datos al nuevo sistema.\n4. Cambiar el dominio de la empresa para que apunte al nuevo proveedor de correo.\n5. Enviar un correo a todo el personal anunciando que el nuevo sistema está activo.\n6. Proporcionar una guía de inicio rápido para los empleados.\n7. Desactivar el sistema de correo anterior.",
+      "options": [
+        { "option_id": "a", "text": "No hay paso de pruebas ni verificación — el plan pasa directamente de la importación al cambio a producción" },
+        { "option_id": "b", "text": "El paso 5 envía el anuncio a través del nuevo sistema — pero los empleados aún no saben cómo acceder a él (el paso 6 viene después)" },
+        { "option_id": "c", "text": "No hay plan de reversión — si la migración falla durante el fin de semana festivo, no hay forma de volver atrás" },
+        { "option_id": "d", "text": "El plan debería usar un enfoque por fases en lugar de migrar a todos a la vez" },
+        { "option_id": "e", "text": "No se menciona la verificación de integridad de datos después de la importación — correos, contactos o elementos del calendario podrían faltar o estar corruptos" },
+        { "option_id": "f", "text": "El paso 7 desactiva el sistema anterior de inmediato — sin período de superposición para detectar elementos perdidos en la migración" },
+        { "option_id": "g", "text": "No hay comunicación previa a la migración — los empleados llegarán después del fin de semana a un sistema del que no fueron advertidos" }
+      ]
+    },
+    {
+      "question_id": "s5-q04",
+      "prompt": "Un analista produjo una comparación para informar una decisión de selección de proveedor. Revisa el objetivo y el resultado, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Comparar tres proveedores de catering para nuestro evento corporativo anual (200 personas) y recomendar la mejor opción basándose en costo, calidad y confiabilidad.'\n\n**Resultado producido:** Una tabla que muestra:\n| Proveedor | Costo por persona | Calificación en línea |\n|-----------|-------------------|----------------------|\n| Proveedor A | $45 | 4.2/5 |\n| Proveedor B | $38 | 4.5/5 |\n| Proveedor C | $52 | 4.8/5 |\n\nRecomendación: 'El Proveedor B ofrece la mejor combinación de bajo costo y alta calificación.'",
+      "options": [
+        { "option_id": "a", "text": "La calificación en línea es un indicador indirecto de calidad, no una medida directa — no te dice sobre el tipo de eventos que han atendido" },
+        { "option_id": "b", "text": "La confiabilidad era un criterio declarado pero está completamente ausente de la comparación" },
+        { "option_id": "c", "text": "No hay información sobre qué incluye el costo por persona — algunos proveedores pueden incluir montaje, personal y equipamiento mientras otros no" },
+        { "option_id": "d", "text": "La tabla debería incluir más de tres proveedores para una comparación más completa" },
+        { "option_id": "e", "text": "La recomendación no justifica por qué costo y calificación tienen el mismo peso — el objetivo no priorizó uno sobre el otro" },
+        { "option_id": "f", "text": "No se menciona si algún proveedor tiene capacidad para 200 personas o disponibilidad en la fecha del evento" }
+      ]
+    },
+    {
+      "question_id": "s5-q05",
+      "prompt": "Se le pidió a un asistente de IA que creara una estimación de presupuesto. Revisa el objetivo y el resultado de la IA, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Estimar el costo anual de abrir una segunda ubicación de almacén, para incluirlo en la propuesta de presupuesto del próximo año.'\n\n**Estimación generada por IA:**\n- Arrendamiento: $180,000/año (basado en tarifas promedio de arrendamiento industrial)\n- Personal: $520,000/año (10 trabajadores de almacén a $52K promedio)\n- Servicios públicos: $36,000/año\n- Seguros: $24,000/año\n- Equipamiento: $150,000 (compra única)\n- **Costo anual total: $910,000**\n\nNota: 'Las cifras se basan en promedios nacionales y pueden variar según la región.'",
+      "options": [
+        { "option_id": "a", "text": "El total suma incorrectamente el costo único de equipamiento ($150K) al total anual — confundiendo gasto de capital con gastos operativos" },
+        { "option_id": "b", "text": "Usar promedios nacionales para una decisión específica de ubicación es demasiado impreciso — el presupuesto debería usar los costos reales de la región objetivo" },
+        { "option_id": "c", "text": "No se menciona personal de gestión o supervisión — 10 trabajadores de almacén sin supervisión es poco realista" },
+        { "option_id": "d", "text": "La estimación es demasiado alta — las operaciones de almacén no cuestan tanto" },
+        { "option_id": "e", "text": "Faltan costos recurrentes como mantenimiento, insumos, seguridad y tecnología/sistemas para la nueva ubicación" },
+        { "option_id": "f", "text": "No hay cronograma de arranque — el primer año probablemente tiene costos parciales ya que el almacén no estará completamente operativo desde el primer día" },
+        { "option_id": "g", "text": "El costo de personal debería incluir beneficios e impuestos de nómina además del salario — $52K por trabajador probablemente subestima el costo real" }
+      ]
+    },
+    {
+      "question_id": "s5-q06",
+      "prompt": "Revisa el objetivo y el resultado a continuación. Explica qué tiene de malo este resultado y por qué no cumple realmente con el objetivo declarado.",
+      "context": "**Objetivo:** 'Crear un informe de finalización de capacitación para confirmar que todos los empleados del equipo de atención al cliente han completado la capacitación obligatoria de cumplimiento antes de la fecha límite regulatoria.'\n\n**Resultado producido:** Una hoja de cálculo que muestra:\n- Columna A: Nombre del empleado\n- Columna B: Departamento\n- Columna C: Nombre del módulo de capacitación\n- Columna D: Fecha de finalización\n\nLa hoja de cálculo contiene 142 filas de registros de capacitación completada. Una nota al inicio dice: '142 capacitaciones completadas registradas a la fecha.'",
+      "constraints": {
+        "placeholder_text": "Explica qué problemas tiene este resultado y por qué impiden que cumpla con el objetivo declarado..."
+      }
+    },
+    {
+      "question_id": "s5-q07",
+      "prompt": "Se le pidió a un asistente de IA que analizara datos y produjo el resultado a continuación. Explica qué tiene de malo este análisis y por qué la conclusión puede ser engañosa.",
+      "context": "**Objetivo:** 'Analizar los resultados de nuestra encuesta de satisfacción de empleados e indicarnos qué departamento tiene el mayor problema de moral para priorizar la intervención.'\n\n**Análisis generado por IA:**\n'Después de analizar los resultados de la encuesta, el departamento de Marketing tiene el puntaje promedio de satisfacción más bajo con 3.1 de 5. Todos los demás departamentos obtuvieron entre 3.6 y 4.2. El puntaje de Marketing está 0.5 puntos por debajo del siguiente departamento más bajo.\n\nRecomendación: Enfocar los esfuerzos de intervención en el departamento de Marketing de inmediato.'\n\n**Contexto adicional que puedes ver (la IA tenía acceso a estos datos):**\n- Departamento de Marketing: 4 empleados respondieron (de 6 en total)\n- Ingeniería: 45 empleados respondieron (de 50 en total)\n- Ventas: 38 empleados respondieron (de 40 en total)\n- Operaciones: 30 empleados respondieron (de 32 en total)",
+      "constraints": {
+        "placeholder_text": "Explica qué tiene de malo este análisis y por qué la conclusión puede ser engañosa..."
+      }
+    },
+    {
+      "question_id": "s5-q08",
+      "prompt": "Revisa el objetivo y el resultado a continuación. Explica qué tiene de malo este resultado y por qué no cumple con el objetivo declarado.",
+      "context": "**Objetivo:** 'Identificar cuál de nuestras 5 líneas de productos es la más rentable para decidir dónde aumentar la inversión.'\n\n**Resultado producido:** Una tabla que muestra:\n| Línea de producto | Ingresos totales (Último año) |\n|-------------------|------------------------------|\n| Producto A | $2.4M |\n| Producto B | $1.8M |\n| Producto C | $3.1M |\n| Producto D | $950K |\n| Producto E | $2.7M |\n\nConclusión: 'El Producto C es la línea de productos más rentable con $3.1M.'",
+      "constraints": {
+        "placeholder_text": "Explica qué problemas tiene este resultado y por qué impiden que cumpla con el objetivo declarado..."
+      }
+    },
+    {
+      "question_id": "s5-q09",
+      "prompt": "Se le pidió a una IA que redactara una política. Revisa el objetivo y el resultado de la IA, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Redactar una política de trabajo desde casa para nuestra empresa. Tenemos 200 empleados en ingeniería, ventas, operaciones y soporte. Queremos flexibilidad pero necesitamos asegurar la colaboración y la rendición de cuentas.'\n\n**Política generada por IA:**\n'Todos los empleados pueden trabajar desde casa hasta 3 días por semana. Los empleados deben estar disponibles en línea durante las horas centrales (10am–3pm). Los gerentes pueden requerir asistencia presencial para reuniones de equipo. El desempeño se evaluará con base en resultados, no en horas registradas. Los empleados deben contar con una conexión a internet confiable y un espacio de trabajo dedicado en casa.'",
+      "options": [
+        { "option_id": "a", "text": "No se especifica zona horaria para las horas centrales — problemático si la empresa tiene empleados en diferentes zonas horarias" },
+        { "option_id": "b", "text": "No hay distinción entre roles — operaciones y soporte pueden necesitar más presencia en oficina que ingeniería" },
+        { "option_id": "c", "text": "La política debería requerir que los empleados trabajen desde la oficina 5 días a la semana para mejor colaboración" },
+        { "option_id": "d", "text": "'Evaluación basada en resultados' se declara pero no existe un marco para medirlo — esto podría crear inconsistencia entre gerentes" },
+        { "option_id": "e", "text": "No se menciona cómo manejar los días en que alguien debe ir a la oficina pero ya programó sus días de trabajo remoto" },
+        { "option_id": "f", "text": "No se menciona equipamiento, ergonomía ni si la empresa proporciona algo para el espacio de trabajo en casa" },
+        { "option_id": "g", "text": "No hay proceso para solicitar excepciones — ¿qué pasa si alguien necesita más de 3 días de trabajo remoto por una condición médica o responsabilidades de cuidado?" }
+      ]
+    },
+    {
+      "question_id": "s5-q10",
+      "prompt": "Un asistente de IA produjo el siguiente cronograma de proyecto. Explica qué tiene de malo y qué riesgos generan las fallas.",
+      "context": "**Objetivo:** 'Crear un cronograma para lanzar nuestro nuevo programa de incorporación de clientes. Lo necesitamos activo en 8 semanas. El programa incluye materiales de capacitación, una secuencia de correos de bienvenida, una lista de verificación de incorporación para los ejecutivos de cuenta, y una encuesta de retroalimentación enviada 30 días después de la incorporación.'\n\n**Cronograma generado por IA:**\n- Semana 1–2: Escribir materiales de capacitación y secuencia de correos de bienvenida.\n- Semana 3–4: Diseñar lista de verificación de incorporación y encuesta de retroalimentación.\n- Semana 5–6: Revisar todos los materiales con las partes interesadas e incorporar comentarios.\n- Semana 7: Piloto con 5 nuevos clientes.\n- Semana 8: Lanzamiento para todos los nuevos clientes.\n\nNota: 'Todas las tareas pueden completarse dentro de la ventana de 8 semanas.'",
+      "constraints": {
+        "placeholder_text": "Explica qué problemas tiene este cronograma y qué riesgos generan..."
+      }
+    },
+    {
+      "question_id": "s5-q11",
+      "prompt": "Se le pidió a un asistente de IA que escribiera un documento de requisitos. Revisa el objetivo y el resultado de la IA, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Escribir un documento de requisitos para migrar nuestro sistema de tickets de soporte al cliente del Proveedor A al Proveedor B. Tenemos 15 agentes de soporte, 3 años de historial de tickets y SLAs activos con clientes empresariales que no pueden interrumpirse.'\n\n**Documento de requisitos generado por IA (extracto):**\n\n**1. Migración de datos**\n- Migrar todos los registros de tickets (abiertos y cerrados) del Proveedor A al Proveedor B\n- Preservar metadatos de tickets: responsable, estado, prioridad, marcas de tiempo, ID de cliente\n- Mapear los estados de tickets del Proveedor A a los equivalentes del Proveedor B\n\n**2. Configuración de agentes**\n- Crear cuentas para los 15 agentes en el Proveedor B\n- Replicar asignaciones de equipos y reglas de enrutamiento\n- Configurar permisos y niveles de acceso de agentes\n\n**3. Configuración de SLA**\n- Configurar temporizadores de SLA en el Proveedor B que coincidan con los objetivos actuales de respuesta/resolución\n- Habilitar notificaciones de incumplimiento de SLA\n\n**4. Transición**\n- Cambiar el enrutamiento de tickets entrantes del Proveedor A al Proveedor B\n- Verificar que todos los agentes puedan iniciar sesión y acceder al nuevo sistema\n- Monitorear durante 48 horas posteriores a la transición\n\n**5. Desmantelamiento**\n- Archivar datos del Proveedor A\n- Cancelar la suscripción del Proveedor A",
+      "options": [
+        { "option_id": "a", "text": "No se menciona la migración de tickets en curso — los tickets abiertos con SLAs activos perderán su tiempo transcurrido y contexto durante la transición" },
+        { "option_id": "b", "text": "El documento asume que el Proveedor B puede replicar exactamente el flujo de trabajo del Proveedor A — no hay análisis de brechas entre las capacidades de ambas plataformas" },
+        { "option_id": "c", "text": "No hay plan de reversión — si el Proveedor B falla durante la transición, no hay ruta definida para volver al Proveedor A" },
+        { "option_id": "d", "text": "La migración debería usar un formato de archivo diferente para mejor compatibilidad" },
+        { "option_id": "e", "text": "No hay paso de pruebas ni validación — el plan pasa de la configuración directamente a la transición a producción sin verificar la integridad de los datos ni el correcto funcionamiento de los flujos" },
+        { "option_id": "f", "text": "Falta la comunicación con los clientes — los clientes empresariales con SLAs activos no son notificados sobre la migración ni sus posibles impactos" },
+        { "option_id": "g", "text": "Falta la capacitación de agentes — el documento crea cuentas pero no aborda cómo los agentes aprenderán la interfaz y los flujos del nuevo sistema" }
+      ]
+    },
+    {
+      "question_id": "s5-q12",
+      "prompt": "Se le pidió a un asistente de IA que analizara datos y produjo el resultado a continuación. Explica qué tiene de malo el análisis y por qué la conclusión no se deriva de la evidencia.",
+      "context": "**Objetivo:** 'Analizar nuestros datos de contratación de los últimos 2 años e indicarnos qué está causando el aumento en nuestro tiempo promedio de contratación para que podamos solucionarlo.'\n\n**Análisis generado por IA:**\n'Después de analizar 340 contrataciones en los últimos 2 años, el tiempo promedio de contratación ha aumentado de 28 días a 41 días. Los datos muestran una fuerte correlación entre el aumento en el tiempo de contratación y la introducción de una tercera ronda de entrevistas, que se agregó hace 18 meses. Antes de la tercera ronda, el tiempo promedio de contratación era de 29 días; después, subió a 39 días.\n\nLa tercera ronda de entrevistas agrega un promedio de 8 días calendario al proceso debido a la complejidad de programación.\n\nConclusión: La tercera ronda de entrevistas es el principal impulsor del aumento en el tiempo de contratación. Recomendación: Eliminar la tercera ronda de entrevistas para reducir el tiempo de contratación a aproximadamente 28 días.'",
+      "constraints": {
+        "placeholder_text": "Explica qué tiene de malo este análisis y por qué la conclusión no se deriva de la evidencia..."
+      }
+    },
+    {
+      "question_id": "s5-q13",
+      "prompt": "Se le pidió a un asistente de IA que creara un plan. Revisa el objetivo y el resultado de la IA, luego selecciona TODOS los problemas que puedas identificar.",
+      "context": "**Objetivo:** 'Crear un plan de 2 semanas para incorporar a un nuevo coordinador de marketing. Debe estar configurado con las herramientas, presentado al equipo y listo para manejar su primera campaña para el día 10.'\n\n**Plan de incorporación generado por IA:**\n\n**Semana 1:**\n- Día 1: Reunión de bienvenida con el gerente. Configurar laptop, correo y Slack.\n- Día 2: Orientación con Recursos Humanos. Revisar manual de la empresa y beneficios.\n- Día 3: Reuniones de presentación con cada jefe de departamento (Ventas, Producto, Ingeniería, Finanzas, Legal, Operaciones).\n- Día 4: Capacitación en la plataforma de automatización de marketing (HubSpot).\n- Día 5: Capacitación en herramientas de analítica (Google Analytics, Looker).\n- Día 5: Asignar primera campaña — secuencia de correos de nutrición para el lanzamiento de producto del Q3.\n\n**Semana 2:**\n- Día 6–7: Elaborar estrategia y textos de la campaña.\n- Día 8: Sesión de revisión con el gerente.\n- Día 9: Revisar y finalizar la campaña.\n- Día 10: Lanzar campaña.\n- Día 11–14: Monitorear métricas de desempeño y optimizar.",
+      "options": [
+        { "option_id": "a", "text": "El día 3 programa reuniones con 6 jefes de departamento en un solo día — probablemente son 4–6 horas de reuniones consecutivas sin tiempo para procesar o tomar notas" },
+        { "option_id": "b", "text": "El plan asigna una campaña real (lanzamiento de producto del Q3) como primera tarea — es un entregable de alto impacto para alguien que aún no ha aprendido la voz de marca, la audiencia ni el historial de campañas del equipo" },
+        { "option_id": "c", "text": "La capacitación en herramientas de los días 4–5 es solo 2 días, lo que probablemente es insuficiente para alguien nuevo en estas plataformas específicas" },
+        { "option_id": "d", "text": "No hay introducción a las campañas existentes del equipo, plantillas, guías de marca ni datos de rendimiento pasado — se espera que la nueva persona cree una campaña sin ver cómo trabaja el equipo" },
+        { "option_id": "e", "text": "El plan debería incluir más actividades sociales para ayudar a la nueva persona a sentirse bienvenida" },
+        { "option_id": "f", "text": "La campaña se asigna el día 5 — el mismo día de la capacitación en analítica — sin dejar tiempo para asimilar la capacitación antes de tener que aplicarla" },
+        { "option_id": "g", "text": "No se menciona acceso al sistema de gestión de proyectos del equipo de marketing, calendario de contenido ni flujos de trabajo existentes — la persona recibe herramientas pero no contexto" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "auth": {
+    "email_label": "Email address",
+    "email_placeholder": "you@company.com",
+    "otp_sent": "A verification code has been sent to your email.",
+    "otp_label": "Verification code",
+    "otp_submit": "Verify",
+    "otp_expired": "Code expired. Request a new one.",
+    "otp_invalid": "Invalid code. Try again.",
+    "domain_rejected": "This assessment is currently available for team members at {domains}. Contact your administrator if you believe you should have access.",
+    "login_button": "Sign in",
+    "logout_button": "Sign out"
+  },
+  "briefing": {
+    "welcome_title": "Welcome to the CORE Assessment",
+    "welcome_message": "This assessment measures how you think, not what you know. There are no trick questions and no specialized knowledge required.",
+    "what_to_expect_title": "What to expect",
+    "what_to_expect_sections": "5 sections, approximately 34 questions total",
+    "what_to_expect_formats": "Mix of question types: single-select, multi-select, drag-to-order, and short written responses",
+    "what_to_expect_duration": "Estimated duration: 45–50 minutes",
+    "rules_title": "Before you begin",
+    "rule_no_back": "You cannot go back to previous questions once you move forward",
+    "rule_timers": "Some questions have visible timers; others have a hidden time limit — you'll get a brief warning before time runs out",
+    "rule_auto_advance": "If time runs out on a question, your current response is submitted automatically",
+    "rule_single_sitting": "The assessment must be completed in a single sitting",
+    "rule_no_resources": "Please do not use external resources or AI tools during the assessment",
+    "begin_button": "Begin assessment"
+  },
+  "section_intro": {
+    "questions_count": "This section has {count} questions and takes approximately {minutes} minutes.",
+    "format_note": "You'll see {types} questions in this section.",
+    "begin_section": "Begin section",
+    "tone_s1": "These are quick questions — trust your instincts.",
+    "tone_s4": "Some questions are quick, others require deeper analysis.",
+    "tone_s3": "Read carefully — the details matter.",
+    "tone_s2": "Take your time. Think about the full picture before answering.",
+    "tone_s5": "Compare what was asked for with what was produced."
+  },
+  "question": {
+    "next_button": "Next",
+    "select_all": "Select ALL options that apply",
+    "drag_instruction": "Drag the steps into the correct order",
+    "word_counter": "{count} / {limit} words",
+    "char_limit_reached": "Limit reached",
+    "selected_count": "{count} selected",
+    "position_label": "Position {n}"
+  },
+  "timer": {
+    "seconds_remaining": "{seconds} seconds remaining",
+    "time_warning": "Time is almost up"
+  },
+  "section_transition": {
+    "section_complete": "Section complete.",
+    "take_a_moment": "Take a moment. When you're ready, the next section is {section_name}.",
+    "continue_button": "Continue"
+  },
+  "completion": {
+    "submitted_title": "Your assessment has been submitted.",
+    "submitted_message": "Your responses are being evaluated. Results will be reviewed by your administrator.",
+    "no_scores_note": "You will not see scores on this screen.",
+    "thank_you": "Thank you for completing the CORE Assessment.",
+    "return_button": "Return to home"
+  },
+  "errors": {
+    "connection_lost": "Connection lost — your responses are saved locally and will sync when the connection is restored.",
+    "session_timeout": "Your assessment session expired and was submitted with the responses you completed.",
+    "resuming": "Resuming your assessment...",
+    "leave_warning": "Your assessment is in progress. Are you sure you want to leave?",
+    "server_error": "We're having trouble submitting your response. It has been saved locally. Wait a moment and try again.",
+    "other_device": "This assessment is already in progress on another device."
+  },
+  "language": {
+    "selector_label": "Language",
+    "en": "English",
+    "es": "Español"
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "section_id": "section-4-logical-reasoning",
+  "name": "Razonamiento Lógico Bajo Restricciones",
+  "instructions": "Esta sección evalúa tu capacidad para razonar con reglas condicionales, restricciones y lógica de múltiples pasos. Algunas preguntas son deducciones rápidas con un temporizador visible — confía en tu razonamiento y decide. Otras son problemas más profundos con más tiempo. En las preguntas escritas, explica brevemente tu razonamiento. No puedes volver a preguntas anteriores.",
+  "questions": [
+    {
+      "question_id": "s4-q01",
+      "prompt": "Una política de la empresa establece: 'Todos los gastos superiores a $200 requieren aprobación del gerente.' Jamie presentó un gasto de $180 sin aprobación del gerente. ¿Cuál afirmación es verdadera?",
+      "options": [
+        { "option_id": "a", "text": "Jamie violó la política" },
+        { "option_id": "b", "text": "Jamie cumplió con la política" },
+        { "option_id": "c", "text": "Jamie debería haber obtenido aprobación por precaución" },
+        { "option_id": "d", "text": "No hay suficiente información para determinar si Jamie cumplió con la política" }
+      ]
+    },
+    {
+      "question_id": "s4-q02",
+      "prompt": "Si lo siguiente es verdadero: 'Todo proyecto que está atrasado recibe una revisión de estado,' y el Proyecto X NO recibió una revisión de estado — ¿qué puedes concluir?",
+      "options": [
+        { "option_id": "a", "text": "El Proyecto X está al día" },
+        { "option_id": "b", "text": "El Proyecto X no está atrasado" },
+        { "option_id": "c", "text": "El Proyecto X fue cancelado" },
+        { "option_id": "d", "text": "El proceso de revisión está fallando" }
+      ]
+    },
+    {
+      "question_id": "s4-q03",
+      "prompt": "Un gerente argumenta: 'Contratamos 10 personas nuevas el trimestre pasado y los ingresos subieron. Por lo tanto, contratar más personas aumenta los ingresos.' ¿Cuál es la falla en este razonamiento?",
+      "options": [
+        { "option_id": "a", "text": "10 personas es una muestra demasiado pequeña para sacar conclusiones" },
+        { "option_id": "b", "text": "Correlación no demuestra causalidad — los ingresos pueden haber aumentado por otras razones" },
+        { "option_id": "c", "text": "Los ingresos siempre suben con el tiempo debido a la inflación" },
+        { "option_id": "d", "text": "El gerente debería haber comparado los ingresos por empleado" }
+      ]
+    },
+    {
+      "question_id": "s4-q04",
+      "prompt": "Regla: 'Los documentos marcados como Confidencial solo pueden compartirse con empleados que hayan firmado un NDA.' Lee ha firmado un NDA. ¿Puede Lee acceder a un documento Confidencial?",
+      "options": [
+        { "option_id": "a", "text": "Sí — Lee cumple el requisito" },
+        { "option_id": "b", "text": "No — firmar un NDA es necesario pero puede no ser suficiente" },
+        { "option_id": "c", "text": "Sí — cualquier persona con un NDA automáticamente obtiene acceso" },
+        { "option_id": "d", "text": "No hay suficiente información" }
+      ]
+    },
+    {
+      "question_id": "s4-q05",
+      "prompt": "Tres equipos presentaron propuestas. Las reglas establecen: 'La propuesta con el menor costo gana, a menos que obtenga menos de 70 en calidad, en cuyo caso queda descalificada.' Equipo A: $50K, calidad 65. Equipo B: $80K, calidad 90. Equipo C: $60K, calidad 75. ¿Quién gana?",
+      "options": [
+        { "option_id": "a", "text": "Equipo A — menor costo" },
+        { "option_id": "b", "text": "Equipo B — mayor calidad" },
+        { "option_id": "c", "text": "Equipo C — menor costo entre las propuestas calificadas" },
+        { "option_id": "d", "text": "No se puede determinar un ganador con esta información" }
+      ]
+    },
+    {
+      "question_id": "s4-q06",
+      "prompt": "Dadas las siguientes reglas para un programa de capacitación, ¿qué empleado es elegible para asistir?",
+      "context": "Reglas:\n1. Los empleados deben tener al menos 1 año de antigüedad en la empresa.\n2. Los empleados deben haber completado el curso previo en línea.\n3. Los gerentes pueden nominar a empleados que no hayan completado el curso previo, pero solo si el empleado tiene 3 o más años de experiencia.\n4. Los contratistas no son elegibles independientemente de su antigüedad.\n\nEmpleados:\n- Dana: 2 años de antigüedad, completó el curso previo, empleada de tiempo completo\n- Eli: 4 años de antigüedad, NO completó el curso previo, empleado de tiempo completo, nominado por su gerente\n- Fran: 6 meses de antigüedad, completó el curso previo, empleada de tiempo completo\n- Glen: 3 años de antigüedad, completó el curso previo, contratista",
+      "options": [
+        { "option_id": "a", "text": "Solo Dana y Eli" },
+        { "option_id": "b", "text": "Solo Dana" },
+        { "option_id": "c", "text": "Dana, Eli y Glen" },
+        { "option_id": "d", "text": "Los cuatro empleados" }
+      ]
+    },
+    {
+      "question_id": "s4-q07",
+      "prompt": "Una empresa está asignando 4 empleados (Kim, Leo, Mia, Noor) a 4 proyectos diferentes (P1, P2, P3, P4). Dadas las restricciones, ¿cuál asignación es válida?",
+      "context": "Restricciones:\n1. Kim no puede trabajar en P2 ni P4.\n2. Leo debe trabajar en P1 o P3.\n3. Si Mia trabaja en P2, entonces Noor debe trabajar en P3.\n4. Cada persona trabaja en exactamente un proyecto, y cada proyecto tiene exactamente una persona.",
+      "options": [
+        { "option_id": "a", "text": "Kim→P1, Leo→P3, Mia→P2, Noor→P4" },
+        { "option_id": "b", "text": "Kim→P3, Leo→P1, Mia→P2, Noor→P4" },
+        { "option_id": "c", "text": "Kim→P1, Leo→P3, Mia→P4, Noor→P2" },
+        { "option_id": "d", "text": "Kim→P4, Leo→P1, Mia→P2, Noor→P3" }
+      ]
+    },
+    {
+      "question_id": "s4-q08",
+      "prompt": "Con base en las siguientes afirmaciones, ¿qué puedes concluir?",
+      "context": "Afirmaciones:\n1. Todos los pedidos realizados antes del mediodía se envían el mismo día.\n2. Los pedidos que requieren empaque personalizado nunca se envían el mismo día.\n3. El pedido #445 fue realizado a las 10:30 AM y requiere empaque personalizado.",
+      "options": [
+        { "option_id": "a", "text": "El pedido #445 se enviará el mismo día porque fue realizado antes del mediodía" },
+        { "option_id": "b", "text": "El pedido #445 NO se enviará el mismo día debido al empaque personalizado" },
+        { "option_id": "c", "text": "Las afirmaciones contienen una contradicción — las reglas entran en conflicto para el pedido #445" },
+        { "option_id": "d", "text": "No hay suficiente información para determinar cuándo se enviará el pedido #445" }
+      ]
+    },
+    {
+      "question_id": "s4-q09",
+      "prompt": "Un comité debe seleccionar exactamente 3 miembros de un grupo de 6 candidatos. Dadas las restricciones, ¿cuál equipo es válido?",
+      "context": "Candidatos: Ava, Ben, Cal, Dee, Eve, Fin\n\nRestricciones:\n1. Si Ava es seleccionada, Ben también debe ser seleccionado.\n2. Si Cal es seleccionado, Dee no puede ser seleccionada.\n3. Eve y Fin no pueden ser seleccionados ambos.\n4. Ben y Cal no pueden ser seleccionados ambos.",
+      "options": [
+        { "option_id": "a", "text": "Ava, Ben, Eve" },
+        { "option_id": "b", "text": "Ben, Cal, Eve" },
+        { "option_id": "c", "text": "Ava, Cal, Dee" },
+        { "option_id": "d", "text": "Cal, Dee, Fin" }
+      ]
+    },
+    {
+      "question_id": "s4-q10",
+      "prompt": "Un líder de equipo dice: 'Ninguno de nuestros proyectos atrasados tuvo una evaluación de riesgos inicial. Entonces, si hacemos evaluaciones de riesgos, nuestros proyectos no se atrasarán.' ¿Es válido este razonamiento?",
+      "options": [
+        { "option_id": "a", "text": "Sí — la evidencia muestra que las evaluaciones de riesgos previenen atrasos" },
+        { "option_id": "b", "text": "No — la ausencia de evaluaciones de riesgos en los proyectos atrasados no demuestra que las habrían prevenido" },
+        { "option_id": "c", "text": "Sí — es una precaución razonable basada en los datos" },
+        { "option_id": "d", "text": "No — las evaluaciones de riesgos causan atrasos porque toman tiempo" }
+      ]
+    },
+    {
+      "question_id": "s4-q11",
+      "prompt": "Un almacén procesa pedidos en orden de prioridad. Dadas las reglas y la cola actual, ¿cuál pedido se envía primero?",
+      "context": "Reglas de prioridad (se aplican en orden — la primera regla que diferencia, define):\n1. Los pedidos express se envían antes que los pedidos estándar.\n2. Entre pedidos de la misma velocidad, los pedidos con artículos perecederos se envían primero.\n3. Entre pedidos aún empatados, el pedido realizado más temprano se envía primero.\n\nCola actual:\n- Pedido A: Estándar, no perecedero, realizado a las 9:00 AM\n- Pedido B: Express, no perecedero, realizado a las 10:30 AM\n- Pedido C: Estándar, perecedero, realizado a las 8:15 AM\n- Pedido D: Express, perecedero, realizado a las 11:00 AM\n- Pedido E: Express, no perecedero, realizado a las 9:45 AM",
+      "options": [
+        { "option_id": "a", "text": "Pedido B" },
+        { "option_id": "b", "text": "Pedido D" },
+        { "option_id": "c", "text": "Pedido E" },
+        { "option_id": "d", "text": "Pedido C" }
+      ]
+    },
+    {
+      "question_id": "s4-q12",
+      "prompt": "Lee el argumento a continuación. En 2 a 4 oraciones, explica si la conclusión se deriva lógicamente de la evidencia — y si no, identifica la falla.",
+      "context": "Argumento: 'Las quejas de nuestros clientes disminuyeron un 40% después de que rediseñamos la página de soporte en nuestro sitio web. Esto demuestra que el nuevo diseño es mejor para resolver los problemas de los clientes.'",
+      "constraints": {
+        "placeholder_text": "Indica si la conclusión es lógicamente válida y explica por qué o por qué no..."
+      }
+    },
+    {
+      "question_id": "s4-q13",
+      "prompt": "Lee el escenario y la conclusión propuesta. En 2 a 4 oraciones, explica si la conclusión está justificada — y qué información adicional necesitarías para tener confianza en ella.",
+      "context": "Escenario: Una empresa probó dos versiones de su página de pago. La Versión A (la original) tuvo una tasa de conversión de 3.2% durante 4 semanas con 50,000 visitantes. La Versión B (el nuevo diseño) tuvo una tasa de conversión de 3.8% durante 1 semana con 5,000 visitantes.\n\nConclusión: 'La Versión B es mejor. Deberíamos cambiar a ella de inmediato.'",
+      "constraints": {
+        "placeholder_text": "Evalúa la conclusión y explica qué falta..."
+      }
+    },
+    {
+      "question_id": "s4-q14",
+      "prompt": "Lee la política y la situación a continuación. En 2 a 4 oraciones, explica si la acción tomada fue correcta según las reglas, e identifica cualquier ambigüedad en la política que dificulte determinarlo.",
+      "context": "Política: 'Los empleados que trabajen más de 8 horas en un solo día tienen derecho a pago de horas extras a 1.5 veces su tarifa por hora. Las horas extras deben ser pre-aprobadas por un supervisor.'\n\nSituación: Alex trabajó 10 horas el martes para cumplir con una fecha límite de un cliente. El supervisor de Alex estaba ausente por enfermedad y no estaba disponible. Alex no obtuvo pre-aprobación. El gerente de Alex negó el pago de horas extras, citando la falta de pre-aprobación.",
+      "constraints": {
+        "placeholder_text": "Evalúa la situación según la política e identifica cualquier ambigüedad..."
+      }
+    },
+    {
+      "question_id": "s4-q15",
+      "prompt": "Cinco tareas (T1–T5) deben completarse. Dadas las reglas de dependencia, ¿cuál es la posición más temprana que T4 puede ocupar en la secuencia?",
+      "context": "Dependencias:\n- T1 debe completarse antes que T2.\n- T3 debe completarse antes que T4.\n- T2 debe completarse antes que T5.\n- T1 debe completarse antes que T3.\n- T4 no tiene otras dependencias más allá de T3.",
+      "options": [
+        { "option_id": "a", "text": "Posición 2" },
+        { "option_id": "b", "text": "Posición 3" },
+        { "option_id": "c", "text": "Posición 4" },
+        { "option_id": "d", "text": "Posición 5" }
+      ]
+    }
+  ]
+}

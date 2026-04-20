@@ -48,6 +48,7 @@ All three organizations share the assessment — their email domains (`enesol.ai
 | Assessment content | 5 sections, 70 base questions in pool, 34 served per session, ~48 min estimated duration |
 | Question formats | single_select (32), multi_select (16), drag_to_order (6), open_ended (16) |
 | Web application | Interactive delivery with per-question timers, auto-advance, session management, no back-navigation |
+| Languages | English (canonical) + Spanish (translation overlay). Domain-based defaults. User selectable at login. Single question library with language overlay — not two separate libraries. |
 | Authentication | Email OTP (no passwords), domain-based allowlist, Admin and Test-Taker roles |
 | AI Evaluation Pipeline | 3-step chain: open-ended scoring (Sonnet) → composite aggregation → Responder Profile synthesis (Opus) |
 | Dashboards | Manager/Admin dashboard (ranking, analytics, drill-downs) + Operational dashboard (pipeline health, golden tests), embedded in web app |
@@ -193,9 +194,9 @@ The following are deliberate v1.0 constraints — things the platform intentiona
 
 ---
 
-*Document Version: 1.2*
+*Document Version: 1.3*
 *Created: February 2026*
 *Updated: April 2026*
-*Changes: Questions 67→70, PostgreSQL replaces JSON storage, section order updated, UI Experience Spec added, Design Philosophy added*
+*Changes: Questions 67→70, PostgreSQL replaces JSON storage, section order updated, UI Experience Spec added, Design Philosophy added, multilingual (English + Spanish) added*
 *Organizations: ENESOL.ai | DataForgeTechnologies.com | Datacracy.co*
 *Source: Synthesized from all companion specifications listed in §9*

@@ -17,7 +17,14 @@
     "drag_order_partial_credit_tolerance": 1,
     "total_questions_in_bank": 70,
     "total_questions_per_session": 34,
-    "estimated_session_duration_minutes": 48
+    "estimated_session_duration_minutes": 48,
+    "supported_languages": ["en", "es"],
+    "default_language": "en",
+    "domain_language_defaults": {
+      "evaluacion.datacracy.co": "es",
+      "assessment.dataforgetechnologies.com": "en",
+      "assessment.enesol.ai": "en"
+    }
   },
 
   "sections": [

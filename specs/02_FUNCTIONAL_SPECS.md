@@ -579,6 +579,67 @@ Where `penalty_factor` = 0.25. Minimum score = 0 (no negative scores).
 
 ---
 
+### Feature 0.2.6 — Multilingual Support (English + Spanish)
+
+**Objective:** Deliver the assessment in both English and Spanish using a single canonical question library with a translation overlay, so that Spanish-speaking team members take a cognitively equivalent assessment in their language.
+
+**Spec Source:** FS §5 (content architecture), UI §2 (login flow), assessment-meta.json (`global_settings`)
+
+**Inputs:** `assessment-meta.json` language configuration (`supported_languages`, `default_language`, `domain_language_defaults`). English section files in `content/sections/`. Spanish overlay files in `content/translations/es/`. UI string files in `content/ui-strings/{lang}.json`.
+
+**Outputs:** A fully localized assessment experience where all user-facing text (questions, options, instructions, UI chrome) appears in the selected language.
+
+**Key Requirements:**
+
+**Language selection:**
+- At the login/landing screen, a language selector allows the user to choose English or Spanish.
+- The default language is determined by the domain the user accesses: `evaluacion.datacracy.co` defaults to Spanish; `assessment.dataforgetechnologies.com` and `assessment.enesol.ai` default to English. These mappings come from `assessment-meta.json` `domain_language_defaults`.
+- The user can override the domain default at login. Their choice is stored in the session and persists throughout the assessment.
+- No mid-assessment language switching. Once the assessment begins, the language is locked.
+
+**Content loading — translation overlay pattern:**
+- English section files (`content/sections/*.json`) are the single source of truth. They contain complete question data: prompt, context, options, scoring, rubrics, timer config — everything.
+- Spanish overlay files (`content/translations/es/*.json`) contain ONLY translated fields: `prompt`, `context`, `options[].text`, `items[].text`, `constraints.placeholder_text`, section-level `name` and `instructions`. They are keyed by `question_id` and `option_id`/`item_id` for merging.
+- At assessment load time, the app loads the English base and, if the session language is Spanish, merges the overlay on top. Translated fields replace English fields; all other fields (scoring, timer, rubric, correct answers) remain from the English base.
+- If a translation is missing for any field, fall back to English silently. This ensures a partially-translated assessment is still functional.
+
+**UI chrome — string keys:**
+- All user-facing text in the assessment interface (buttons, labels, instructions, briefing, section intros, timer warnings, completion screen, error messages) comes from `content/ui-strings/{lang}.json`, never hardcoded in components.
+- The UI loads the appropriate string file based on the session language.
+- String files use a flat-ish key structure (e.g., `briefing.welcome_title`, `question.next_button`, `timer.seconds_remaining`).
+- Strings may contain interpolation tokens (e.g., `{count}`, `{section_name}`, `{seconds}`) that the UI replaces at render time.
+
+**Assessment metadata localization:**
+- Section names, short names, and descriptions shown to test-takers are translated via `content/translations/es/assessment-meta-overrides.json`. The app merges these with the English `assessment-meta.json` the same way it merges question translations.
+
+**What stays English-only in v1:**
+- Responder Profiles (admin-only — admins are bilingual)
+- Dashboard (admin-only)
+- Rubric criteria and sample_strong_response (AI-internal)
+- Audit trail and pipeline metadata
+- `explanation` fields (internal reference)
+
+**AI scoring of Spanish responses:**
+- Open-ended responses written in Spanish are scored by the same AI pipeline using the same English rubric criteria. The scoring prompt must handle cross-language evaluation — Claude evaluates meaning and cognitive quality, not language match.
+- No separate Spanish rubric or Spanish sample_strong_response is needed for v1. The AI evaluator assesses the thinking demonstrated in the response regardless of the language it's written in.
+
+**Acceptance Criteria:**
+
+1. Accessing `evaluacion.datacracy.co` shows the login screen in Spanish by default.
+2. Accessing `assessment.dataforgetechnologies.com` shows the login screen in English by default.
+3. User can switch language at login before starting the assessment.
+4. All questions display in the selected language when overlay exists.
+5. Missing translations fall back to English without breaking the assessment.
+6. All UI chrome text comes from string files, not hardcoded components.
+7. Language choice persists through the full assessment session.
+8. Open-ended responses in Spanish are scored correctly by the AI pipeline.
+
+**Dependencies:** Features 0.2.1 (auth — session must store language), 0.2.3 (assessment flow — overlay loading integrates with question rendering), 0.1.6 (database — sessions table stores language preference).
+
+**Scope Boundaries:** v1 supports English and Spanish only. Adding more languages means adding another overlay directory and ui-strings file — no code changes. Translation quality review is a human process outside the platform. No in-app translation management UI.
+
+---
+
 ## v0.3 — AI Evaluation Pipeline
 
 **Milestone Gate:** Submit a response → receive a complete Responder Profile back. Audit trail captures every LLM call. Re-evaluation endpoint works. Golden test framework runs with AI-generated consensus scores.
@@ -1526,6 +1587,6 @@ data/
 *Version: 1.3*
 *Created: February 2026*
 *Updated: April 2026*
-*Source: Synthesized from CORE Assessment Functional Spec v2.4, AI Evaluation Technical Spec v1.5, Dashboard Module Spec v1.2, Versioning Roadmap v1.2, Future Backlog Spec v2.2, UI Experience Spec v1.0, Design Philosophy v1.0, assessment-meta.json, Question Bank Summary*
+*Source: Synthesized from CORE Assessment Functional Spec v2.4, AI Evaluation Technical Spec v1.5, Dashboard Module Spec v1.2, Versioning Roadmap v1.2, Future Backlog Spec v2.2, UI Experience Spec v1.1, Design Philosophy v1.0, assessment-meta.json, Question Bank Summary*
 *Repository: [github.com/enesol-julio/core-assessment](https://github.com/enesol-julio/core-assessment)*
 *Local path: `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment`*

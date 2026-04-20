@@ -1,0 +1,147 @@
+{
+  "section_id": "section-3-critical-observation",
+  "name": "Observación Crítica",
+  "instructions": "Se te presentarán requisitos de negocio, resúmenes de proyectos o especificaciones que parecen completos a primera vista — pero contienen vacíos, contradicciones o ambigüedades. En las preguntas de selección múltiple, selecciona TODOS los problemas que puedas identificar. En las preguntas escritas, enumera las preguntas que harías antes de comenzar a trabajar. Cada pregunta tiene un tiempo límite — recibirás un aviso antes de que se agote. No puedes volver a preguntas anteriores.",
+  "questions": [
+    {
+      "question_id": "s3-q01",
+      "prompt": "Revisa el siguiente requisito y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Requisito: 'Cuando un cliente realiza un pedido, enviarle un correo de confirmación de inmediato. Si el total del pedido supera los $500, debe ser aprobado manualmente por un gerente antes de procesarse. Todos los pedidos deben enviarse dentro de las 24 horas.'",
+      "options": [
+        { "option_id": "a", "text": "El correo de confirmación se envía antes de la aprobación del gerente — el cliente puede pensar que el pedido está confirmado cuando no lo está" },
+        { "option_id": "b", "text": "No se define qué sucede si el gerente no aprueba a tiempo para cumplir con la ventana de envío de 24 horas" },
+        { "option_id": "c", "text": "$500 es un umbral demasiado bajo para aprobación manual" },
+        { "option_id": "d", "text": "No se menciona qué debe contener el correo de confirmación" },
+        { "option_id": "e", "text": "El compromiso de envío en 24 horas entra en conflicto con el paso de aprobación manual — la aprobación podría tardar más de 24 horas" },
+        { "option_id": "f", "text": "No se especifica qué sucede si la dirección de correo electrónico del cliente es inválida" }
+      ]
+    },
+    {
+      "question_id": "s3-q02",
+      "prompt": "Revisa el siguiente requisito y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Requisito: 'El sistema de programación de empleados debe permitir a los gerentes crear horarios semanales. Los empleados pueden solicitar tiempo libre, que los gerentes pueden aprobar o rechazar. El sistema debe prevenir conflictos de horario. Los horarios se finalizan cada viernes para la semana siguiente.'",
+      "options": [
+        { "option_id": "a", "text": "No se define qué constituye un 'conflicto de horario'" },
+        { "option_id": "b", "text": "No hay fecha límite para cuándo deben enviarse las solicitudes de tiempo libre en relación con la finalización del viernes" },
+        { "option_id": "c", "text": "Los horarios semanales son demasiado rígidos — algunos negocios necesitan flexibilidad diaria" },
+        { "option_id": "d", "text": "No se menciona qué sucede si un gerente no está disponible para aprobar una solicitud antes del viernes" },
+        { "option_id": "e", "text": "No se especifica cómo manejar cambios en el horario después de la finalización (por ejemplo, ausencias por enfermedad, emergencias)" },
+        { "option_id": "f", "text": "No se menciona una notificación cuando se aprueba o rechaza una solicitud de tiempo libre" }
+      ]
+    },
+    {
+      "question_id": "s3-q03",
+      "prompt": "Revisa el siguiente requisito y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Requisito: 'Crear una encuesta de satisfacción del cliente que se envíe después de cada llamada de servicio completada. La encuesta debe usar una calificación de 1 a 5 estrellas. Los resultados se comparten con el equipo de servicio semanalmente. Los clientes que califiquen con 1 o 2 estrellas deben recibir una llamada de seguimiento dentro de las 24 horas.'",
+      "options": [
+        { "option_id": "a", "text": "No se define qué significa 'completada' — ¿el cliente confirma la finalización o el agente cierra el ticket?" },
+        { "option_id": "b", "text": "Una calificación de 1 a 5 estrellas es demasiado simplista — debería usar una escala de 1 a 10" },
+        { "option_id": "c", "text": "No se menciona quién hace la llamada de seguimiento ni qué debe decir" },
+        { "option_id": "d", "text": "No se contempla el manejo de clientes que reciben múltiples encuestas en un período corto (por ejemplo, personas que llaman frecuentemente)" },
+        { "option_id": "e", "text": "El compromiso de seguimiento en 24 horas no contempla fines de semana ni días festivos" },
+        { "option_id": "f", "text": "No se especifica cuánto tiempo tiene el cliente para responder la encuesta antes de que los datos se consideren obsoletos" }
+      ]
+    },
+    {
+      "question_id": "s3-q04",
+      "prompt": "Revisa el siguiente resumen de proyecto y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Resumen del proyecto: 'Necesitamos un sistema automatizado para procesar facturas entrantes. Los proveedores envían facturas como archivos PDF adjuntos por correo electrónico. El sistema debe extraer los campos clave (nombre del proveedor, monto, fecha de vencimiento), compararlos con órdenes de compra existentes, y enrutarlos al jefe de departamento correspondiente para aprobación. Las facturas aprobadas se envían al equipo de finanzas para el pago. El sistema debe procesar las facturas dentro de las 4 horas posteriores a su recepción.'",
+      "options": [
+        { "option_id": "a", "text": "No se especifica cómo manejar facturas que no coinciden con ninguna orden de compra existente" },
+        { "option_id": "b", "text": "No se menciona qué sucede cuando las facturas llegan en formatos distintos a PDF (por ejemplo, imágenes, documentos de Word)" },
+        { "option_id": "c", "text": "No hay proceso para manejar facturas duplicadas del mismo proveedor" },
+        { "option_id": "d", "text": "La ventana de procesamiento de 4 horas incluye la aprobación humana — que el sistema no puede controlar" },
+        { "option_id": "e", "text": "No se especifica qué significa 'jefe de departamento correspondiente' — ¿cómo se determina el enrutamiento?" },
+        { "option_id": "f", "text": "La extracción de PDF no es confiable — este enfoque no funcionará" },
+        { "option_id": "g", "text": "No se menciona el manejo de coincidencias parciales (por ejemplo, el monto de la factura difiere del de la orden de compra)" }
+      ]
+    },
+    {
+      "question_id": "s3-q05",
+      "prompt": "Revisa el siguiente requisito y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Requisito: 'Construir un sistema donde los empleados de la empresa puedan reservar salas de reuniones. Las salas están disponibles de 8am a 6pm. Las reservas pueden hacerse con hasta 2 semanas de anticipación. Si nadie se registra en la sala dentro de los 10 minutos posteriores al inicio de la reserva, la reserva se cancela automáticamente. Se deben soportar reuniones recurrentes.'",
+      "options": [
+        { "option_id": "a", "text": "No se define qué significa 'registrarse' — ¿sensor físico, botón, o confirmación manual?" },
+        { "option_id": "b", "text": "8am a 6pm no especifica zona horaria — problemático si la empresa tiene múltiples oficinas" },
+        { "option_id": "c", "text": "No se menciona la duración máxima de reserva — alguien podría bloquear una sala todo el día" },
+        { "option_id": "d", "text": "Las reuniones recurrentes con la regla de cancelación automática podrían crear problemas — una reserva recurrente podría cancelarse cada semana si el organizador llega unos minutos tarde" },
+        { "option_id": "e", "text": "No se especifica quién puede cancelar o modificar la reserva de otra persona" },
+        { "option_id": "f", "text": "2 semanas de anticipación es un plazo muy corto para planificación a largo plazo" },
+        { "option_id": "g", "text": "No se menciona qué sucede cuando una reserva recurrente entra en conflicto con una reserva única — ¿cuál tiene prioridad?" }
+      ]
+    },
+    {
+      "question_id": "s3-q06",
+      "prompt": "Revisa el siguiente requisito y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Requisito: 'Los clientes pueden devolver cualquier producto dentro de los 30 días posteriores a la compra para un reembolso completo. Las devoluciones deben incluir el recibo original. Los reembolsos se procesan al método de pago original dentro de 5 días hábiles. Los artículos deben estar en su empaque original.'",
+      "options": [
+        { "option_id": "a", "text": "No se menciona cómo manejar devoluciones cuando el método de pago original ya no es válido (por ejemplo, tarjeta vencida, cuenta cerrada)" },
+        { "option_id": "b", "text": "La política debería ofrecer cambios, no solo reembolsos" },
+        { "option_id": "c", "text": "No hay manejo de excepciones para productos defectuosos — ¿un artículo defectuoso todavía debe estar en su empaque original?" },
+        { "option_id": "d", "text": "No se especifica si la ventana de 30 días es desde la fecha de compra o la fecha de entrega" },
+        { "option_id": "e", "text": "'Recibo original' es ambiguo — ¿un recibo digital o un estado de cuenta bancario cuentan?" },
+        { "option_id": "f", "text": "5 días hábiles es demasiado lento para procesar reembolsos" }
+      ]
+    },
+    {
+      "question_id": "s3-q07",
+      "prompt": "Revisa el siguiente resumen de proyecto y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Resumen del proyecto: 'Queremos automatizar nuestro proceso de contratación. Los candidatos aplican a través de nuestro sitio web. El sistema debe filtrar currículums según los requisitos del puesto, clasificar candidatos por nivel de ajuste, y programar automáticamente entrevistas con los 10 mejores candidatos. Los gerentes de contratación reciben un resumen diario de nuevas solicitudes. El sistema debe responder a cada candidato dentro de las 48 horas.'",
+      "options": [
+        { "option_id": "a", "text": "No se define cómo se determina el 'ajuste' ni qué criterios se usan para la clasificación" },
+        { "option_id": "b", "text": "Programar entrevistas automáticamente no considera la disponibilidad del candidato ni del entrevistador" },
+        { "option_id": "c", "text": "'Los 10 mejores' es un número fijo que no escala — un puesto especializado podría tener 8 candidatos en total, mientras que uno popular podría tener 500" },
+        { "option_id": "d", "text": "El resumen diario podría estar desactualizado cuando el gerente lo lea — debería ser en tiempo real" },
+        { "option_id": "e", "text": "El requisito de respuesta en 48 horas no especifica qué contiene la respuesta — ¿rechazo, acuse de recibo, o próximos pasos?" },
+        { "option_id": "f", "text": "No se mencionan medidas de protección contra sesgos en el proceso automatizado de filtrado y clasificación" },
+        { "option_id": "g", "text": "No se contempla el manejo de candidatos internos o referencias — ¿pasan por el mismo proceso?" }
+      ]
+    },
+    {
+      "question_id": "s3-q08",
+      "prompt": "¿Qué preguntas le harías al responsable del proyecto antes de comenzar a trabajar en esto?",
+      "context": "Resumen de funcionalidad: 'Construir un dashboard que muestre el rendimiento de ventas en tiempo real para nuestros gerentes regionales. Debe actualizarse automáticamente y ser accesible desde dispositivos móviles.'",
+      "constraints": {
+        "placeholder_text": "Enumera las preguntas que harías y explica brevemente por qué cada una es importante..."
+      }
+    },
+    {
+      "question_id": "s3-q09",
+      "prompt": "¿Qué preguntas le harías al responsable del proyecto antes de comenzar a trabajar en esto?",
+      "context": "Resumen de funcionalidad: 'Necesitamos un sistema de alertas que notifique a los supervisores de almacén cuando los niveles de inventario de cualquier producto caigan por debajo del umbral de reorden. Las alertas deben enviarse de inmediato por mensaje de texto.'",
+      "constraints": {
+        "placeholder_text": "Enumera las preguntas que harías y explica brevemente por qué cada una es importante..."
+      }
+    },
+    {
+      "question_id": "s3-q10",
+      "prompt": "¿Qué preguntas harías antes de comenzar a trabajar en esto? Enfócate en vacíos, ambigüedades y riesgos.",
+      "context": "Resumen del proyecto: 'Estamos cambiando las evaluaciones de desempeño de nuestros empleados de un ciclo anual a revisiones trimestrales. Los gerentes calificarán a los empleados en una escala de 1 a 5 en varias competencias. Los resultados serán visibles para el empleado, su gerente y Recursos Humanos. El nuevo proceso comienza el próximo trimestre.'",
+      "constraints": {
+        "placeholder_text": "Enumera las preguntas que harías y explica brevemente por qué cada una es importante..."
+      }
+    },
+    {
+      "question_id": "s3-q11",
+      "prompt": "¿Qué preguntas harías antes de comenzar a trabajar en esto? Enfócate en vacíos, ambigüedades y riesgos.",
+      "context": "Resumen del proyecto: 'Nuestra empresa quiere implementar una política donde todos los documentos dirigidos a clientes deben ser revisados y aprobados por un miembro senior del equipo antes de ser enviados. Esto aplica a propuestas, contratos, informes y presentaciones. El objetivo es mejorar la calidad y la consistencia.'",
+      "constraints": {
+        "placeholder_text": "Enumera las preguntas que harías y explica brevemente por qué cada una es importante..."
+      }
+    },
+    {
+      "question_id": "s3-q12",
+      "prompt": "Revisa el siguiente resumen de proyecto y selecciona TODOS los problemas que puedas identificar.",
+      "context": "Resumen del proyecto: 'Queremos consolidar nuestros tres canales de soporte al cliente (teléfono, correo electrónico y chat en vivo) en un solo sistema de tickets. Todas las solicitudes entrantes se convierten en tickets. Los tickets se asignan a agentes según disponibilidad. Los clientes reciben actualizaciones automáticas cuando el estado de su ticket cambia. El tiempo promedio de respuesta debe ser menor a 2 horas. Los agentes atienden los tickets en orden de llegada.'",
+      "options": [
+        { "option_id": "a", "text": "No hay sistema de prioridades — un ticket de una interrupción crítica y una consulta general se tratan igual bajo el criterio de 'orden de llegada'" },
+        { "option_id": "b", "text": "No se distingue entre tiempo de respuesta y tiempo de resolución — 'respuesta' podría significar un acuse de recibo o una solución" },
+        { "option_id": "c", "text": "Asignar por disponibilidad no considera la especialización del agente — una consulta de facturación podría llegar a un agente técnico" },
+        { "option_id": "d", "text": "El chat en vivo tiene expectativas diferentes del cliente que el correo electrónico — aplicar un solo SLA a ambos canales puede no tener sentido" },
+        { "option_id": "e", "text": "El sistema debería usar IA para resolver automáticamente los tickets simples" },
+        { "option_id": "f", "text": "No se menciona qué sucede con las conversaciones en curso durante la transición de los canales anteriores al nuevo sistema" },
+        { "option_id": "g", "text": "No se especifica qué 'cambios de estado' generan actualizaciones al cliente — ¿cada reasignación interna o solo avances significativos?" }
+      ]
+    }
+  ]
+}

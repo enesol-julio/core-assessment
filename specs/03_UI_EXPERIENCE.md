@@ -83,28 +83,41 @@ WCAG 2.1 AA compliance minimum. Not an afterthought — a design constraint from
 - Touch targets ≥ 44px on all interactive elements
 - No information conveyed by color alone
 
+### 2.7 Language-Agnostic Components
+
+All user-facing text comes from translation string files (`content/ui-strings/{lang}.json`), never hardcoded in components. Question content comes from the canonical English files merged with language overlays (`content/translations/{lang}/`). Components render whatever text they receive — they have no awareness of which language is active. This means:
+- Adding a new language requires only new translation files, not code changes
+- Components use string keys with interpolation tokens (e.g., `{count}`, `{section_name}`) for dynamic values
+- Text direction is left-to-right for both supported languages (English, Spanish)
+
 ---
 
 ## 3. Assessment Flow — Screen by Screen
 
 ### 3.1 Screen: Landing / Authentication
 
-**Purpose:** Authenticate the user and set the stage.
+**Purpose:** Authenticate the user, select language, and set the stage.
 
 **Content:**
 - CORE Assessment branding (logo, assessment name, organization names)
+- **Language selector** — dropdown or toggle allowing the user to choose English or Spanish. Default is determined by the domain: `evaluacion.datacracy.co` defaults to Spanish, other domains default to English. The selector and all surrounding text update immediately when the language changes.
 - Email input for OTP authentication (per Functional Spec §7.6)
 - OTP verification flow (enter code sent to email)
-- Brief statement: "This assessment takes approximately 45–50 minutes."
+- Brief statement: "This assessment takes approximately 45–50 minutes." (from ui-strings)
 
 **Behavior:**
+- Language selection is available BEFORE authentication — the user chooses their language first, then logs in
+- After successful authentication, the language choice is stored in the session and persists through the entire assessment
+- No mid-assessment language switching. Once the assessment begins, the language is locked.
 - After successful authentication, check if the user has an in-progress assessment (resume) or needs to start a new one
 - If first-time user: capture name and role (self-reported) per Functional Spec §7.6.5
 - No preview of questions, section details, or scoring information on this screen
 
 **Design notes:**
 - Clean, minimal layout. The authentication flow should feel effortless
-- Error states for invalid email (not in domain allowlist) should be clear and non-technical: "This assessment is currently available to [organization] team members. Contact your administrator if you believe you should have access."
+- Language selector should be visible but not dominant — a small dropdown or toggle in the top corner, or inline with the login form
+- Error states for invalid email (not in domain allowlist) should be clear and non-technical: "This assessment is currently available to [organization] team members. Contact your administrator if you believe you should have access." (from ui-strings)
+- All text on this screen and every subsequent screen comes from `content/ui-strings/{lang}.json` — no hardcoded strings in components
 
 ---
 
@@ -480,4 +493,4 @@ The UI silently captures the following alongside answers:
 *Created: April 2026*
 *Updated: April 2026*
 *Companion documents: CORE Assessment Functional Spec v2.4, CORE Assessment Design Philosophy v1.0, CORE Dashboard Module Spec v1.2*
-*Changes from v1.0: Companion doc version bumps, session state backed by PostgreSQL*
+*Changes from v1.0: Language selector on login, §2.7 language-agnostic components principle, session state backed by PostgreSQL, all text from ui-strings*
