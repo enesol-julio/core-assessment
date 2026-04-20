@@ -162,8 +162,8 @@ core-assessment/
 ```
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.2                   │
-│  Feature: 0.2.1 — Email OTP Authentication  │
-│  Status: Next Up (v0.1 milestone closed)    │
+│  Feature: 0.2.2 — Domain Allowlist Mgmt     │
+│  Status: In Progress                        │
 └─────────────────────────────────────────────┘
 ```
 

@@ -12,10 +12,13 @@
     "db:migrate": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON src/db/migrate.ts",
     "db:seed": "node --env-file-if-exists=.env.local --disable-warning=MODULE_TYPELESS_PACKAGE_JSON src/db/seed.ts",
     "db:drop": "drizzle-kit drop",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "smoke:auth": "tsx scripts/validate/auth-smoke.mjs"
   },
   "dependencies": {
+    "@azure/msal-node": "^5.1.3",
     "drizzle-orm": "^0.45.2",
+    "jose": "^6.2.2",
     "next": "16.1.6",
     "pg": "^8.20.0",
     "react": "19.2.3",
@@ -32,6 +35,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

@@ -9,6 +9,15 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.1 — Email OTP Authentication
+- Added `src/lib/auth/` — `config.ts`, `otp.ts`, `session.ts`, `email.ts`, `middleware.ts`
+- OTP flow: 6-digit codes, 10-min expiry, single-use, domain allowlist check, JWT session via `jose`, secure cookie, 4-hr default expiry
+- Email sender: `GraphSender` (production, via `@azure/msal-node` client credentials) with automatic fallback to `DevConsoleSender` (logs OTP to stdout + `data/audit/otp/`) when Azure creds are unset
+- API routes: `POST /api/auth/request-otp`, `POST /api/auth/verify-otp`, `POST /api/auth/logout`, `GET /api/auth/session`
+- `AUTH_BYPASS=true` in development auto-seeds the admin session, throws at startup if leaked to production
+- Smoke script `npm run smoke:auth` exercises OTP issue/consume/expire/reuse, user find-or-create, JWT round-trip, session revoke (all passing against live Postgres)
+- Installed `jose`, `@azure/msal-node`, `tsx` (dev)
+
 ### v0.1.0 — Milestone Gate Closed
 - All six v0.1 features complete and acceptance-validated
 - 70 questions authored, schemas defined, content validator passing
