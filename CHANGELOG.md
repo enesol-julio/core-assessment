@@ -9,6 +9,13 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.4 — Deterministic Scoring Engine
+- Added `src/lib/scoring/index.ts` — pure functions for `scoreSingleSelect`, `scoreMultiSelect`, `scoreDragToOrder`, `scoreFromRubric`, `sectionRawScore`, `compositeScore`, `classify`
+- Multi-select: `max(0, (correct/total_correct) − incorrect × 0.25) × maxScore` per spec
+- Drag-to-order: full credit at correct position, 50% for off-by-1 within tolerance, 0 otherwise
+- Classify uses `Math.floor(composite)` to handle fractional composites cleanly against integer tier boundaries (e.g. 54.999 → Foundational)
+- Smoke script `npm run smoke:scoring` covers spec examples (3-of-4 with/without incorrect, adjacent-swap partial credit, classify at boundaries)
+
 ### v0.2.2 — Domain Allowlist Management
 - Added `src/lib/auth/domains.ts` — validate, normalize, list, add (idempotent), remove (with safety guard against removing last domain)
 - API routes (all admin-only): `GET /api/admin/domains`, `POST /api/admin/domains`, `DELETE /api/admin/domains/{domain}`
