@@ -689,23 +689,21 @@ During development (pre-v0.2 milestone), the auth system may not yet exist. A de
 
 ### 10.1 v1.0 Target
 
-The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) behind an AWS Application Load Balancer, suitable for a population of <500 users with low concurrent usage.
+The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) serving multiple domains, suitable for a population of <500 users with low concurrent usage.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  DNS: assessment.dataforgetechnologies.com                       │
+│  DNS (all three point to the EC2 instance):                      │
+│    assessment.dataforgetechnologies.com                           │
+│    assessment.enesol.ai                                          │
+│    evaluacion.datacracy.co                                       │
 │                          │                                       │
 │                          ▼                                       │
-│  ┌─────────────────────────────────────────┐                    │
-│  │  AWS ALB (HTTPS:443 — ACM certificate)  │                    │
-│  │  → forwards to Target Group on port 80  │                    │
-│  └───────────────────┬─────────────────────┘                    │
-│                      │                                           │
-│                      ▼                                           │
 │  ┌──────────────────────────────────────────────────┐           │
 │  │  EC2 Instance (Ubuntu 24.04, t3.small/medium)     │           │
 │  │                                                    │           │
-│  │  nginx (:80) → proxy_pass → localhost:3000        │           │
+│  │  Reverse Proxy (:443) — automatic SSL per domain  │           │
+│  │    → proxy to localhost:3000                       │           │
 │  │                                                    │           │
 │  │  ┌──────────────────────────────────────────────┐ │           │
 │  │  │  Next.js Application (pm2)                    │ │           │
@@ -713,11 +711,13 @@ The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) behind an
 │  │  └──────────────────────────┬───────────────────┘ │           │
 │  │                              │                     │           │
 │  │  ┌──────────────────────────┴───────────────────┐ │           │
-│  │  │  Filesystem: /home/ubuntu/core-assessment/    │ │           │
-│  │  │  └── data/                                    │ │           │
-│  │  │      (JSON files: responses, profiles,        │ │           │
-│  │  │       calibration, audit, users, golden tests)│ │           │
+│  │  │  PostgreSQL 16                                │ │           │
+│  │  │  (users, responses, profiles, calibration,    │ │           │
+│  │  │   sessions, golden tests, pipeline runs)      │ │           │
 │  │  └──────────────────────────────────────────────┘ │           │
+│  │                                                    │           │
+│  │  Filesystem: data/                                 │           │
+│  │  (audit trail, pipeline traces, backups)           │           │
 │  │                                                    │           │
 │  │  Outbound:                                         │           │
 │  │  ├── Anthropic API (LLM inference)                 │           │
@@ -730,11 +730,11 @@ The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) behind an
 **Deployment considerations:**
 
 - **PostgreSQL on same instance (v1.0).** Database runs on the same EC2 instance. Connection string in `.env.production`. Backups via `scripts/db/backup.sh` (pg_dump to `data/backups/`). Cloud migration swaps the connection string.
-- **Filesystem for operational artifacts only.** The `data/` directory stores audit trail, pipeline traces, and backups — not primary application data. Deployments to serverless platforms would require moving audit logging to a cloud storage service.
-- **SSL terminated at the ALB.** AWS Certificate Manager provides the TLS certificate. The EC2 instance handles HTTP only (nginx on port 80). No Certbot or SSL config on the instance.
+- **Filesystem for operational artifacts only.** The `data/` directory stores audit trail, pipeline traces, and backups — not primary application data.
+- **Automatic SSL with multi-domain support.** The reverse proxy sits on the EC2 instance, terminates HTTPS for all configured domains, and forwards traffic to the Next.js app on localhost:3000. SSL certificates are automatically provisioned and renewed. No external load balancer or manual certificate management required. Caddy is recommended for this role.
 - **No background job infrastructure.** The pipeline runs as an async function within the API route handler. No Redis, no queue, no worker process. This is acceptable for v1.0 throughput but means pipeline failures must be retried via the re-evaluate endpoint.
 - **Process management via pm2.** The Next.js production server runs under pm2 for auto-restart on crash and startup on reboot.
-- **Environment variables** stored in `.env.production` on the server (gitignored): Anthropic API key, Microsoft Graph API credentials (tenant ID, client ID, client secret), JWT secret, domain allowlist seed, and feature flags.
+- **Environment variables** stored in `.env.production` on the server (gitignored): database connection string, Anthropic API key, Microsoft Graph API credentials (tenant ID, client ID, client secret), JWT secret, domain allowlist seed, and feature flags.
 
 ### 10.2 Deployment Flow
 

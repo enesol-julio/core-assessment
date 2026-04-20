@@ -6,7 +6,7 @@
 
 ## 1. Project Identity
 
-CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). Structured data is stored in **PostgreSQL 16** (Drizzle ORM); audit trail and operational artifacts live on the filesystem. Repository: `github.com/enesol-julio/core-assessment`. Production: `assessment.dataforgetechnologies.com` (EC2 Ubuntu behind ALB). We are building **v1.0** through milestone blocks v0.1–v0.5.
+CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). Structured data is stored in **PostgreSQL 16** (Drizzle ORM); audit trail and operational artifacts live on the filesystem. Repository: `github.com/enesol-julio/core-assessment`. Production: `assessment.dataforgetechnologies.com` (EC2 Ubuntu, multi-domain with automatic SSL). We are building **v1.0** through milestone blocks v0.1–v0.5.
 
 ---
 
@@ -275,19 +275,22 @@ AUTH_BYPASS_ROLE=admin
 
 | Property | Value |
 |---|---|
-| **Domain** | `assessment.dataforgetechnologies.com` |
+| **Domains** | `assessment.dataforgetechnologies.com`, `assessment.enesol.ai`, `evaluacion.datacracy.co` |
 | **Server** | AWS EC2, Ubuntu 24.04 LTS |
 | **Database** | PostgreSQL 16 on same EC2 instance (v1.0) |
 | **App path (server)** | `/home/ubuntu/core-assessment` |
 | **App path (local)** | `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment` |
 | **Process manager** | pm2 |
-| **Reverse proxy** | nginx (port 80 → localhost:3000) |
-| **SSL** | Terminated at AWS ALB |
+| **Reverse proxy + SSL** | Automatic SSL certificate management with multi-domain support. Caddy recommended. |
 | **Env file (server)** | `.env.production` (gitignored) |
 
 **Key env vars:** `DATABASE_URL`, `ANTHROPIC_API_KEY`, `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `JWT_SECRET`, `EMAIL_FROM`, `SEED_DOMAINS`, `SEED_ADMIN_EMAIL`.
 
-**Deploy workflow:** `git pull → npm install → npx drizzle-kit migrate → npm run build → pm2 restart`. Scripts: `scripts/db/setup-ec2.sh` (first-time), `scripts/deploy/ec2-deploy.sh` (repeating).
+**What this means for code:**
+
+- The app handles HTTP only (localhost:3000). The reverse proxy handles HTTPS termination, automatic certificate provisioning/renewal, and multi-domain routing. No external load balancer or manual certificate management required.
+- All three domains serve the same application. No domain-specific routing in the app.
+- Deploy workflow: `git pull → npm install → npx drizzle-kit migrate → npm run build → pm2 restart`. Scripts: `scripts/db/setup-ec2.sh` (first-time), `scripts/deploy/ec2-deploy.sh` (repeating).
 
 ---
 
