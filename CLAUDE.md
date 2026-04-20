@@ -161,21 +161,27 @@ core-assessment/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.1                   │
-│  Feature: 0.1.6 — DB Schema & Migrations    │
-│  Status: Code complete — awaiting live DB   │
+│  CURRENTLY BUILDING: v0.2                   │
+│  Feature: 0.2.1 — Email OTP Authentication  │
+│  Status: Next Up (v0.1 milestone closed)    │
 └─────────────────────────────────────────────┘
 ```
 
-**v0.1 scope (Assessment Content & Schema):**
+**v0.1 scope (Assessment Content & Schema) — ✅ COMPLETE:**
 - 0.1.1 — `assessment-meta.json` (root config) ✅
 - 0.1.2 — 5 section definition files (`content/sections/`) ✅
 - 0.1.3 — Question content authoring (70 base questions) ✅
 - 0.1.4 — Assessment response schema definition ✅
 - 0.1.5 — Schema validation tooling (dev/CI tool) ✅
-- 0.1.6 — Database schema & migrations (Drizzle ORM) — code complete; live validation pending Postgres
+- 0.1.6 — Database schema & migrations (Drizzle ORM) ✅
 
-**Milestone gate:** All 70 base questions authored, valid against JSON schema. Section files pass validation. `assessment-meta.json` complete. Database schema defined with initial migration.
+**v0.2 scope (Web Application / Assessment Delivery):**
+- 0.2.1 — Email OTP Authentication (Microsoft Graph)
+- 0.2.2 — Domain Allowlist Management
+- 0.2.3 — Assessment Session Flow (5-section timed delivery)
+- 0.2.4 — Deterministic Scoring Engine (objective types)
+- 0.2.5 — Role-Based Route Protection (`requireAdmin`)
+- 0.2.6 — Multilingual Support (English + Spanish overlay)
 
 ---
 

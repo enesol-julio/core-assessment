@@ -9,6 +9,11 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.1.0 — Milestone Gate Closed
+- All six v0.1 features complete and acceptance-validated
+- 70 questions authored, schemas defined, content validator passing
+- PostgreSQL 16 schema live: 10 tables materialized, seed confirmed, second-migration generate/apply/rollback verified end-to-end
+
 ### v0.1.6 — Database Schema & Migrations (Drizzle ORM)
 - Added `src/db/schema.ts` with 10 Drizzle-typed tables: `users`, `sessions`, `otp_tokens`, `responses`, `profiles`, `calibration_snapshots`, `pipeline_runs`, `golden_test_responses`, `golden_test_runs`, `allowed_domains`
 - Indexes per DS §8.4: `profiles` indexed on `organization`, `fitness_rating`, `classification`, `completed_at`, `composite_score DESC`, plus composite unique on `(response_id, profile_version)`; `responses` on `user_id`, `completed_at`; `pipeline_runs` on `response_id`, `status`; `calibration_snapshots` on `is_current`
