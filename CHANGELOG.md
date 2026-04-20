@@ -9,6 +9,18 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.3.1–0.3.4, 0.3.6 — Pipeline Core (orchestrator + providers + audit + steps + synthesis)
+- Added `src/services/pipeline/providers/` — `LLMProvider` interface, `AnthropicProvider` (native SDK, auto-cost by model), `FixtureProvider` (deterministic synthetic scores + profiles for dev/test without API keys), `AuditedProvider` wrapper that logs every call to `data/audit/{date}/{audit_id}.json` with retry (3 attempts, exponential backoff) and SHA-256 prompt hash for exact-reproduction reference
+- `detectProvider()` picks `fixture` when `ANTHROPIC_API_KEY` is unset/placeholder or `PIPELINE_PROVIDER=fixture`; otherwise `anthropic`
+- Step 1 (`steps/step1-scoring.ts`): parallel LLM scoring for every open-ended response; model Sonnet (temp 0.1); output validated against `ScoreResultSchema` with clamp fallback
+- Step 2 (`steps/step2-aggregation.ts`): deterministic aggregation — converts rubric scores to objective-equivalent points, computes section raw scores (0–100), composite weighted average, classification, speed profile (ratios + stddev), populates percentile rank if calibration present
+- Step 3 (`steps/step3-synthesis.ts`): single Opus call (temp 0.4) returning full Responder Profile content; robust parse that unwraps fixture's envelope; pads missing section_analysis entries with fallback narratives
+- Orchestrator (`pipeline.ts`): writes `pipeline_runs` row, advances status pending → scoring → aggregating → synthesizing → complete; on failure captures `error_message`; profiles persisted to DB with versioning (unique on response_id + profile_version)
+- Prompts live in `prompts/scoring-prompt.ts` and `prompts/synthesis-prompt.ts`, versioned (`v1.0.0`)
+- Schemas: `schemas/score-result.ts`, `schemas/responder-profile.ts`
+- Installed `@anthropic-ai/sdk@^0.90.0`
+- Smoke `npm run smoke:pipeline` runs full submit → evaluate → re-evaluate flow against the fixture provider: 54 audit records written, profile_version increments correctly on re-eval (1 → 2), both versions retained, raw response immutable, pipeline_runs row transitions to `complete`
+
 ### v0.2.3 — Assessment Session Flow
 - Added `src/services/assessment/` — `start.ts` (loads content, selects served questions, strips answer-revealing fields before returning to client), `submit.ts` (validates submission, computes speed flags, auto-scores objective questions, writes to `responses` table, open-ended scores remain null for the pipeline)
 - Client submission schema in `src/lib/types/assessment-submit.ts`
