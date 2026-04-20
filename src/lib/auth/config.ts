@@ -5,9 +5,15 @@ export const SESSION_COOKIE_NAME = "core_session";
 export function authBypassEnabled(): boolean {
   if (process.env.AUTH_BYPASS !== "true") return false;
   if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "SECURITY: AUTH_BYPASS=true is not permitted in production. Refusing to start.",
-    );
+    const phase = process.env.NEXT_PHASE ?? "";
+    // Allow during build-time static rendering; hard fail at runtime.
+    if (phase === "phase-production-server" || phase === "phase-production-dev-server") {
+      throw new Error(
+        "SECURITY: AUTH_BYPASS=true is not permitted in production. Refusing to start.",
+      );
+    }
+    console.warn("[auth] AUTH_BYPASS=true observed during build; ignoring (will throw at runtime).");
+    return false;
   }
   return true;
 }

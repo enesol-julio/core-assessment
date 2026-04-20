@@ -9,6 +9,16 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.3 — Assessment Session Flow
+- Added `src/services/assessment/` — `start.ts` (loads content, selects served questions, strips answer-revealing fields before returning to client), `submit.ts` (validates submission, computes speed flags, auto-scores objective questions, writes to `responses` table, open-ended scores remain null for the pipeline)
+- Client submission schema in `src/lib/types/assessment-submit.ts`
+- API routes: `POST /api/assess/start` (auth required), `POST /api/assess/submit` (auth required), `GET /api/content/ui-strings?lang=en|es`
+- UI components: `LoginClient` (OTP request/verify flow with language toggle), `AssessmentRunner` (briefing → section intros → per-question flow with visible/hidden timer, auto-advance at 0s, order-picker, text area with char limit)
+- Pages: `src/app/page.tsx` (language defaults by host, redirects authenticated users to `/assess` or `/dashboard`), `src/app/(assessment)/assess/page.tsx`, `src/app/(assessment)/complete/page.tsx`
+- Build guard: `authBypassEnabled()` no longer throws during `next build` static prerender (NEXT_PHASE detection); still throws at production server runtime
+- Smoke `npm run smoke:assess` verifies no answer-revealing fields leak to the client, 34 served questions, objective auto-scoring, open-ended null scores, full response persisted as `responseData` JSONB
+- Production build (`next build`) passes: 13 routes, all dynamic routes detected correctly
+
 ### v0.2.6 — Content Loader with i18n Overlay
 - Added `src/lib/content/index.ts` — `loadAssessmentMeta`, `loadSection`, `loadAssessment` merge Spanish overlays from `content/translations/es/` onto the English base with silent fallback for missing translations
 - UI string loading (`loadUiStrings`, `uiString`, `interpolate`) with fallback to English and `{token}` replacement

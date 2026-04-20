@@ -161,9 +161,9 @@ core-assessment/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.2                   │
-│  Feature: 0.2.3 — Assessment Session Flow   │
-│  Status: In Progress (API + UI)             │
+│  CURRENTLY BUILDING: v0.3                   │
+│  Feature: 0.3.1 — Pipeline Orchestrator     │
+│  Status: v0.2 milestone closed              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -175,13 +175,23 @@ core-assessment/
 - 0.1.5 — Schema validation tooling (dev/CI tool) ✅
 - 0.1.6 — Database schema & migrations (Drizzle ORM) ✅
 
-**v0.2 scope (Web Application / Assessment Delivery):**
-- 0.2.1 — Email OTP Authentication (Microsoft Graph)
-- 0.2.2 — Domain Allowlist Management
-- 0.2.3 — Assessment Session Flow (5-section timed delivery)
-- 0.2.4 — Deterministic Scoring Engine (objective types)
-- 0.2.5 — Role-Based Route Protection (`requireAdmin`)
-- 0.2.6 — Multilingual Support (English + Spanish overlay)
+**v0.2 scope (Web Application / Assessment Delivery) — ✅ COMPLETE:**
+- 0.2.1 — Email OTP Authentication ✅
+- 0.2.2 — Domain Allowlist Management ✅
+- 0.2.3 — Assessment Session Flow ✅
+- 0.2.4 — Deterministic Scoring Engine ✅
+- 0.2.5 — Role-Based Route Protection ✅
+- 0.2.6 — Multilingual Support (EN+ES overlay) ✅
+
+**v0.3 scope (AI Evaluation Pipeline):**
+- 0.3.1 — Pipeline Orchestrator (3-step chain)
+- 0.3.2 — Model Abstraction Layer (LLMProvider)
+- 0.3.3 — Open-Ended Scoring Rubric & Prompt Template
+- 0.3.4 — Responder Profile Generation (Step 3)
+- 0.3.5 — Calibration Parameter Generation
+- 0.3.6 — Audit Trail
+- 0.3.7 — Golden Test Framework
+- 0.3.8 — Re-Evaluation & Pipeline API Endpoints
 
 ---
 

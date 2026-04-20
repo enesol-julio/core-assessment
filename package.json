@@ -17,7 +17,8 @@
     "smoke:domains": "tsx scripts/validate/domains-smoke.mjs",
     "smoke:scoring": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate/scoring-smoke.mjs",
     "smoke:auth-gate": "tsx scripts/validate/auth-gate-smoke.mjs",
-    "smoke:content": "tsx scripts/validate/content-loader-smoke.mjs"
+    "smoke:content": "tsx scripts/validate/content-loader-smoke.mjs",
+    "smoke:assess": "tsx scripts/validate/assess-submit-smoke.mjs"
   },
   "dependencies": {
     "@azure/msal-node": "^5.1.3",
