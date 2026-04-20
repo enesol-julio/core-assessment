@@ -9,6 +9,18 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.1.6 — Database Schema & Migrations (Drizzle ORM)
+- Added `src/db/schema.ts` with 10 Drizzle-typed tables: `users`, `sessions`, `otp_tokens`, `responses`, `profiles`, `calibration_snapshots`, `pipeline_runs`, `golden_test_responses`, `golden_test_runs`, `allowed_domains`
+- Indexes per DS §8.4: `profiles` indexed on `organization`, `fitness_rating`, `classification`, `completed_at`, `composite_score DESC`, plus composite unique on `(response_id, profile_version)`; `responses` on `user_id`, `completed_at`; `pipeline_runs` on `response_id`, `status`; `calibration_snapshots` on `is_current`
+- Foreign keys: `sessions.user_id` (cascade), `responses.user_id` (restrict), `profiles.{response_id,user_id}` (cascade/restrict), `pipeline_runs.response_id` (cascade)
+- Added `drizzle.config.ts` (PostgreSQL dialect, output to `drizzle/`)
+- Generated initial migration `drizzle/0000_initial_schema.sql` via `drizzle-kit generate`
+- Added `src/db/index.ts` (pool + drizzle client, singleton), `src/db/migrate.ts` (migration runner), `src/db/seed.ts` (idempotent admin + domain seed)
+- Added `src/instrumentation.ts` — Next.js instrumentation hook that auto-runs migrations in development (gated on `NODE_ENV` and `DATABASE_URL`)
+- npm scripts: `db:generate`, `db:migrate`, `db:seed`, `db:drop`, `db:studio`
+- Added `DATABASE_URL` to `.env.example`
+- Installed `drizzle-orm@^0.45.2`, `pg@^8.20.0`, `drizzle-kit@^0.31.10`, `@types/pg`
+
 ### v0.1.5 — Schema Validation Tooling
 - Added `scripts/validate/content.ts` — validates `assessment-meta.json` and all 5 section files against Zod schemas
 - Added `src/lib/types/assessment-meta.ts` and `src/lib/types/section.ts` with canonical schemas (reused at runtime by content loaders)

@@ -162,8 +162,8 @@ core-assessment/
 ```
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.1                   │
-│  Feature: 0.1.6 — Database Schema (Drizzle) │
-│  Status: Next Up                            │
+│  Feature: 0.1.6 — DB Schema & Migrations    │
+│  Status: Code complete — awaiting live DB   │
 └─────────────────────────────────────────────┘
 ```
 
@@ -173,7 +173,7 @@ core-assessment/
 - 0.1.3 — Question content authoring (70 base questions) ✅
 - 0.1.4 — Assessment response schema definition ✅
 - 0.1.5 — Schema validation tooling (dev/CI tool) ✅
-- 0.1.6 — Database schema & migrations (Drizzle ORM)
+- 0.1.6 — Database schema & migrations (Drizzle ORM) — code complete; live validation pending Postgres
 
 **Milestone gate:** All 70 base questions authored, valid against JSON schema. Section files pass validation. `assessment-meta.json` complete. Database schema defined with initial migration.
 
