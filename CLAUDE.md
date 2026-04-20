@@ -161,9 +161,9 @@ core-assessment/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.4                   │
-│  Feature: 0.4.1 — DataProvider Interface    │
-│  Status: v0.3 milestone closed              │
+│  CURRENTLY BUILDING: v0.5                   │
+│  Feature: 0.5.1 — Pilot harness             │
+│  Status: v0.4 milestone closed              │
 └─────────────────────────────────────────────┘
 ```
 
@@ -193,12 +193,17 @@ core-assessment/
 - 0.3.7 — Golden Test Framework ✅
 - 0.3.8 — Re-Evaluation & Pipeline API Endpoints ✅
 
-**v0.4 scope (Dashboard & Reporting):**
-- 0.4.1 — DataProvider Interface + PostgresProvider
-- 0.4.2 — Transform Layer (ranking, distributions, heatmap, individual, operations)
-- 0.4.3 — Manager/Admin Dashboard View
-- 0.4.4 — Operational Dashboard View
-- 0.4.5 — Dashboard API Endpoints
+**v0.4 scope (Dashboard & Reporting) — ✅ COMPLETE:**
+- 0.4.1 — DataProvider Interface + PostgresProvider ✅
+- 0.4.2 — Transform Layer ✅
+- 0.4.3 — Manager/Admin Dashboard View ✅
+- 0.4.4 — Operational Dashboard View ✅
+- 0.4.5 — Dashboard API Endpoints ✅
+
+**v0.5 scope (Pilot Program):**
+- 0.5.1 — Pilot Setup & Recruitment (human + infrastructure)
+- 0.5.2 — Assessment Administration & Data Collection
+- 0.5.3 — Validation Analysis
 
 ---
 

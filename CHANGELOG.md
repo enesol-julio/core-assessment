@@ -9,6 +9,22 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.4.1–0.4.5 — Dashboard & Reporting (data, transforms, APIs, UI)
+- `DataProvider` interface at `src/services/dashboard/interfaces/data-provider.ts`; `PostgresProvider` at `src/services/dashboard/providers/postgres-provider.ts` pushes organization/classification/fitness/date filters into SQL WHERE clauses; returns latest-version-per-response summaries
+- Transforms in `src/services/dashboard/transforms/` — pure functions only:
+  - `ranking.ts` — fitness tier (Strong Fit=1 … Not Yet Ready=5) → composite desc → name alphabetical
+  - `distributions.ts` — fitness + classification distributions (with color), 5-point histogram bucketing, per-section stats (mean/median/stddev)
+  - `heatmap.ts` — individuals×sections matrix with colour bands matching classification tiers
+  - `individual.ts` — shapes a profile into the drill-down view including population-mean reference
+  - `operations.ts` — pipeline health with colour-coded tones and last-10-MAD drift detection
+- Admin-gated API routes: `GET /api/dashboard/ranking` (paginated), `GET /api/dashboard/distributions`, `GET /api/dashboard/heatmap`, `GET /api/dashboard/individual/{id}`, `GET /api/dashboard/ops/pipeline-health`, `GET /api/dashboard/ops/golden-test-status`
+- Dashboard UI at `/dashboard` (server-rendered: summary cards, composite histogram, fitness + classification distribution bars, ranking table, section heatmap) and `/dashboard/{response_id}` (client-side radar chart via Recharts, cognitive profile, fitness, recommendations, speed, red flags)
+- Operational UI at `/ops` — 4 summary cards with threshold-based colour tones (success rate, latency, cost), golden test status with MAD trend sparkline and drift / consecutive-failures badges, recent-error list
+- Settings UI at `/settings` with `DomainsSettings` client component (idempotent add, delete with last-domain guard via API)
+- Installed `recharts@^3.8.1`
+- Smoke `npm run smoke:dashboard` confirms: listProfiles returns 5 summaries, ranking invariants (fitness tier monotonically non-decreasing), 20-bucket histogram sums to n, heatmap 5×5=25 cells, filter pushdown rejects unknown classification, pipeline health success rate 1.0 over the 5-run window
+- `next build`: 30 routes registered (25 API + 5 pages)
+
 ### v0.3.5, 0.3.7, 0.3.8 — Calibration, Golden Tests, Pipeline API
 - Calibration (`src/services/pipeline/calibration/params.ts`): `MIN_CALIBRATION_SAMPLE=10`; computes composite stats (mean, median, std_dev, quartiles) + per-section stats + per-section raw score distributions (used by step 2 percentiles). `updateCalibrationSnapshot()` is transactional and maintains exactly one `is_current = true` snapshot
 - Calibration auto-updates after every successful pipeline run once `countProfiles() >= 10` — `batch_rescore` triggers are excluded to avoid snapshot storms
