@@ -9,6 +9,13 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.1.5 — Schema Validation Tooling
+- Added `scripts/validate/content.ts` — validates `assessment-meta.json` and all 5 section files against Zod schemas
+- Added `src/lib/types/assessment-meta.ts` and `src/lib/types/section.ts` with canonical schemas (reused at runtime by content loaders)
+- Cross-validation: section `file` references exist, pool counts match meta, type sets match, per-section `question_id` prefix matches, classification tiers cover 0–100 with no gaps/overlaps, weights sum to 1.0
+- `npm run validate:content` script entry, exit code 1 on validation errors
+- Enabled `allowImportingTsExtensions` in `tsconfig.json` so Node 25 can run TypeScript directly without a build step
+
 ### v0.1.4 — Assessment Response Schema
 - Added `src/lib/types/assessment-response.ts` with Zod schemas
 - Discriminated union on `type` for `single_select`/`multi_select`/`drag_to_order`/`open_ended` question responses

@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:content": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate/content.ts"
   },
   "dependencies": {
     "next": "16.1.6",
