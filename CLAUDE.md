@@ -6,7 +6,7 @@
 
 ## 1. Project Identity
 
-CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). All data is stored as JSON files on disk (no database in v1). Repository: `github.com/enesol-julio/core-assessment`. Production: `assessment.dataforgetechnologies.com` (EC2 Ubuntu behind ALB). We are building **v1.0** through milestone blocks v0.1–v0.5.
+CORE (Critical Observation, Reasoning & Execution) is a timed, multi-format cognitive assessment platform that identifies individuals who can direct AI effectively in vibe-coding environments. It's a **Next.js 14+ monolith** (TypeScript, Tailwind CSS, React) with three subsystems: assessment delivery UI, AI evaluation pipeline (Anthropic Claude), and embedded admin dashboard (Tremor + Recharts). Structured data is stored in **PostgreSQL 16** (Drizzle ORM); audit trail and operational artifacts live on the filesystem. Repository: `github.com/enesol-julio/core-assessment`. Production: `assessment.dataforgetechnologies.com` (EC2 Ubuntu behind ALB). We are building **v1.0** through milestone blocks v0.1–v0.5.
 
 ---
 
@@ -33,6 +33,11 @@ core-assessment/
 │   │       ├── dashboard/                # Dashboard data endpoints
 │   │       ├── golden-test/              # Golden test endpoints
 │   │       └── admin/                    # Domain/user management
+│   ├── db/                              # Database layer
+│   │   ├── schema.ts                    # Drizzle schema definitions (all tables)
+│   │   ├── index.ts                     # Database connection + client export
+│   │   ├── migrate.ts                   # Migration runner (auto-run in dev)
+│   │   └── seed.ts                      # Seed data (admin user, domains)
 │   ├── services/                         # Business logic (NO UI awareness)
 │   │   ├── pipeline/                     # AI evaluation pipeline
 │   │   │   ├── pipeline.ts              # Main orchestrator
@@ -40,11 +45,11 @@ core-assessment/
 │   │   │   ├── steps/                   # Step 1 (scoring), Step 2 (agg), Step 3 (synthesis)
 │   │   │   ├── calibration/             # Calibration logic
 │   │   │   ├── golden-test/             # Golden test suite
-│   │   │   ├── audit/                   # LLM call logging
+│   │   │   ├── audit/                   # LLM call logging (writes to data/audit/)
 │   │   │   └── schemas/                 # Zod schemas for pipeline I/O
 │   │   └── dashboard/                   # Dashboard business logic
 │   │       ├── interfaces/              # DataProvider interface
-│   │       ├── providers/               # JsonFileProvider (v1)
+│   │       ├── providers/               # PostgresProvider (v1)
 │   │       └── transforms/              # Ranking, distributions, heatmap, etc.
 │   ├── lib/                             # Shared utilities
 │   │   ├── auth/                        # Session utils, middleware, OTP
@@ -63,29 +68,34 @@ core-assessment/
 ├── content/                             # Static assessment content (version-controlled)
 │   ├── assessment-meta.json
 │   └── sections/                        # 5 section JSON files
-├── data/                                # Runtime data (gitignored, created at runtime)
-│   ├── responses/                       # Raw assessment responses (IMMUTABLE)
-│   ├── profiles/                        # Responder Profiles (versioned)
-│   ├── calibration/                     # current.json + history/
-│   ├── pipeline/                        # Execution metadata
-│   ├── golden-tests/                    # Golden responses + run results
-│   ├── audit/                           # LLM call logs
-│   └── users/                           # User records
+├── drizzle/                             # Auto-generated migration files (committed)
+│   ├── 0000_initial_schema.sql
+│   └── meta/
+├── data/                                # Runtime operational artifacts (gitignored)
+│   ├── audit/                           # LLM call logs (append-only)
+│   ├── traces/                          # Pipeline execution traces
+│   ├── backups/                         # pg_dump output files
+│   └── temp/                            # Ephemeral scratch files
 ├── prompts/                             # AI evaluation prompt templates
 ├── docs/                                # Documentation
 │   └── briefs/                          # Implementation briefs from planning chat
-├── scripts/                             # Deployment, setup, utility scripts
+├── scripts/                             # Automation scripts
+│   ├── db/                              # Database setup, seed, backup, restore
+│   ├── deploy/                          # EC2 deployment and first-time setup
+│   └── validate/                        # Content schema validation
 ├── tests/                               # Test files (mirrors src/ structure)
 ├── CLAUDE.md                            # This file
 ├── CHANGELOG.md
+├── drizzle.config.ts                    # Drizzle Kit configuration
 └── package.json, tsconfig.json, etc.
 ```
 
 **Hard rules:**
-- `content/` = static, version-controlled. `data/` = runtime, gitignored. **Never confuse the two.**
+- `content/` = static, version-controlled. `data/` = runtime operational artifacts, gitignored.
+- Structured queryable data → **PostgreSQL**. Append-only operational artifacts → `data/`.
 - Never create new top-level directories. If a file doesn't fit, ask.
-- Components go in `src/components/`, business logic in `src/services/`, shared utilities in `src/lib/`.
-- API routes go under `src/app/api/` following the existing namespace grouping.
+- Components in `src/components/`, business logic in `src/services/`, utilities in `src/lib/`, database in `src/db/`.
+- API routes under `src/app/api/`. Migration files in `drizzle/`. Scripts in `scripts/{purpose}/`.
 
 ---
 
@@ -97,39 +107,46 @@ core-assessment/
 | Language | TypeScript | Strict mode. No `any` unless truly unavoidable. |
 | Styling | Tailwind CSS | Utility-first. No custom CSS files unless necessary. |
 | UI Library | React | Functional components + hooks only. |
-| Dashboard | Tremor + Recharts | Tremor for primitives (cards, tables). Recharts for custom charts. |
-| AI Primary | Anthropic Claude | Sonnet for scoring (temp 0.1), Opus for synthesis (temp 0.4) |
-| AI Fallback | OpenAI | Fallback structure only, not active in v1 default config |
-| Validation | Zod | For all pipeline I/O schemas and API request/response validation |
-| Auth | JWT / secure cookie | Email OTP, domain allowlist |
-| Email (OTP) | Microsoft Graph API | Client credentials flow via `@azure/msal-node`. Entra ID app with `Mail.Send` permission. See `docs/M365_GRAPH_SETUP.md`. |
+| Dashboard | Tremor + Recharts | Tremor for primitives. Recharts for custom charts. |
+| **Database** | **PostgreSQL 16** | Primary data store. Same-instance on EC2 in v1.0. |
+| **ORM** | **Drizzle ORM** | Schema, type-safe queries, migration generation. |
+| **DB Driver** | **`pg`** | Standard PostgreSQL driver for Node.js. |
+| AI Primary | Anthropic Claude | Sonnet for scoring (temp 0.1), Opus for synthesis (temp 0.4). |
+| AI Fallback | OpenAI GPT-4o | Provider structure exists; not active in v1.0. |
+| LLM Integration | Custom orchestrator | No LangChain/LangGraph. Native SDKs + provider interface. |
+| Auth | Email OTP | Microsoft Graph API for email delivery. JWT sessions in PostgreSQL. |
+| Validation | Zod | API inputs, pipeline I/O, content schemas. |
 
 **Naming conventions:**
 
 | Thing | Convention | Example |
 |---|---|---|
-| Files (components) | PascalCase | `RankingTable.tsx`, `FitnessDistribution.tsx` |
-| Files (utilities/services) | kebab-case or camelCase | `pipeline.ts`, `golden-test/`, `data-provider.ts` |
-| Files (hooks) | camelCase with `use` prefix | `useTimer.ts`, `useAuth.ts` |
+| Files (components) | PascalCase | `RankingTable.tsx` |
+| Files (utilities) | kebab-case or camelCase | `pipeline.ts`, `data-provider.ts` |
+| Files (hooks) | camelCase with `use` prefix | `useTimer.ts` |
 | React components | PascalCase | `<SectionHeatmap />` |
-| TypeScript interfaces | PascalCase, prefixed with `I` only if ambiguous | `DataProvider`, `ProfileFilters` |
-| API routes | kebab-case paths | `/api/golden-test/`, `/api/dashboard/` |
-| JSON data files | kebab-case | `{response-id}.json`, `current.json` |
+| TypeScript interfaces | PascalCase | `DataProvider`, `ProfileFilters` |
+| Database tables | snake_case | `pipeline_runs`, `golden_test_runs` |
+| Drizzle schema exports | camelCase | `users`, `responses`, `profiles` |
+| API routes | kebab-case paths | `/api/golden-test/` |
 | Constants | UPPER_SNAKE_CASE | `MAX_OTP_AGE_MINUTES` |
-| Env variables | UPPER_SNAKE_CASE | `ANTHROPIC_API_KEY` |
+| Env variables | UPPER_SNAKE_CASE | `DATABASE_URL` |
 
 ---
 
 ## 4. Architecture Invariants (Never Violate)
 
-1. **Dashboard three-layer architecture:** Data Access (DataProvider) → Transforms (pure functions) → Presentation (React components). No business logic in presentation. No direct file reads in components or API routes.
-2. **DataProvider abstraction:** All data consumers use the `DataProvider` interface (`src/services/dashboard/interfaces/`). v1 implementation is `JsonFileProvider`. This enables the v2.2 database migration with zero changes to transforms or presentation.
-3. **JSON-file storage only (v1).** All data lives in `data/` as JSON files. No database. No Redis. No queues.
-4. **Pipeline is three steps:** Step 1 = open-ended scoring (Sonnet, parallel), Step 2 = composite aggregation, Step 3 = Responder Profile synthesis (Opus). Never collapse or reorder these.
-5. **LLM provider abstraction:** All LLM calls go through the provider interface (`src/services/pipeline/providers/`). Never call Anthropic/OpenAI SDKs directly from pipeline steps.
-6. **Response immutability:** Raw response data (answers, timing, speed flags) is **never** modified after submission. AI evaluation results are appended, never overwriting raw fields.
-7. **Auth middleware pattern:** `requireAdmin` middleware on all `/admin/*` routes and protected API endpoints. Client-side nav hiding is UX only, not security.
-8. **Pipeline runs async:** Submission persists the response immediately, then triggers evaluation asynchronously. User sees confirmation, not a spinner.
+1. **Dashboard three-layer architecture.** Data Access (DataProvider) → Transforms (pure functions) → Presentation (React). No business logic in presentation.
+2. **DataProvider abstraction.** All data consumers use the `DataProvider` interface. v1.0 = `PostgresProvider`. Cloud migration = change `DATABASE_URL`.
+3. **PostgreSQL for structured data. Filesystem for operational artifacts.** Users, responses, profiles, calibration, golden tests, sessions → PostgreSQL. Audit logs, traces, backups → `data/`.
+4. **Pipeline is three steps.** Step 1 = scoring (Sonnet, parallel), Step 2 = aggregation, Step 3 = synthesis (Opus). Never collapse or reorder.
+5. **LLM provider abstraction.** All LLM calls through provider interface. Never call SDKs directly.
+6. **Response immutability.** Raw responses never modified after submission.
+7. **Auth middleware pattern.** `requireAdmin` on all protected routes. Client-side hiding is UX only.
+8. **Pipeline runs async.** Submission persists immediately, evaluation runs asynchronously.
+9. **Section presentation order.** Read `order` field from `assessment-meta.json`. File names are identifiers, not sequence.
+10. **Migrations committed to repo.** Drizzle Kit generates SQL in `drizzle/`. Auto-run in dev. Explicit in production deploy.
+11. **Drizzle ORM for all database operations.** No raw SQL outside migration files.
 
 ---
 
@@ -144,30 +161,29 @@ core-assessment/
 ```
 
 **v0.1 scope (Assessment Content & Schema):**
-- 0.1.1 — `assessment-meta.json` (root config)
-- 0.1.2 — 5 section definition files (`content/sections/`)
-- 0.1.3 — Question content authoring (67 base questions)
+- 0.1.1 — `assessment-meta.json` (root config) ✅
+- 0.1.2 — 5 section definition files (`content/sections/`) ✅
+- 0.1.3 — Question content authoring (70 base questions)
 - 0.1.4 — Assessment response schema definition
 - 0.1.5 — Schema validation tooling (dev/CI tool)
+- 0.1.6 — Database schema & migrations (Drizzle ORM)
 
-**Milestone gate:** All 67 base questions authored, valid against JSON schema. Section files pass validation. `assessment-meta.json` complete.
-
-> **Update this block manually as features complete and new ones begin.**
+**Milestone gate:** All 70 base questions authored, valid against JSON schema. Section files pass validation. `assessment-meta.json` complete. Database schema defined with initial migration.
 
 ---
 
 ## 6. Scope Boundaries
 
-**In scope (v0.1–v0.5 → v1.0):** Assessment content, web app + auth, AI pipeline, dashboard, pilot.
+**In scope (v0.1–v0.5 → v1.0):** Assessment content, web app + auth, AI pipeline, dashboard, PostgreSQL database, pilot.
 
 **NOT in scope — do not build:**
 
 | Feature | Deferred To | Why Not Now |
 |---|---|---|
-| Scenario rotation / variant population | v2.0 | `variants[]` array exists but stays empty |
-| Dual-evaluator scoring (Claude + GPT cross-validation) | v2.1 | Provider interface accommodates this later |
-| Database migration (PostgreSQL) | v2.2 | DataProvider abstraction handles the swap |
-| Longitudinal tracking (multiple assessments per user) | v2.2 | Schema has fields, no query logic yet |
+| Scenario rotation / variant population | v2.0 | `variants[]` exists but stays empty |
+| Dual-evaluator scoring | v2.1 | Provider interface accommodates later |
+| Cloud database migration (Neon/RDS/Supabase) | v2.2 | Connection string swap — zero code changes |
+| Longitudinal tracking | v2.2 | Schema has fields, no query logic yet |
 | Export / reporting (PDF, CSV) | v2.2 | View-only in v1 |
 | Individual test-taker feedback view | v2.3+ | Admin-only results in v1 |
 | AI collaboration section (Section 6) | v2.3+ | Not designed |
@@ -190,10 +206,10 @@ AUTH_BYPASS_ROLE=admin
 ```
 
 **Rules:**
-- Environment-gated: `AUTH_BYPASS` is checked **only** when `NODE_ENV === 'development'`.
+- Environment-gated: checked **only** when `NODE_ENV === 'development'`.
 - Auto-seeds a default admin session for `julio@datacracy.co`.
-- **Hard fail-safe:** Add a production guard at app startup that throws if `AUTH_BYPASS=true` and `NODE_ENV === 'production'`. This must never be removable without code changes.
-- **Must be fully removed or permanently disabled before v0.5 (pilot).**
+- **Hard fail-safe:** Production guard throws if `AUTH_BYPASS=true` and `NODE_ENV === 'production'`.
+- **Must be removed or permanently disabled before v0.5 (pilot).**
 
 ---
 
@@ -201,15 +217,15 @@ AUTH_BYPASS_ROLE=admin
 
 | Aspect | Convention |
 |---|---|
-| Location | `tests/` directory, mirroring `src/` structure |
-| Runner | Vitest (or Jest — decide at project init, then stay consistent) |
+| Location | `tests/` directory, mirroring `src/` |
+| Runner | Vitest (or Jest — decide at init, stay consistent) |
 | Naming | `{feature}.test.ts` or `{feature}.spec.ts` |
 | Run | `npm test` (all), `npm test -- --filter {pattern}` (specific) |
-| Minimum per feature | At least: happy path, one error case, edge case if spec mentions one |
-| Pipeline tests | Mock LLM providers. Never make real API calls in tests. |
-| Dashboard transforms | Pure function tests — input data → expected output. No mocking needed. |
-| Schema validation | Test that valid data passes and invalid data fails with correct errors. |
-| Content validation | The v0.1 schema validator (`scripts/`) serves as the content test suite. |
+| Minimum per feature | Happy path, one error case, edge case if spec mentions one |
+| Pipeline tests | Mock LLM providers. Never make real API calls. |
+| Database tests | Use `core_assessment_test` database. Reset between suites. |
+| Dashboard transforms | Pure function tests — input → expected output. No mocking. |
+| Content validation | `scripts/validate/` serves as the content test suite. |
 
 ---
 
@@ -217,19 +233,10 @@ AUTH_BYPASS_ROLE=admin
 
 | File | Purpose | When to Update |
 |---|---|---|
-| `docs/briefs/` | Implementation briefs from the planning chat | Never modify — these are reference artifacts |
+| `docs/briefs/` | Implementation briefs | Never modify — reference artifacts |
 | `CHANGELOG.md` | Version-level changes | After each feature completion |
-| `CLAUDE.md` | This file | After each version block completion or new pattern established |
-| `README.md` | Setup, run, deploy instructions | After project init and major infra changes |
-
-**CHANGELOG format:**
-
-```markdown
-## [v0.1.1] - YYYY-MM-DD
-### Added
-- Assessment metadata file (content/assessment-meta.json)
-- Schema validation for section weights, classification tiers
-```
+| `CLAUDE.md` | This file | After version block completion or new pattern |
+| `README.md` | Setup, run, deploy | After project init and major infra changes |
 
 ---
 
@@ -237,12 +244,11 @@ AUTH_BYPASS_ROLE=admin
 
 | Aspect | Format |
 |---|---|
-| Commit messages | `feat(0.1.1): add assessment-meta.json` / `fix(0.2.3): timer not auto-advancing` / `test(0.1.5): schema validation edge cases` / `docs: update CHANGELOG for v0.1` |
+| Commit messages | `feat(0.1.1): add assessment-meta.json` / `fix(0.2.3): timer issue` |
 | Commit prefixes | `feat`, `fix`, `test`, `docs`, `refactor`, `chore` |
 | Feature scope | Feature ID in parens: `(0.1.1)`, `(0.3.4)` |
-| Tags | `v0.X.Y-feature-N` per feature, `v0.X.0` per milestone block |
-| Branching | Single `main` branch for v0.x development. Feature branches optional — developer preference. |
-| Tag example | `v0.1.0` when all v0.1 features pass milestone gate |
+| Tags | `v0.X.Y-feature-N` per feature, `v0.X.0` per milestone |
+| Branching | Single `main` branch for v0.x. Feature branches optional. |
 
 ---
 
@@ -250,16 +256,18 @@ AUTH_BYPASS_ROLE=admin
 
 > **Read this before every task.**
 
-- ❌ **Don't add auth/RBAC complexity.** v1 has two roles: Admin and Test-Taker. No Manager, no Operator, no granular permissions. That's v2.1+.
-- ❌ **Don't use a database.** All storage is JSON files in `data/`. DataProvider abstraction exists precisely so we can swap later.
-- ❌ **Don't install unnecessary dependencies.** Check if what you need is already in the stack (Next.js, React, Tailwind, Tremor, Recharts, Zod, Anthropic SDK). Justify any new `npm install`.
-- ❌ **Don't restructure the folder layout.** The structure in §2 is canonical. If something doesn't fit, flag it — don't invent a new directory.
-- ❌ **Don't build v2+ features.** Check §6 before starting anything. If it's on that table, stop and confirm with the user.
-- ❌ **Don't modify raw response data.** Responses in `data/responses/` are immutable after submission. AI results are appended, never overwritten.
-- ❌ **Don't call LLM SDKs directly from pipeline steps.** Always go through the provider abstraction in `src/services/pipeline/providers/`.
-- ❌ **Don't put business logic in React components.** Components render. Transforms compute. Providers fetch. Keep the layers clean.
-- ❌ **Don't skip the DataProvider.** No direct `fs.readFile` for data access in API routes or components. Always use the provider.
-- ❌ **Don't populate `variants[]`.** The array exists in the schema but stays empty in v1. Variant content is v2.0.
+- ❌ **Don't add auth/RBAC complexity.** v1 = Admin + Test-Taker. That's it.
+- ❌ **Don't store structured data on filesystem.** Queryable data → PostgreSQL.
+- ❌ **Don't write raw SQL outside migration files.** Use Drizzle ORM.
+- ❌ **Don't install unnecessary dependencies.** Check existing stack first.
+- ❌ **Don't restructure folders.** §2 is canonical.
+- ❌ **Don't build v2+ features.** Check §6 first.
+- ❌ **Don't modify raw responses.** Immutable after submission.
+- ❌ **Don't call LLM SDKs directly.** Use provider abstraction.
+- ❌ **Don't put business logic in components.** Components render. Transforms compute.
+- ❌ **Don't bypass DataProvider.** No direct queries in routes or components.
+- ❌ **Don't populate `variants[]`.** Empty in v1.
+- ❌ **Don't hardcode section order.** Read `order` from `assessment-meta.json`.
 
 ---
 
@@ -269,41 +277,32 @@ AUTH_BYPASS_ROLE=admin
 |---|---|
 | **Domain** | `assessment.dataforgetechnologies.com` |
 | **Server** | AWS EC2, Ubuntu 24.04 LTS |
+| **Database** | PostgreSQL 16 on same EC2 instance (v1.0) |
 | **App path (server)** | `/home/ubuntu/core-assessment` |
 | **App path (local)** | `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment` |
-| **Process manager** | pm2 (`pm2 restart core-assessment`) |
+| **Process manager** | pm2 |
 | **Reverse proxy** | nginx (port 80 → localhost:3000) |
-| **SSL** | Terminated at AWS ALB (ACM certificate) — app handles HTTP only |
-| **Env file (server)** | `.env.production` (gitignored, created manually on server) |
+| **SSL** | Terminated at AWS ALB |
+| **Env file (server)** | `.env.production` (gitignored) |
 
-**What this means for code:**
+**Key env vars:** `DATABASE_URL`, `ANTHROPIC_API_KEY`, `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `JWT_SECRET`, `EMAIL_FROM`, `SEED_DOMAINS`, `SEED_ADMIN_EMAIL`.
 
-- `NEXT_PUBLIC_APP_URL` is `https://assessment.dataforgetechnologies.com` in production, `http://localhost:3000` in dev.
-- The app never handles HTTPS directly — the ALB does. No SSL config in Next.js or nginx on the instance.
-- The `data/` directory persists on the EC2 EBS volume across deploys and reboots.
-- Deploy workflow: `git push` from Mac → `git pull && npm run build && pm2 restart` on server. Full details in `docs/RUNBOOK.md` Part 5.
+**Deploy workflow:** `git pull → npm install → npx drizzle-kit migrate → npm run build → pm2 restart`. Scripts: `scripts/db/setup-ec2.sh` (first-time), `scripts/deploy/ec2-deploy.sh` (repeating).
 
 ---
 
 ## 13. Companion Docs
 
-Implementation briefs live in `docs/briefs/`. These are scoped instructions produced by the planning chat (Claude Chat Project) for each feature. They contain:
-
-- Objective, spec sources, prerequisites
-- File-by-file creation/modification list
-- Acceptance criteria
-- Scope boundaries
-
-**Spec documents (for deep reference):**
-
 | Spec | Version | Covers |
 |---|---|---|
-| Functional Spec | v2.2 | Assessment design, sections, scoring, auth, schemas |
-| AI Evaluation Technical Spec | v1.3 | Pipeline architecture, prompts, golden tests, calibration |
-| Dashboard Module Spec | v1.1 | Three-layer dashboard, transforms, components, access control |
-| Versioning Roadmap | v1.1 | Version scheme, milestone gates, dependency chain |
-| Future Backlog Spec | v2.1 | Everything deferred to v2+ (use to detect scope creep) |
-| RUNBOOK | 1.2 | Local setup, build workflow, version block checklists, EC2 deployment |
+| Functional Spec | v2.4 | Assessment design, sections, scoring, auth, schemas |
+| AI Evaluation Technical Spec | v1.5 | Pipeline architecture, prompts, golden tests, calibration |
+| Dashboard Module Spec | v1.2 | Three-layer dashboard, PostgresProvider, transforms, access control |
+| UI Experience Spec | v1.0 | Screen-by-screen test-taker UX |
+| Design Philosophy | v1.0 | 7 cognitive patterns, section mapping |
+| Versioning Roadmap | v1.2 | Version scheme, milestone gates, dependency chain |
+| Future Backlog Spec | v2.2 | Everything deferred to v2+ |
+| RUNBOOK | 1.2 | Local setup, build workflow, EC2 deployment |
 
 **Key entities:**
 
@@ -311,5 +310,11 @@ Implementation briefs live in `docs/briefs/`. These are scoped instructions prod
 |---|---|
 | `julio@datacracy.co` | Seeded initial Admin |
 | Seed domains | `enesol.ai`, `dataforgetechnologies.com`, `datacracy.co` |
-| Assessment | 5 sections, 67 questions in pool, 34 served per session, ~48 min |
-| Question types | `single_select` (32), `multi_select` (14), `drag_to_order` (6), `open_ended` (15) |
+| Assessment | 5 sections, 70 questions in pool, 34 served per session, ~48 min |
+| Question types | `single_select` (32), `multi_select` (16), `drag_to_order` (6), `open_ended` (16) |
+| Section order | S1→S4→S3→S2→S5 |
+| Database | PostgreSQL 16, Drizzle ORM, JSONB + indexed scalars |
+
+---
+
+*CLAUDE.md Version: 1.2 · Updated: April 2026*

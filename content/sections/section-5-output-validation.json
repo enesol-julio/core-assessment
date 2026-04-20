@@ -20,7 +20,7 @@
       {
         "field": "output_source",
         "value": "ai",
-        "min": 1
+        "min": 2
       }
     ]
   },
@@ -352,7 +352,8 @@
           "Recognizes there's no total headcount for the customer-facing team to compare against",
           "Points out there's no filter for the specific mandatory compliance module vs. other training",
           "Notes the deadline isn't referenced — no way to see if completions were before or after the cutoff",
-          "Identifies that the report doesn't answer the yes/no question the goal implies: 'Are we compliant?'"
+          "Identifies that the report doesn't answer the yes/no question the goal implies: 'Are we compliant?'",
+          "Identifies this as a structural data model problem (wrong unit of analysis), not just a missing column"
         ],
         "levels": [
           {
@@ -387,7 +388,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "This report fundamentally cannot answer the question it was built to answer. The goal is to confirm that all employees in the customer-facing team have completed the mandatory compliance training before the deadline. The report fails on every axis of that goal.\n\nFirst, the unit of analysis is wrong. It counts completions (142 rows), not people. One employee completing three training modules generates three rows — so 142 completions could represent 50 people or 140. Without deduplication by employee, the number is meaningless.\n\nSecond, the report shows who did complete but not who didn't. The goal requires confirming ALL employees completed training, which means the critical output is the gap list — who is missing. A completion log alone can never prove universal compliance.\n\nThird, there's no baseline. How many people are on the customer-facing team? Without that denominator, 142 is just a number with no interpretive value.\n\nFourth, there's no filter for the mandatory compliance module specifically. If the spreadsheet includes all training types, the count is inflated with irrelevant completions.\n\nFifth, there's no reference to the regulatory deadline. Completions after the deadline don't count, but the report can't distinguish pre-deadline from post-deadline records.\n\nIn short, this answers 'people did training' when the goal was 'are we compliant?' — a yes/no question requiring a headcount, a gap list, module-specific filtering, and a deadline cutoff. The data structure needs redesign, not supplementation.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -423,7 +424,8 @@
           "Points out that the AI didn't mention response counts or sample sizes in its analysis — a major omission",
           "Questions whether the 2 non-respondents in Marketing might have the lowest satisfaction (response bias)",
           "Suggests the recommendation is premature given the unreliable data",
-          "Notes that a proper comparison requires acknowledging confidence levels or margin of error across different-sized groups"
+          "Notes that a proper comparison requires acknowledging confidence levels or margin of error across different-sized groups",
+          "Recognizes the recommendation should be withheld entirely — the data doesn't support any conclusion at this sample size"
         ],
         "levels": [
           {
@@ -458,7 +460,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "The critical flaw in this analysis is the sample size. The Marketing department's score is based on just 4 responses out of 6 total employees. At that size, a single disgruntled or particularly satisfied employee shifts the average by nearly a full point. The 3.1 score could easily represent one unhappy person and three neutral ones — that's not a department morale problem, it's one data point with an outsized effect.\n\nThe AI compounded this by omitting the response counts entirely from its analysis. It presents Marketing's 3.1 as directly comparable to Engineering's score based on 45 responses. These are not comparable figures — the margin of error on a 4-person sample is enormous, while 45 responses gives a reasonably stable average. A responsible analysis would have flagged the sample size difference as the first finding, not the score difference.\n\nThere's also a response bias concern: 2 of 6 Marketing employees didn't respond. If the non-respondents are the least satisfied (perhaps too disengaged to bother with the survey), the actual department satisfaction could be even lower. But equally, they might be the most satisfied — people who are content sometimes skip surveys. With 33% non-response in a 6-person group, you can't infer anything.\n\nThe recommendation to 'focus intervention efforts on Marketing immediately' is not just premature — it's unsupported. The data doesn't warrant any conclusion about Marketing. The correct recommendation is to gather more data before acting: follow up with the 2 non-respondents, consider individual conversations rather than survey data for a team this small, and avoid making departmental conclusions from a sample that's too small to be statistically meaningful.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -528,7 +530,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "The fundamental flaw is that this report equates revenue with profitability — and the conclusion explicitly makes this error by calling the highest-revenue product 'the most profitable.' Revenue and profitability are different things, and the difference is exactly what the goal asks about.\n\nProduct C generates $3.1M in revenue, but if it costs $2.9M to produce and deliver, its profit is $200K. Product D at $950K revenue might cost only $400K, making it more profitable at $550K. Without cost data — cost of goods sold, operating expenses, delivery costs, support costs — the table literally cannot answer the question asked.\n\nBeyond the revenue-profit confusion, the analysis is missing several dimensions that the stated goal ('decide where to increase investment') requires:\n\nGrowth trajectory: Is Product C's $3.1M growing, flat, or declining? Investing in a shrinking product line, even a large one, may be the wrong move.\n\nMargin structure: Which product lines have improving margins vs. deteriorating ones? An investment decision should favor lines where additional investment improves unit economics, not just volume.\n\nMarket potential and capacity: Even if a product is profitable, can it absorb more investment? If Product D operates in a niche market with limited demand, increased investment won't produce proportional returns.\n\nThe output looks professional — it's a clean table with a clear conclusion. But it answers a different question ('which product has the most revenue?') than what was asked ('which is most profitable and where should we invest?'). The conclusion isn't just incomplete — it's structurally wrong.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -627,7 +629,8 @@
           "Points out that account manager training is not included — the checklist exists but nobody is trained on using it",
           "Recognizes that the timeline is entirely sequential with no parallel work — writing and designing could overlap",
           "Notes there's no buffer or contingency — one stakeholder delay in week 5–6 cascades everything",
-          "Identifies that the welcome email sequence may need technical setup (email platform, triggers, testing) which isn't accounted for"
+          "Identifies that the welcome email sequence may need technical setup (email platform, triggers, testing) which isn't accounted for",
+          "Identifies that the 30-day survey issue reveals a misunderstanding of what 'live in 8 weeks' means for the survey component"
         ],
         "levels": [
           {
@@ -662,10 +665,206 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "This timeline has several structural flaws, and the most telling one reveals a fundamental misunderstanding of the project scope.\n\nThe 30-day feedback survey cannot be evaluated within 8 weeks. If the program launches to pilot customers in week 7, those customers won't receive the 30-day survey until approximately week 11. Results won't be available until week 12 at the earliest. So either the survey wasn't really part of the 8-week scope (in which case the timeline should say so), or someone didn't think through what '30 days after onboarding' actually means in calendar time. This isn't a scheduling error — it's a signal that the AI treated the survey as a document to create rather than a process to run.\n\nThe pilot window is critically thin. One week (week 7) to pilot with 5 customers and one week (week 8) to incorporate lessons and launch to everyone. If the pilot reveals a problem — confusing checklist, broken email sequence, training gaps — there's no time to fix it. A meaningful pilot needs at least 2 weeks of observation plus a buffer for iteration.\n\nAccount manager training is absent entirely. The checklist exists (designed in weeks 3–4) but nobody is trained on using it. Creating materials and creating readiness are different steps.\n\nThe timeline is entirely sequential with no parallel work. Writing training materials and designing the onboarding checklist could overlap. The email sequence design could begin before the training materials are finalized. Parallelizing these tasks would free up time for a longer pilot.\n\nThere's no buffer for stakeholder feedback delays. If the review in weeks 5–6 takes longer than expected (stakeholders are busy, conflicting opinions, multiple revision rounds), every downstream milestone slides. A timeline this tight needs explicit contingency.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q11",
+      "type": "multi_select",
+      "difficulty": "hard",
+      "points": 15,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "An AI assistant was asked to write a requirements document. Review the goal and the AI's output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Write a requirements document for migrating our customer support ticketing from Vendor A to Vendor B. We have 15 support agents, 3 years of ticket history, and active SLAs with enterprise clients that cannot be interrupted.'\n\n**AI-generated requirements document (excerpt):**\n\n**1. Data Migration**\n- Migrate all ticket records (open and closed) from Vendor A to Vendor B\n- Preserve ticket metadata: assignee, status, priority, timestamps, customer ID\n- Map Vendor A ticket statuses to Vendor B equivalents\n\n**2. Agent Setup**\n- Create accounts for all 15 agents on Vendor B\n- Replicate team assignments and routing rules\n- Configure agent permissions and access levels\n\n**3. SLA Configuration**\n- Set up SLA timers on Vendor B matching current response/resolution targets\n- Enable SLA breach notifications\n\n**4. Cutover**\n- Switch incoming ticket routing from Vendor A to Vendor B\n- Verify all agents can log in and access the new system\n- Monitor for 48 hours post-cutover\n\n**5. Decommission**\n- Archive Vendor A data\n- Cancel Vendor A subscription",
+      "options": [
+        {
+          "option_id": "a",
+          "text": "No mention of migrating in-progress tickets — open tickets with active SLAs will lose their elapsed time and context during cutover"
+        },
+        {
+          "option_id": "b",
+          "text": "The document assumes Vendor B can replicate Vendor A's exact workflow — no gap analysis between the two platforms' capabilities"
+        },
+        {
+          "option_id": "c",
+          "text": "No rollback plan — if Vendor B fails during cutover, there's no defined path to revert to Vendor A"
+        },
+        {
+          "option_id": "d",
+          "text": "The migration should use a different file format for better compatibility"
+        },
+        {
+          "option_id": "e",
+          "text": "No testing or validation step — the plan goes from setup directly to production cutover without verifying data integrity or workflow correctness"
+        },
+        {
+          "option_id": "f",
+          "text": "Customer communication is absent — enterprise clients with active SLAs aren't notified about the migration or potential impacts"
+        },
+        {
+          "option_id": "g",
+          "text": "Agent training is missing — the document creates accounts but doesn't address how agents learn the new system's interface and workflows"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b",
+        "c",
+        "e",
+        "f",
+        "g"
+      ],
+      "explanation": "Open tickets with running SLAs need special handling during cutover — elapsed time must transfer or SLA clocks restart unfairly (a). The document assumes feature parity between vendors without verifying it (b). No rollback plan for a production cutover is a critical risk (c). No test/validation step means going live blind (e). Enterprise clients with SLAs deserve notification — a surprise system change could trigger contractual issues (f). Creating accounts is not the same as enabling agents to use the system effectively (g). Option (d) is a technical implementation detail, not a requirements gap.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q12",
+      "type": "open_ended",
+      "difficulty": "hard",
+      "points": 25,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 150,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "An AI assistant was asked to analyze data and produced the output below. Explain what's wrong with the analysis and why the conclusion doesn't follow from the evidence.",
+      "context": "**Goal:** 'Analyze our hiring data from the last 2 years and tell us what's driving the increase in our average time-to-hire so we can fix it.'\n\n**AI-generated analysis:**\n'After analyzing 340 hires over the last 2 years, the average time-to-hire has increased from 28 days to 41 days. The data shows a strong correlation between the increase in time-to-hire and the introduction of a third interview round, which was added 18 months ago. Before the third round, average time-to-hire was 29 days; after, it rose to 39 days.\n\nThe third interview round adds an average of 8 calendar days to the process due to scheduling complexity.\n\nConclusion: The third interview round is the primary driver of increased time-to-hire. Recommendation: Remove the third interview round to bring time-to-hire back to ~28 days.'",
+      "constraints": {
+        "char_limit": 5000,
+        "word_limit": 1000,
+        "placeholder_text": "Explain what's wrong with this analysis and why the conclusion doesn't follow..."
+      },
+      "rubric": {
+        "scale_min": 0,
+        "scale_max": 5,
+        "scoring_method": "ai_evaluation",
+        "criteria": [
+          "Identifies that correlation between the interview round addition and increased time-to-hire doesn't prove causation — other factors may have changed simultaneously",
+          "Notes that the analysis doesn't control for confounding variables (hiring volume, role mix changes, market conditions, recruiter capacity)",
+          "Points out that removing the third round might reduce time-to-hire but could worsen hire quality — the analysis ignores why the round was added",
+          "Recognizes that 8 extra days from the interview round doesn't fully explain the 13-day increase (28 to 41), suggesting other factors are involved",
+          "Questions whether the analysis segmented by role type, department, or seniority — aggregate numbers may hide that specific segments drive the increase",
+          "Notes that the recommendation to remove the round is overconfident given the single-factor analysis"
+        ],
+        "levels": [
+          {
+            "score": 5,
+            "label": "Exceptional",
+            "description": "Comprehensive, well-structured, identifies non-obvious issues/steps. Shows systems thinking."
+          },
+          {
+            "score": 4,
+            "label": "Strong",
+            "description": "Covers key points with good structure. May miss one subtle element but demonstrates clear reasoning."
+          },
+          {
+            "score": 3,
+            "label": "Adequate",
+            "description": "Identifies obvious issues/steps but lacks depth or misses important considerations."
+          },
+          {
+            "score": 2,
+            "label": "Weak",
+            "description": "Superficial or partially correct. Shows some reasoning but significant gaps."
+          },
+          {
+            "score": 1,
+            "label": "Poor",
+            "description": "Misunderstands the task, provides irrelevant response, or demonstrates no structured thinking."
+          },
+          {
+            "score": 0,
+            "label": "No Response",
+            "description": "Blank or completely off-topic."
+          }
+        ]
+      },
+      "sample_strong_response": "The analysis correctly identifies a correlation but draws a causal conclusion that the data doesn't support, and the recommendation ignores critical context.\n\nFirst, the math doesn't add up. The average time-to-hire went from 28 to 41 days — a 13-day increase. But the third interview round accounts for only 8 of those 13 days. Where did the other 5 days go? The analysis doesn't investigate this gap, which means at least one other significant factor is contributing to the increase and is being ignored.\n\nSecond, the analysis treats the interview round addition as the only thing that changed in 18 months. During that period, many other factors likely shifted: the types of roles being hired for (senior roles take longer), hiring volume (more open roles strain recruiter capacity), market conditions (tighter labor markets mean longer candidate searches), internal process changes, or even the caliber of candidates in the pipeline. A proper analysis would control for these variables.\n\nThird, the recommendation to remove the third round treats time-to-hire as the only metric that matters. The third round was presumably added for a reason — maybe to improve hire quality, reduce bad hires, or involve key stakeholders. Removing it might reduce time-to-hire while increasing the rate of poor hiring decisions, which is a far more expensive problem. The analysis doesn't mention hire quality, retention of new hires, or hiring manager satisfaction.\n\nFinally, the aggregate analysis may be hiding the real story. If 80% of the time-to-hire increase comes from engineering roles while sales hiring is unchanged, the fix isn't removing an interview round across the board — it's addressing whatever's specific to engineering hiring. Without segmented data, the recommendation is a blunt instrument applied to a nuanced problem.",
+      "speed_flags": {
+        "suspicious_fast_seconds": 20,
+        "slow_threshold_seconds": 145
+      },
+      "variants": []
+    },
+    {
+      "question_id": "s5-q13",
+      "type": "multi_select",
+      "difficulty": "medium",
+      "points": 15,
+      "output_source": "ai",
+      "timer_config": {
+        "time_allowed_seconds": 120,
+        "warning_seconds": 15,
+        "show_timer": "hidden_with_warning",
+        "auto_advance": true
+      },
+      "prompt": "An AI assistant was asked to create a plan. Review the goal and the AI's output, then select ALL issues you can identify.",
+      "context": "**Goal:** 'Create a 2-week plan for onboarding a new marketing coordinator. They should be set up with tools, introduced to the team, and ready to handle their first campaign by day 10.'\n\n**AI-generated onboarding plan:**\n\n**Week 1:**\n- Day 1: Welcome meeting with manager. Set up laptop, email, and Slack.\n- Day 2: HR orientation. Review company handbook and benefits.\n- Day 3: Introduction meetings with each department head (Sales, Product, Engineering, Finance, Legal, Operations).\n- Day 4: Training on marketing automation platform (HubSpot).\n- Day 5: Training on analytics tools (Google Analytics, Looker).\n- Day 5: Assign first campaign — email nurture sequence for Q3 product launch.\n\n**Week 2:**\n- Day 6–7: Draft campaign strategy and copy.\n- Day 8: Review session with manager.\n- Day 9: Revise and finalize campaign.\n- Day 10: Launch campaign.\n- Day 11–14: Monitor performance metrics and optimize.",
+      "options": [
+        {
+          "option_id": "a",
+          "text": "Day 3 schedules meetings with 6 department heads in a single day — this is likely 4–6 hours of back-to-back meetings with no time to process or take notes"
+        },
+        {
+          "option_id": "b",
+          "text": "The plan assigns a real campaign (Q3 product launch) as a first task — this is a high-stakes deliverable for someone who hasn't yet learned the team's brand voice, audience, or campaign history"
+        },
+        {
+          "option_id": "c",
+          "text": "Tool training on Day 4–5 is only 2 days, which is likely insufficient for someone new to these specific platforms"
+        },
+        {
+          "option_id": "d",
+          "text": "No introduction to the team's existing campaigns, templates, brand guidelines, or past performance data — the new hire is expected to create a campaign without seeing how the team works"
+        },
+        {
+          "option_id": "e",
+          "text": "The plan should include more social activities to help the new hire feel welcome"
+        },
+        {
+          "option_id": "f",
+          "text": "The campaign is assigned on Day 5 — the same day as analytics training — leaving no time to absorb the training before being expected to apply it"
+        },
+        {
+          "option_id": "g",
+          "text": "No mention of access to the marketing team's project management system, content calendar, or existing workflows — the hire gets tools but not context"
+        }
+      ],
+      "correct_answers": [
+        "a",
+        "b",
+        "d",
+        "f",
+        "g"
+      ],
+      "explanation": "Six back-to-back department head meetings is overwhelming and unproductive for day 3 (a). Assigning a Q3 product launch campaign as a first task is scope creep from the AI — the goal said 'ready to handle their first campaign' not 'launch a critical campaign' (b). No exposure to existing work, brand guidelines, or team patterns means the hire is designing in a vacuum (d). Assigning the campaign the same day as tool training leaves zero absorption time (f). Tools without workflows, calendars, and team context means the hire can use the software but doesn't know how the team uses it (g). Option (c) is a judgment call — 2 days might be sufficient for someone with prior experience. Option (e) is a nice-to-have preference, not a structural gap in the onboarding plan.",
+      "scoring_config": {
+        "method": "partial_credit",
+        "penalty_factor": 0.25
+      },
+      "speed_flags": {
+        "suspicious_fast_seconds": 15,
+        "slow_threshold_seconds": 115
       },
       "variants": []
     }

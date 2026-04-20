@@ -42,13 +42,15 @@ The CORE Assessment Platform is a Next.js monolith with three major subsystems: 
           │                        │                        │
           ▼                        ▼                        ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                     STORAGE LAYER (JSON Files on Disk)                   │
+│                     STORAGE LAYER                                        │
 │                                                                         │
-│  data/responses/    data/profiles/    data/calibration/    data/audit/  │
-│  data/pipeline/     data/users/       data/golden-tests/               │
+│  PostgreSQL 16 (Drizzle ORM):                                          │
+│    users, sessions, responses, profiles, calibration_snapshots,        │
+│    pipeline_runs, golden_test_responses, golden_test_runs, otp_tokens  │
 │                                                                         │
-│  content/assessment-meta.json    content/sections/*.json                │
-│  prompts/*.ts                                                           │
+│  Filesystem:                                                            │
+│    content/assessment-meta.json  content/sections/*.json  prompts/*.ts │
+│    data/audit/  data/traces/  data/backups/                            │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -56,7 +58,7 @@ The CORE Assessment Platform is a Next.js monolith with three major subsystems: 
 
 - **Monolith by design.** Zero additional infrastructure in v1.0. The pipeline, dashboard, and web app are all routes/services inside one Next.js application.
 - **Auth from day one.** Email OTP authentication with domain-based allowlist. Two roles: Admin (full access) and Test-Taker (assessment only). No anonymous access.
-- **JSON-file storage with abstraction.** All data lives as JSON files on disk, but all consumers access data through the `DataProvider` interface. The database migration (v2.2) swaps the provider, not the consumers.
+- **PostgreSQL with DataProvider abstraction.** Structured data (users, responses, profiles, calibration, golden tests, sessions) lives in PostgreSQL 16 via Drizzle ORM. Audit trail and operational artifacts live on the filesystem (`data/`). All consumers access data through the `DataProvider` interface — cloud database migration requires only a connection string change.
 - **AI pipeline runs async.** Assessment submission persists the response immediately, then triggers the evaluation pipeline asynchronously. The user sees a confirmation screen, not a loading spinner.
 
 ---
@@ -103,9 +105,11 @@ The CORE Assessment Platform is a Next.js monolith with three major subsystems: 
 
 | Property | Detail |
 |---|---|
-| **Responsibility** | Defines the 67-question pool across 5 sections, scoring parameters, timer configs, rubrics, variants structure |
+| **Responsibility** | Defines the 70-question pool across 5 sections, scoring parameters, timer configs, rubrics, variants structure |
 | **Location** | `content/assessment-meta.json` (metadata, section ordering, weights); `content/sections/*.json` (5 section definition files) |
 | **Key dependencies** | None (static JSON, read-only at runtime) |
+| **Section ordering** | Section files retain original numbering (`section-1-*` through `section-5-*`). The `order` field in `assessment-meta.json` controls presentation order: S1→S4→S3→S2→S5. See `specs/03_UI_EXPERIENCE.md` for rationale. |
+| **Distinction** | Assessment content (`content/`) is static JSON on filesystem, version-controlled and bundled with the app. Runtime data (responses, profiles, calibration) lives in PostgreSQL. These are separate concerns. |
 | **Key behaviors** | Application loads `assessment-meta.json` first, then loads each section file in order. Variant selection happens at question-render time |
 
 ### 2.6 Audit Trail
@@ -465,9 +469,9 @@ interface DataProvider {
 }
 ```
 
-**v1.0 implementation:** `JsonFileProvider` — reads from `data/` directory. `listProfiles` scans all files in `data/profiles/`, extracts summary fields. Filtering and sorting happen in the transform layer, not in the provider. No caching in v1.
+**v1.0 implementation:** `PostgresProvider` — queries PostgreSQL via Drizzle ORM. `listProfiles` queries the `profiles` table with JSONB field extraction for summaries. Simple filters (organization, date range, classification) push down into SQL WHERE clauses. Complex aggregation remains in the transform layer.
 
-**v2.2 implementation:** `DatabaseProvider` — reads from PostgreSQL with JSONB columns and indexed fields. Same interface, swapped via configuration. Zero changes to transforms or presentation.
+**Cloud migration (v2.2):** Swap `DATABASE_URL` from local PostgreSQL to a managed service (Neon, AWS RDS, Supabase). Same interface, same schema, same Drizzle ORM code. Zero changes to transforms or presentation.
 
 ---
 
@@ -725,7 +729,8 @@ The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) behind an
 
 **Deployment considerations:**
 
-- **Persistent filesystem required.** JSON-file storage means the deployment target must support persistent disk. The EC2 EBS volume provides this. Do not deploy to serverless platforms (Vercel, Lambda) — file writes won't persist between invocations.
+- **PostgreSQL on same instance (v1.0).** Database runs on the same EC2 instance. Connection string in `.env.production`. Backups via `scripts/db/backup.sh` (pg_dump to `data/backups/`). Cloud migration swaps the connection string.
+- **Filesystem for operational artifacts only.** The `data/` directory stores audit trail, pipeline traces, and backups — not primary application data. Deployments to serverless platforms would require moving audit logging to a cloud storage service.
 - **SSL terminated at the ALB.** AWS Certificate Manager provides the TLS certificate. The EC2 instance handles HTTP only (nginx on port 80). No Certbot or SSL config on the instance.
 - **No background job infrastructure.** The pipeline runs as an async function within the API route handler. No Redis, no queue, no worker process. This is acceptable for v1.0 throughput but means pipeline failures must be retried via the re-evaluate endpoint.
 - **Process management via pm2.** The Next.js production server runs under pm2 for auto-restart on crash and startup on reboot.
@@ -733,7 +738,7 @@ The v1.0 deployment target is a single EC2 instance (Ubuntu 24.04 LTS) behind an
 
 ### 10.2 Deployment Flow
 
-The build process is standard Next.js: `git pull` → `npm install` → `npm run build` → `pm2 restart core-assessment`. Assessment content (`content/`) is bundled with the application. The `data/` directory is created at runtime if it doesn't exist, and persists across deployments on the EBS volume. Full deployment procedures are documented in `docs/RUNBOOK.md` Part 5.
+The build process: `git pull` → `npm install` → `npx drizzle-kit migrate` → `npm run build` → `pm2 restart core-assessment`. Assessment content (`content/`) is bundled with the application. Database migrations run before the build to ensure schema is current. The `data/` directory (audit trail, traces, backups) persists across deployments. Full deployment procedures are documented in `docs/RUNBOOK.md` Part 5.
 
 ---
 
@@ -743,7 +748,7 @@ The architecture explicitly accommodates the following v2+ changes without requi
 
 | Future Change | Version | Accommodation in v1.0 |
 |---|---|---|
-| **Database migration** | v2.2 | `DataProvider` interface decouples all consumers from storage. Swap `JsonFileProvider` for `DatabaseProvider`. No changes to transforms, presentation, or pipeline logic |
+| **Cloud database migration** | v2.2 | PostgreSQL is already the v1.0 storage. Cloud migration (Neon, RDS, Supabase) requires only changing `DATABASE_URL`. DataProvider interface, Drizzle schema, and all application code remain unchanged |
 | **Dual evaluator (Claude + GPT-4o)** | v2.1 | `LLMProvider` interface abstracts all LLM calls. Adding a second provider and cross-validation logic extends the pipeline without modifying scoring or synthesis step code |
 | **Additional roles (Manager, Operator)** | v2.1+ | Middleware pattern (`requireAdmin`) expands to `requireRole(["admin", "manager"])`. Dashboard three-layer architecture stays untouched; only route-level middleware changes |
 | **External BI tool migration** | v2.3+ | Dashboard data endpoints (`/api/dashboard/*`) serve as stable API contracts. An external tool (e.g., Metabase) can consume these directly, replacing only the presentation layer |
@@ -756,10 +761,11 @@ The architecture explicitly accommodates the following v2+ changes without requi
 ---
 
 *Document: 01_ARCHITECTURE.md*
-*Version: 1.2*
+*Version: 1.4*
 *Created: February 2026*
-*Updated: February 2026*
-*Source: CORE Assessment Functional Spec v2.2, AI Evaluation Technical Spec v1.3, Dashboard Module Spec v1.1, Versioning Roadmap v1.1, Project Overview*
+*Updated: April 2026*
+*Source: CORE Assessment Functional Spec v2.4, AI Evaluation Technical Spec v1.5, Dashboard Module Spec v1.2, Versioning Roadmap v1.2, UI Experience Spec v1.0, Design Philosophy v1.0, Project Overview*
+*Changes from v1.2: PostgreSQL replaces JSON storage, questions 67→70, section order documented, storage layer rewritten, deployment updated*
 *Repository: [github.com/enesol-julio/core-assessment](https://github.com/enesol-julio/core-assessment)*
 *Production: [assessment.dataforgetechnologies.com](https://assessment.dataforgetechnologies.com)*
 *Local path: `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment`*

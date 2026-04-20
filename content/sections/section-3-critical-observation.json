@@ -493,7 +493,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Before starting work on this real-time sales dashboard, I'd ask:\n\n1. What decisions will this dashboard drive? 'Real-time sales data' could mean tracking today's revenue vs. target, monitoring individual rep performance, watching for anomalies in transaction patterns, or all of these. The use case determines what metrics matter and what 'real-time' actually means — every 5 seconds? Every 5 minutes? Start-of-day refresh? The infrastructure cost difference is significant.\n\n2. Who is the audience and how will they access it? A dashboard for the VP of Sales on a wall-mounted screen has different design requirements than one for regional managers checking phones between meetings. Device, frequency of use, and technical sophistication all shape the design.\n\n3. What data sources exist and how reliable are they? Do all sales channels (in-store, online, phone) feed into one system? Are there known data quality issues (delayed transactions, duplicate entries, returns not subtracted in real time)? If the data has latency or quality problems, a 'real-time' dashboard will show real-time wrong numbers — which is worse than a delayed dashboard showing correct ones.\n\n4. What does 'real-time' mean for this team specifically? Is there a current report they're comparing against? What's the lag on their current data, and what problem does reducing that lag solve? Sometimes 'we want real-time' actually means 'we want same-day instead of next-week.'\n\n5. Are there comparative benchmarks to display alongside the data? Raw numbers without context (targets, last year's same period, team averages) don't drive decisions — they just display activity.\n\n6. What's the budget and timeline? A real-time data pipeline with streaming updates is a different project than a dashboard that refreshes every 15 minutes from an existing database. The brief doesn't distinguish between these.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -564,7 +564,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Before building this low-stock alert system, I'd ask:\n\n1. What defines 'low stock'? Is there a single threshold for all products, or does it vary? A product that sells 10 units per day needs a different threshold than one that sells 10 per month. A fixed threshold (e.g., 'below 50 units') would trigger constant false alarms for slow-movers and miss genuine stockouts for fast-movers. The reorder lead time matters too — if a supplier takes 2 weeks to deliver, 'low stock' needs to account for the demand during that 2-week window.\n\n2. Who receives the alerts and what are they expected to do? If alerts go to a purchasing team, they need enough context to act (supplier info, reorder quantities, cost). If alerts go to store managers, they may need different information (substitute products, expected restock dates). Alerting the wrong person creates noise without action.\n\n3. How many alerts per day is manageable? If the system generates 200 alerts daily, the team will ignore them. What's the prioritization scheme — alert on everything, or only on high-revenue or high-velocity items? Alert fatigue is a real risk that undermines the system's purpose.\n\n4. What inventory data is available and how accurate is it? If the inventory system doesn't reflect real-time sales, returns, or damages, the alerts will fire on stale data. An alert that says 'low stock' when the shelf is actually full erodes trust immediately.\n\n5. Is this tracking a single warehouse, multiple locations, or both? A product might be low at one store but overstocked at another — does the system need to recommend transfers, or just flag the shortage?\n\n6. What happens when an alert fires — is there an automated reorder workflow, or is this purely informational? If someone has to manually place a reorder for every alert, the system's value depends entirely on how quickly they act.\n\n7. How will we know if the system is working? What metric tells us the alert system actually reduced stockouts or improved reorder timing, versus just generating notifications that nobody acts on?",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -601,7 +601,8 @@
           "Asks about employee self-assessment or 360 feedback as part of the process",
           "Questions historical access — can employees see trends across quarters?",
           "Considers the training and communication needed for managers and employees on the new cadence",
-          "Questions what 'visible' means — read-only? can employees dispute or comment?"
+          "Questions what 'visible' means — read-only? can employees dispute or comment?",
+          "Identifies that the brief describes a solution without stating the problem it solves — questions the root cause"
         ],
         "levels": [
           {
@@ -636,7 +637,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Before starting work on this performance review cycle change, I'd ask:\n\n1. What problem is this solving? The brief says to change from annual to quarterly reviews, but doesn't explain why. Are annual reviews producing feedback that's too stale? Are managers and employees finding them unhelpful? Is there a retention problem that faster feedback might address? The reason for the change determines what 'quarterly reviews' should actually look like — if the problem is stale feedback, shorter reviews with more frequent check-ins might work; if the problem is lack of goal alignment, quarterly reviews with structured goal-setting are different.\n\n2. What does a 'quarterly review' consist of? Is it the same full review done 4 times a year (which quadruples the workload) or a lighter check-in with a full review annually? The brief says 'transition to quarterly' but doesn't define the scope of each quarterly cycle. Manager time commitment needs to be realistic.\n\n3. How does this affect compensation and promotion decisions? If annual reviews are tied to salary adjustments or promotion decisions, moving to quarterly reviews raises the question: do compensation decisions happen quarterly too, or does one of the four reviews serve as the compensation review? This has significant HR and budget implications.\n\n4. What's the manager capacity? How many direct reports does each manager have? If a manager has 15 reports and each quarterly review takes 2 hours (prep, meeting, documentation), that's 30 hours per quarter — nearly a full work week. Has anyone assessed whether managers can absorb this?\n\n5. What system or process currently supports annual reviews, and can it handle 4× the volume? If reviews are done in a software system, does licensing or capacity support the increased frequency?\n\n6. What happens to in-progress annual reviews? Employees mid-cycle need a transition plan — do they get an abbreviated annual review first, then switch to quarterly?",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145
@@ -673,7 +674,8 @@
           "Questions urgency exceptions — what happens when a client needs a document within an hour?",
           "Asks how this is tracked and enforced — honor system or tooling?",
           "Considers the volume impact — how many documents per day/week go to clients?",
-          "Questions whether templates or standards exist that could reduce review burden"
+          "Questions whether templates or standards exist that could reduce review burden",
+          "Identifies that the policy creates a single point of failure and questions the escalation path"
         ],
         "levels": [
           {
@@ -708,7 +710,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Before starting work on this document approval policy, I'd ask:\n\n1. Who qualifies as a 'senior team member'? Is this a specific title, a level, or anyone with enough tenure? If only 2 people qualify, they become a bottleneck. If 20 people qualify, the inconsistency in review standards becomes the problem.\n\n2. What does 'reviewed and approved' mean in practice? Is this a stylistic review (formatting, tone)? A factual accuracy check? A legal/compliance review? Each type requires different expertise and takes different amounts of time. The brief treats all document types the same, but a proposal review is very different from a contract review.\n\n3. What's the expected turnaround time? If a client needs a proposal within 2 hours and the senior reviewer is in meetings all day, what happens? Without an SLA, the policy will either be ignored under time pressure or create delays that damage client relationships. There needs to be an escalation path or delegation mechanism for urgent situations.\n\n4. What's the volume? How many client-facing documents go out per day or week? If the answer is 50 per week and there are 3 senior reviewers, that's 16–17 reviews per person per week — which may be unsustainable alongside their other responsibilities.\n\n5. What constitutes 'client-facing'? Does an informal email to a known client contact count? A Slack message with a data attachment? The boundary between 'client-facing document' and 'routine communication' is unclear, and people will interpret it differently.\n\n6. How is approval tracked and enforced? Is this an honor system or is there tooling? If honor system, compliance will vary wildly by team. If tooling, what's the workflow — email chain? Document management system? Digital signature?\n\n7. What happens if the senior reviewer is unavailable — on leave, out sick, or just unreachable? The policy creates a single point of failure with no fallback defined. Does a peer review suffice? Can a manager authorize an exception?",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 145

@@ -45,13 +45,13 @@ All three organizations share the assessment — their email domains (`enesol.ai
 
 | Component | Detail |
 |---|---|
-| Assessment content | 5 sections, 67 base questions in pool, 34 served per session, ~48 min estimated duration |
-| Question formats | single_select (32), multi_select (14), drag_to_order (6), open_ended (15) |
+| Assessment content | 5 sections, 70 base questions in pool, 34 served per session, ~48 min estimated duration |
+| Question formats | single_select (32), multi_select (16), drag_to_order (6), open_ended (16) |
 | Web application | Interactive delivery with per-question timers, auto-advance, session management, no back-navigation |
 | Authentication | Email OTP (no passwords), domain-based allowlist, Admin and Test-Taker roles |
 | AI Evaluation Pipeline | 3-step chain: open-ended scoring (Sonnet) → composite aggregation → Responder Profile synthesis (Opus) |
 | Dashboards | Manager/Admin dashboard (ranking, analytics, drill-downs) + Operational dashboard (pipeline health, golden tests), embedded in web app |
-| Storage | JSON files for all data (profiles, calibration, audit trail), with abstraction layer for future DB migration |
+| Storage | PostgreSQL 16 (Drizzle ORM) for structured data (profiles, calibration, responses, users, sessions). Filesystem for audit trail, pipeline traces, and backups. DataProvider abstraction enables cloud DB migration via connection string swap. |
 | Calibration | Population-derived statistics, percentile computation, batch re-scoring |
 | Golden tests | AI-calibrated framework (multi-model consensus, no human reviewers) |
 | Audit trail | Structured logging of every LLM call with full prompt/response/cost data |
@@ -75,8 +75,8 @@ Scenario rotation/variants, dual-evaluator scoring, database migration, longitud
 | **AI — Fallback** | OpenAI GPT-4o | Configured via provider abstraction layer; not active in v1.0 default |
 | **LLM Integration** | Custom lightweight orchestrator | No LangChain/LangGraph — pipeline is linear, native SDKs + provider interface |
 | **Authentication** | Email OTP | Stateless JWT or secure session cookie; no persistent passwords |
-| **Data Storage (v1)** | JSON files on disk | Profiles, calibration params, pipeline runs, golden test results |
-| **Data Storage (v2+)** | PostgreSQL (planned) | JSONB columns with indexed fields; migration via DataProvider interface swap |
+| **Database** | PostgreSQL 16 | Primary data store via Drizzle ORM. JSONB columns for profiles/responses, indexed scalars for filtering. |
+| **ORM** | Drizzle ORM | Type-safe schema, queries, and migration generation. Migrations committed to repo. |
 | **Assessment Schema** | JSON (7 files) | 1 metadata + 5 section definitions + 1 response schema |
 | **Access Control** | Route-level middleware | Admin-only for dashboards and pipeline endpoints; shared auth system |
 
@@ -86,7 +86,7 @@ Scenario rotation/variants, dual-evaluator scoring, database migration, longitud
 
 | Version | Name | Scope Summary | Milestone Gate |
 |---|---|---|---|
-| **v0.1** | Content | 67 questions authored across 5 sections; JSON schemas validated; assessment-meta.json complete | All questions pass schema validation |
+| **v0.1** | Content | 70 questions authored across 5 sections; database schema defined; JSON schemas validated; assessment-meta.json complete | All questions pass schema validation |
 | **v0.2** | Web App + Auth | Assessment delivery UI, Email OTP auth, domain allowlist, Admin/Test-Taker roles, session management | User can log in via OTP, complete 5-section assessment, submit with full metadata |
 | **v0.3** | Pipeline | 3-step AI evaluation chain, Responder Profile generation, audit trail, golden test framework, re-evaluation endpoints | Submit response → receive complete Responder Profile; audit trail captures all LLM calls |
 | **v0.4** | Dashboard | Three-layer architecture (data access → transforms → presentation), Manager/Admin + Operational views, ranking algorithm | Both dashboards render correctly; ranking orders correctly; unauthorized users blocked |
@@ -123,7 +123,7 @@ v0.1 Content
                                 │
                                 ├─► v2.1 Team Benchmarking
                                 │
-                                ├─► v2.2 Database Migration
+                                ├─► v2.2 Cloud Database Migration (connection string swap)
                                 │     └─► v2.3+ Advanced BI Migration
                                 │
                                 ├─► v2.2 Export & Reporting
@@ -142,7 +142,7 @@ v0.1 Content
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| **Storage (v1)** | JSON files on disk | Matches pipeline's natural output format. Zero database dependency. Population < 500 makes this performant. |
+| **Storage** | PostgreSQL 16 via Drizzle ORM | Database from day one. JSONB stores complete profile/response objects; indexed scalar columns enable efficient filtering/sorting. Cloud migration (Neon, RDS, Supabase) requires only a connection string change. Audit trail stays on filesystem (append-only, large payloads). |
 | **Storage abstraction** | `DataProvider` interface | Decouples all consumers (dashboard, pipeline) from storage. Swap JSON → PostgreSQL without touching presentation or transform layers. |
 | **Dashboard deployment** | Embedded in web app | Zero additional infrastructure. Shares the app's Email OTP auth — no second login needed. |
 | **Dashboard architecture** | Three-layer (data access → transforms → presentation) | Each layer independently replaceable. Future-proofs against storage migration, library swap, or external BI tool migration. |
@@ -166,14 +166,13 @@ The following are deliberate v1.0 constraints — things the platform intentiona
 
 - **No test-taker results visibility.** After submission, test-takers see a confirmation screen only. No scores, no profile, no feedback. (v2.3+ adds feedback view; v3.0+ adds improvement plans.)
 - **No scenario variants.** v1.0 ships with base questions only. The schema supports variants, but none are populated. (v2.0 adds rotation.)
-- **No database.** All data lives in JSON files. This is sufficient for populations under ~500 and avoids premature infrastructure complexity.
+- **No self-hosted database clustering.** Single PostgreSQL instance on the same EC2 in v1.0. Cloud-managed migration is a connection string swap.
 - **No dual-evaluator scoring.** Single AI evaluator per question in v1.0. (v2.1 adds multi-provider scoring.)
 - **No export or reporting.** Dashboard is view-only. No CSV/PDF export. (v2.2 adds export.)
 - **No longitudinal tracking.** Each assessment is a point-in-time snapshot. No re-assessment comparison. (v2.2 adds tracking.)
 - **No proctoring.** Assessment integrity relies on design-level anti-gaming, not webcam/browser lockdown. (v2.3+ adds proctoring integration.)
 - **Two roles only.** Admin (full access) and Test-Taker (take assessment, nothing else). No Manager or Operator roles until v2.1+.
 - **No alerting infrastructure.** Operational dashboard is passive — no email/Slack notifications for pipeline failures or golden test drift.
-- **No UI/UX visual design spec.** Component behavior is specified; colors, typography, and layout polish are not.
 
 ---
 
@@ -181,17 +180,22 @@ The following are deliberate v1.0 constraints — things the platform intentiona
 
 | Document | Version | Purpose |
 |---|---|---|
-| **CORE Assessment Functional Specification** | v2.2 | Complete assessment design: sections, question types, scoring methodology, timer behavior, anti-gaming mechanisms, data architecture (JSON schemas), authentication & access control, AI evaluation layer overview, success criteria. The "what" and "why" of the assessment. |
-| **CORE AI Evaluation Pipeline — Technical Specification** | v1.3 | Pipeline architecture: 3-step chain design, model abstraction layer, prompt templates, scoring/synthesis schemas, calibration parameter generation, batch re-scoring, single-assessment re-evaluation, audit trail, golden test framework, cost/latency budgets, error handling. The "how" of AI evaluation. |
-| **CORE Dashboard Module Specification** | v1.1 | Dashboard architecture: three-layer design (data access → transforms → presentation), DataProvider interface, JsonFileProvider, ranking algorithm, transform functions, component specifications, Manager/Admin and Operational dashboard views, API endpoint contracts, role-based access enforcement, data migration path. |
-| **CORE Future Backlog Specification** | v2.1 | All planned v2+ enhancements organized by domain, with target versions, priorities, effort estimates, dependencies, and design readiness. The single source of truth for what's not in v1.0. |
-| **CORE Versioning Roadmap** | v1.1 | Platform-wide versioning scheme (v0.1 → v1.0 → v2+), milestone gates, dependency chain, pilot validation plan, key design principles. The sequencing of everything. |
+| **CORE Assessment Functional Specification** | v2.4 | Complete assessment design: sections, question types, scoring methodology, timer behavior, anti-gaming mechanisms, data architecture (JSON schemas), authentication & access control, AI evaluation layer overview, success criteria. The "what" and "why" of the assessment. |
+| **CORE AI Evaluation Pipeline — Technical Specification** | v1.5 | Pipeline architecture: 3-step chain design, model abstraction layer, prompt templates, scoring/synthesis schemas, calibration parameter generation, batch re-scoring, single-assessment re-evaluation, audit trail, golden test framework, cost/latency budgets, error handling. The "how" of AI evaluation. |
+| **CORE Dashboard Module Specification** | v1.2 | Dashboard architecture: three-layer design (data access → transforms → presentation), DataProvider interface, JsonFileProvider, ranking algorithm, transform functions, component specifications, Manager/Admin and Operational dashboard views, API endpoint contracts, role-based access enforcement, data migration path. |
+| **CORE Future Backlog Specification** | v2.2 | All planned v2+ enhancements organized by domain, with target versions, priorities, effort estimates, dependencies, and design readiness. The single source of truth for what's not in v1.0. |
+| **CORE Versioning Roadmap** | v1.2 | Platform-wide versioning scheme (v0.1 → v1.0 → v2+), milestone gates, dependency chain, pilot validation plan, key design principles. The sequencing of everything. |
+| **CORE Assessment Design Philosophy** | v1.0 | Defines the 7 cognitive patterns the assessment measures, maps each to sections, defines what "Exceptional" looks like. |
+| **CORE UI Experience Specification** | v1.0 | Screen-by-screen assessment-taker experience: flows, timer behavior, accessibility, responsive design, edge cases. |
+| **CORE Sample Response Authoring Guide** | v1.0 | Quality bar and worked examples for authoring sample_strong_response entries. |
 | **assessment-meta.json** | 1.0.0 | Machine-readable assessment configuration: global settings, section ordering, weights, pool/served counts, timer modes, scoring parameters. Loaded first by the application to build UI structure. |
-| **Question Bank Summary** | — | Quick-reference table of all 67 questions: IDs, types, difficulty, points, timing, topics. Full content lives in the section JSON files. |
+| **Question Bank Summary** | v1.1 | Quick-reference table of all 70 questions with cognitive pattern mapping. Full content lives in the section JSON files. |
 
 ---
 
-*Document Version: 1.0*
+*Document Version: 1.2*
 *Created: February 2026*
+*Updated: April 2026*
+*Changes: Questions 67→70, PostgreSQL replaces JSON storage, section order updated, UI Experience Spec added, Design Philosophy added*
 *Organizations: ENESOL.ai | DataForgeTechnologies.com | Datacracy.co*
 *Source: Synthesized from all companion specifications listed in §9*

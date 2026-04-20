@@ -384,7 +384,8 @@
           "Sequences a pilot or phased rollout before full-scale launch",
           "Considers customer communication or marketing as a distinct step",
           "Accounts for testing or validation before going live",
-          "Correct dependency ordering — does not place downstream steps before their prerequisites"
+          "Correct dependency ordering — does not place downstream steps before their prerequisites",
+          "Identifies information dependencies between steps — what early decisions (venue, program rules) constrain downstream choices (marketing, staffing, logistics)"
         ],
         "levels": [
           {
@@ -419,7 +420,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Step 1: Define the program structure. Before building anything, define the rules: how do customers earn points (per dollar? per visit?), what's the redemption model (discounts? free items? tiers?), are there expiration rules? This comes first because every downstream decision — system requirements, staff training, marketing — depends on these rules.\n\nStep 2: Select or build the loyalty platform. With the rules defined, evaluate systems that can track points across 150 physical stores AND the online store in real time. The cross-channel requirement is the critical constraint — the system must handle a customer earning points in-store and redeeming online, or vice versa. Integration with existing POS systems and the e-commerce platform is the key technical decision.\n\nStep 3: Configure and test the system. Set up the platform with the program rules from Step 1, integrate with POS and online checkout, and test end-to-end: earn in-store, redeem online, and the reverse. Validate that point balances sync correctly across channels. This must be complete before any customer or staff sees the program.\n\nStep 4: Train store staff. Staff at 150 locations need to explain the program, enroll customers, and troubleshoot basic issues (points not appearing, redemption failures). Training before launch is essential — a confused staff member will create a negative first impression that undermines enrollment. Consider a train-the-trainer model given the scale.\n\nStep 5: Pilot at 5–10 stores. Run the program at a small subset of locations for 2–4 weeks before full rollout. This catches configuration issues, staff readiness gaps, and customer experience problems at a manageable scale. The pilot also produces real enrollment and redemption data to validate the program economics.\n\nStep 6: Full launch with marketing. Roll out to all 150 stores and online, supported by customer-facing marketing (in-store signage, email campaigns, website promotion). Marketing comes after the system works and staff are trained — launching marketing before the program is ready creates demand you can't fulfill.",
       "speed_flags": {
         "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
@@ -455,7 +456,8 @@
           "Includes training or change management for employees and managers",
           "Sequences a pilot or phased rollout before company-wide deployment",
           "Considers timezone or cross-office implications",
-          "Correct dependency ordering — discovery before design, design before build, training before launch"
+          "Correct dependency ordering — discovery before design, design before build, training before launch",
+          "Considers what happens if a step fails or is delayed — contingency or dependency-aware ordering"
         ],
         "levels": [
           {
@@ -490,7 +492,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Step 1: Discovery and requirements gathering. Before selecting any tool, document the current state: what leave types exist (PTO, sick, personal, etc.), who approves what (direct manager? skip-level? HR for extended leave?), how are balances calculated (accrual vs. annual grant?), and are there policies that vary by office or timezone? This step comes first because every downstream decision depends on understanding the current rules. The timezone dimension is critical: a request submitted at 5pm in one office might land on a manager's desk at 2pm in another.\n\nStep 2: Tool evaluation and selection. With requirements documented, evaluate options against them. Key criteria: does it support the approval chains from Step 1? Can it handle timezone-aware workflows? Does it integrate with existing payroll or HR systems? Can it import historical data?\n\nStep 3: System configuration and data migration. Configure the tool with the policies and approval chains from Steps 1–2. Migrate existing leave balances from spreadsheets. Critically, validate migrated data against source spreadsheets for a sample of employees — migration errors here will erode trust immediately.\n\nStep 4: Training and change management. Train both managers (how to approve/deny, handle edge cases) and employees (how to submit, check balances). Change management matters because if submitting a request is harder than sending an email, adoption will be low.\n\nStep 5: Pilot with one office. Run the system with a single office for 2–4 weeks. This catches configuration issues and workflow gaps before affecting all 300 employees. Ideally the pilot office interacts with managers in other timezones to test cross-office workflows.\n\nStep 6: Full rollout and decommission. Roll out to remaining offices in waves. Once all are live and stable, formally shut down the email/spreadsheet process — keeping both running creates confusion about the source of truth.",
       "speed_flags": {
         "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
@@ -527,7 +529,8 @@
           "Addresses the order routing or fulfillment logic change (which warehouse ships?)",
           "Includes testing or pilot phase before full rollout",
           "Accounts for operational differences (schedules, processes) across warehouses",
-          "Sequences dependencies correctly — standardize before unifying, unify before rerouting fulfillment"
+          "Sequences dependencies correctly — standardize before unifying, unify before rerouting fulfillment",
+          "Identifies that data migration requires a validation/reconciliation step, not just a transfer step"
         ],
         "levels": [
           {
@@ -562,7 +565,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Step 1: Inventory and assessment. Before unifying anything, document what each warehouse currently tracks: what fields exist, what units are used (each vs. case vs. pallet?), how are items identified (SKU? barcode? internal code?), and what's the data quality like? If one warehouse has clean digital records and another has handwritten logs, the migration complexity is very different. This comes first because you can't design a unified system without knowing what you're unifying.\n\nStep 2: Define the unified data model. Based on the inventory, decide: one item ID scheme (which one wins, or do you create a new one?), standard units of measure, required fields for every item, and how to handle items that exist in one warehouse's system but not another's. This is a design decision, not a technical one — it requires input from operations staff who understand why each warehouse does things differently.\n\nStep 3: Build data transformation and mapping. For each warehouse, create the rules to convert their current data format into the unified model. This includes mapping old IDs to new IDs, converting units, and handling discrepancies (what if Warehouse A says there are 500 units and Warehouse B's records for the same item say 450?). Discrepancy resolution rules must be defined before migration, not discovered during it.\n\nStep 4: Migrate and reconcile. Run the migration for one warehouse first, then validate: does the unified system's inventory match a physical count sample? Do the numbers reconcile with the source records? Fix discrepancies before migrating the next warehouse. Reconciliation is not optional — it's the step that determines whether the unified system is trustworthy.\n\nStep 5: Train warehouse staff and update processes. Staff need to use the unified system for receiving, picking, and cycle counts. If the ID scheme or units changed, labels and procedures need updating. Training before full cutover prevents errors that would immediately undermine confidence in the new system.\n\nStep 6: Cutover and monitor. Switch all three warehouses to the unified system. Run parallel tracking for a defined period (e.g., 2 weeks) to catch any discrepancies the migration missed. Decommission the old systems only after the monitoring period confirms accuracy.",
       "speed_flags": {
         "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170
@@ -599,7 +602,8 @@
           "Includes training for school staff who will use or support the new process",
           "Considers a testing or simulation phase (dry run of the matching algorithm/logic)",
           "Recognizes the hard deadline as a constraint that shapes the plan",
-          "Correct dependency ordering — rules before system, system before testing, communication before enrollment opens"
+          "Correct dependency ordering — rules before system, system before testing, communication before enrollment opens",
+          "Considers the information handoff between discovery and design — what gets lost if you skip it"
         ],
         "levels": [
           {
@@ -634,7 +638,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "Step 1: Discovery across all 20 schools. Before designing anything, understand the current state: what enrollment data does each school collect? What systems do they use (paper, spreadsheets, different software)? What are the data formats and quality levels? Are there schools with unique requirements (special programs, language-specific forms, capacity constraints)? The 5-month deadline makes this urgent — discovery that drags on compresses everything downstream.\n\nStep 2: Define the centralized system requirements. Based on discovery, define what the unified system needs: required fields, data validation rules, access permissions (who at each school can enter/edit data?), and reporting requirements for the district. The design must accommodate the 20 schools' actual variety, not an idealized version of it. If discovery found that 5 schools track data that others don't, the design must decide whether to require it from all or make it optional.\n\nStep 3: Select or build the system. Given the 5-month deadline, buying is likely faster than building. Evaluate options against the requirements from Step 2. Integration with existing district systems (student information system, transportation, lunch program) is probably a hard constraint.\n\nStep 4: Data migration and validation. Migrate existing enrollment data from all 20 schools into the new system. This is the highest-risk step: 20 different source formats, varying data quality, and the possibility of duplicate records across schools. Build validation checks that flag anomalies (students enrolled in two schools, missing required fields, impossible dates). Validate a sample with school registrars before declaring migration complete.\n\nStep 5: Train school staff. Each school's registrar or enrollment coordinator needs to use the system. Given 20 schools, consider training in cohorts grouped by current technical readiness. Provide reference materials, not just live training — staff will need to look things up during the first enrollment cycle.\n\nStep 6: Pilot during a low-volume period. If possible, pilot with 3–5 schools before the deadline. If the deadline doesn't allow sequential rollout, at minimum do a dry run: have each school enter a set of test records and verify the data flows correctly to the district level.\n\nStep 7: Full launch with support. Go live across all 20 schools with dedicated support available for the first enrollment cycle. Monitor data quality centrally and flag issues early. The first cycle will surface edge cases that no amount of planning can predict — having a response mechanism ready is the difference between a bumpy launch and a failed one.",
       "speed_flags": {
         "suspicious_fast_seconds": 30,
         "slow_threshold_seconds": 170

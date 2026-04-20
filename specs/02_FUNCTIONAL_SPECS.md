@@ -18,19 +18,21 @@ This document is the consolidated, feature-by-feature functional specification f
 
 | Abbreviation | Document | Version |
 |---|---|---|
-| **FS** | CORE Assessment Functional Specification | v2.2 |
-| **TS** | CORE AI Evaluation Pipeline — Technical Specification | v1.3 |
-| **DS** | CORE Dashboard Module Specification | v1.1 |
-| **VR** | CORE Versioning Roadmap | v1.1 |
+| **FS** | CORE Assessment Functional Specification | v2.4 |
+| **TS** | CORE AI Evaluation Pipeline — Technical Specification | v1.5 |
+| **DS** | CORE Dashboard Module Specification | v1.2 |
+| **VR** | CORE Versioning Roadmap | v1.2 |
 | **AM** | assessment-meta.json | 1.0.0 |
-| **QB** | Question Bank Summary | — |
-| **FB** | CORE Future Backlog Specification | v2.1 |
+| **QB** | Question Bank Summary | v1.1 |
+| **FB** | CORE Future Backlog Specification | v2.2 |
+| **UI** | CORE UI Experience Specification | v1.0 |
+| **DP** | CORE Assessment Design Philosophy | v1.0 |
 
 ---
 
 ## v0.1 — Assessment Content & Schema
 
-**Milestone Gate:** All 67 base questions authored, reviewed, and valid against JSON schema. Section files pass schema validation. `assessment-meta.json` complete.
+**Milestone Gate:** All 70 base questions authored, reviewed, and valid against JSON schema. Section files pass schema validation. `assessment-meta.json` complete.
 
 ---
 
@@ -53,9 +55,9 @@ This document is the consolidated, feature-by-feature functional specification f
   - `open_ended_char_limit`: `5000`, `open_ended_word_limit`: `1000`
   - `multi_select_penalty_factor`: `0.25`
   - `drag_order_partial_credit_tolerance`: `1`
-  - `total_questions_in_bank`: `67`, `total_questions_per_session`: `34`
+  - `total_questions_in_bank`: `70`, `total_questions_per_session`: `34`
   - `estimated_session_duration_minutes`: `48`
-- `sections` array (5 entries, fixed order) each containing: `section_id`, `name`, `short_name`, `file` (relative path), `order` (1–5), `weight` (summing to 1.0), `description`, `questions_in_pool`, `questions_served`, `question_types[]`, `timer_mode`, `estimated_duration_seconds`
+- `sections` array (5 entries, presentation order controlled by `order` field) each containing: `section_id`, `name`, `short_name`, `file` (relative path), `order` (1–5), `weight` (summing to 1.0), `description`, `questions_in_pool`, `questions_served`, `question_types[]`, `timer_mode`, `estimated_duration_seconds`
 - `scoring` block: `composite_method`: `"weighted_average"`, `scale_min`: 0, `scale_max`: 100, five classification tiers with min/max/label/color/description
 - `evaluation` block: scoring rules per question type (binary, partial_credit, positional, rubric)
 - `speed_metrics` block: captured but not included in score
@@ -134,7 +136,7 @@ Each section file contains a `section_id`, `name`, `instructions` (displayed to 
 | S2: Problem Decomposition | 10 | 5 | Min 2 drag_to_order, min 2 open_ended |
 | S3: Critical Observation | 12 | 6 | Min 3 multi_select, min 2 open_ended |
 | S4: Logical Reasoning | 15 | 8 | Min 3 quick, min 3 deep, min 2 open_ended |
-| S5: Output Validation | 10 | 5 | Min 2 multi_select, min 2 open_ended, must include ≥1 AI-output source |
+| S5: Output Validation | 13 | 5 | Min 2 multi_select, min 2 open_ended, must include ≥2 AI-output source |
 
 **Variant Rules (schema only in v1.0):**
 
@@ -171,9 +173,9 @@ Each section file contains a `section_id`, `name`, `instructions` (displayed to 
 
 **Key Requirements:**
 
-**Difficulty Distribution (67 total):** Easy: 6 (9%), Medium: 34 (51%), Hard: 27 (40%).
+**Difficulty Distribution (70 total):** Easy: 6 (9%), Medium: 35 (50%), Hard: 29 (41%).
 
-**Question Type Distribution:** single_select: 32, multi_select: 14, drag_to_order: 6, open_ended: 15.
+**Question Type Distribution:** single_select: 32, multi_select: 16, drag_to_order: 6, open_ended: 16.
 
 **Anti-gaming design constraints (per FS §4):**
 
@@ -185,7 +187,7 @@ Each section file contains a `section_id`, `name`, `instructions` (displayed to 
 
 **Acceptance Criteria:**
 
-1. 67 questions exist across 5 section files with correct IDs (s1-q01 through s5-q10).
+1. 70 questions exist across 5 section files with correct IDs (s1-q01 through s5-q13).
 2. Difficulty counts match the distribution table.
 3. Type counts match the distribution table.
 4. Every multi_select question has at least one more option than correct answers.
@@ -270,6 +272,92 @@ The response object must contain:
 **Dependencies:** Features 0.1.1, 0.1.2.
 
 **Scope Boundaries:** This is a developer/CI tool, not a user-facing feature.
+
+---
+
+### Feature 0.1.6 — Database Data Model & Migrations
+
+**Objective:** Define the persistent data model for all structured, queryable application data. Establish the migration framework so that schema changes are version-controlled and reproducible across environments.
+
+**Spec Source:** FS §5 (Data Architecture), DS §3 (DataProvider), DS §8.4 (Schema)
+
+**Inputs:** Entity definitions from Functional Spec (users, responses, profiles, calibration, golden tests), authentication requirements (sessions, OTP tokens), pipeline requirements (pipeline runs), admin requirements (allowed domains).
+
+**Outputs:** Database schema definitions, initial migration file (committed to repo), migration runner configuration (auto-run in dev, explicit in production), seed data script.
+
+**Key Requirements:**
+
+**Entities and their fields:**
+
+**`users`** — Authenticated platform users.
+- `id` (uuid, primary key), `email` (text, unique, not null), `name` (text, not null), `organization` (text, not null — derived from email domain), `role` (text, not null, default `test_taker` — one of `admin` or `test_taker`), `created_at` (timestamp)
+
+**`sessions`** — Active authenticated sessions.
+- `id` (uuid, primary key), `user_id` (uuid, references users, not null), `expires_at` (timestamp, not null), `created_at` (timestamp)
+
+**`otp_tokens`** — Email OTP verification tokens.
+- `id` (uuid, primary key), `email` (text, not null), `code` (text, not null), `expires_at` (timestamp, not null), `used` (boolean, default false), `created_at` (timestamp)
+
+**`responses`** — Submitted assessment responses. Immutable after creation.
+- `id` (uuid, primary key), `user_id` (uuid, references users, not null), `assessment_version` (text, not null), `started_at` (timestamp, not null), `completed_at` (timestamp, not null), `response_data` (JSONB, not null — contains the full response payload: per-question answers, timing data, speed flags, session metadata, device info), `created_at` (timestamp)
+
+**`profiles`** — Responder Profiles generated by the AI evaluation pipeline. Versioned — re-evaluation creates a new row, not an update.
+- `id` (uuid, primary key), `response_id` (uuid, references responses, not null), `profile_version` (integer, not null, default 1), `user_id` (uuid, references users, not null), `composite_score` (numeric 5,2, not null), `classification` (text, not null), `fitness_rating` (text, not null), `organization` (text, not null), `completed_at` (timestamp, not null), `percentile_rank` (integer, nullable), `relative_fitness_tier` (text, nullable), `profile_data` (JSONB, not null — contains the full Responder Profile as defined in the schema above), `created_at` (timestamp)
+
+**`calibration_snapshots`** — Population-level statistics for norm-referencing. Append-only with a "current" pointer.
+- `id` (uuid, primary key), `sample_size` (integer, not null), `is_current` (boolean, default false), `params` (JSONB, not null — contains full calibration parameters: per-section distributions, composite distribution, speed benchmarks, fitness distribution), `generated_at` (timestamp)
+
+**`pipeline_runs`** — Execution metadata for each pipeline invocation.
+- `id` (uuid, primary key), `response_id` (uuid, references responses, not null), `status` (text, not null — one of `pending`, `scoring`, `aggregating`, `synthesizing`, `complete`, `error`), `started_at` (timestamp), `completed_at` (timestamp, nullable), `total_latency_ms` (integer, nullable), `total_cost_usd` (numeric 8,4, nullable), `metadata` (JSONB, nullable — step-level timing, model info), `error_message` (text, nullable)
+
+**`golden_test_responses`** — Fixed set of pre-scored responses for AI scoring validation.
+- `id` (uuid, primary key), `question_id` (text, not null), `quality_level` (text, not null), `response_text` (text, not null), `consensus_score` (numeric 3,1, not null), `acceptable_min` (numeric 3,1, not null), `acceptable_max` (numeric 3,1, not null), `response_data` (JSONB, not null — full golden response data including model scores, agreement level, notes)
+
+**`golden_test_runs`** — Results of each golden test execution.
+- `id` (uuid, primary key), `ran_at` (timestamp), `passed` (boolean, not null), `mad` (numeric 4,3, not null), `range_compliance_rate` (numeric 4,3, not null), `extreme_miss_count` (integer, not null), `results` (JSONB, not null — per-response deviation details)
+
+**`allowed_domains`** — Email domains permitted to authenticate.
+- `id` (uuid, primary key), `domain` (text, unique, not null), `added_by` (text, not null), `added_at` (timestamp)
+
+**Indexing guidance:**
+- `profiles`: index on `organization`, `fitness_rating`, `classification`, `completed_at`, `composite_score` (descending) — these are the dashboard's primary filter and sort columns
+- `responses`: index on `user_id`, `completed_at`
+- `pipeline_runs`: index on `response_id`, `status`
+- `calibration_snapshots`: index on `is_current`
+
+**Schema design principles:**
+- JSONB columns store the complete objects that the pipeline produces. Indexed scalar columns duplicate key fields for filtering and sorting. This avoids parsing JSONB for common queries while preserving full-fidelity objects for detailed reads.
+- Normalization is deferred. The JSONB-heavy approach matches the pipeline's natural output format. If query patterns emerge that require normalized tables (e.g., per-question score lookups across the population), normalize at that point.
+- All UUIDs are auto-generated. All timestamps default to now where appropriate.
+
+**Migration framework:**
+- Migration files are auto-generated and committed to the repo
+- In development: pending migrations auto-run on app startup (before the server begins accepting requests)
+- In production: migrations run as an explicit step in the deploy script, before the build
+- Rollback: migration tool must support reverting the most recent migration
+
+**Seed data:**
+- Initial admin user: `julio@datacracy.co` with role `admin`
+- Initial allowed domains: `enesol.ai`, `dataforgetechnologies.com`, `datacracy.co`
+- Seed script is idempotent — running it twice does not create duplicates
+
+**What does NOT go in the database:**
+- Audit trail (LLM call logs with full prompt/response bodies) → `data/audit/` on filesystem
+- Pipeline traces → `data/traces/` on filesystem
+- Assessment content (questions, metadata) → `content/` on filesystem (version-controlled)
+
+**Acceptance Criteria:**
+
+1. Initial migration creates all tables with correct columns, types, and constraints.
+2. Foreign key relationships are enforced (user_id references, response_id references).
+3. Seed script creates the initial admin user and allowed domains.
+4. Migration auto-runs in development mode without manual intervention.
+5. A second migration can be generated, applied, and rolled back cleanly.
+6. The DataProvider interface can be implemented against these tables without schema changes.
+
+**Dependencies:** Feature 0.1.4 (response schema must be defined — the `response_data` JSONB structure comes from there).
+
+**Scope Boundaries:** This defines the data model. The DataProvider implementation (`PostgresProvider`) is Feature 0.4.1. The pipeline writes to these tables in v0.3 features. Auth reads/writes users, sessions, and OTP tokens in v0.2 features.
 
 ---
 
@@ -676,7 +764,7 @@ interface LLMProvider {
 
 **Inputs:** Aggregated scores object from Step 2 (all section scores, composite, classification, speed profile, calibration context, open-ended justifications).
 
-**Outputs:** Complete Responder Profile JSON stored at `data/profiles/{response-id}.json`.
+**Outputs:** Complete Responder Profile stored in the `profiles` PostgreSQL table (`profile_data JSONB` + indexed scalar columns for composite_score, classification, fitness_rating, organization). Profile versioning uses `profile_version` column.
 
 **Key Requirements:**
 
@@ -767,11 +855,11 @@ interface LLMProvider {
 
 | Rating | Criteria |
 |---|---|
-| **Strong Fit** | Consistent strength across all sections. Strong decomposition and observation. Fast and accurate. Ready for AI-directed work with minimal guidance. |
-| **Good Fit** | Solid performance across most sections. May have one area slightly below proficient. Can work effectively with AI with occasional support. |
-| **Conditional Fit** | Strengths in some areas but notable gaps. Needs targeted development before independent AI-directed work. |
-| **Developing Fit** | Fundamental skills present but multiple gaps. Requires structured coaching and mentoring. |
-| **Not Yet Ready** | Critical gaps in core reasoning skills. Needs foundational development before AI-assisted work. |
+| **Strong Fit** | Consistent strength across all sections. Strong decomposition and observation. Fast and accurate. Would naturally refuse the obvious fix, escalate at the right tier, maintain context discipline, and know which decisions can't be delegated. Can own the full orchestration cycle independently. |
+| **Good Fit** | Solid across most sections. May have one area slightly below proficient. Can decompose and validate effectively but may need support in one area — typically observation or sequencing. |
+| **Conditional Fit** | Strengths in some areas but notable gaps. Likely strong at one end of the orchestrator cycle but weak at the other. Needs targeted development. |
+| **Developing Fit** | Fundamental skills present but multiple gaps. Would benefit from paired work with a stronger orchestrator. Requires structured coaching. |
+| **Not Yet Ready** | Critical gaps in core reasoning skills. Risks accepting AI outputs uncritically. Requires foundational skill-building before AI-assisted work delegation. |
 
 **Relative Fitness Tiers (percentile-based, requires calibration data):**
 
@@ -782,7 +870,18 @@ interface LLMProvider {
 | 25th–49th | Below Average |
 | < 25th | Bottom Quartile |
 
-**Profile versioning:** Each synthesis run creates a new profile version. Previous versions retained for audit at `data/profiles/{response-id}.v{n}.json`.
+**Profile versioning:** Each synthesis run creates a new profile version. Previous versions retained in the database (new row with incremented `profile_version`, old rows preserved).
+
+**Synthesis Behavioral Requirements:**
+
+The synthesis step produces the Responder Profile by analyzing scored data through an LLM. The prompt template (stored in `prompts/`) must produce output that meets these behavioral standards:
+
+- **Orchestrator skill mapping.** The profile must connect observed performance to the cognitive patterns the assessment measures: root-cause diagnosis, dependency-aware sequencing, context gap detection, escalation judgment, output-vs-intent validation, scope discipline, and forward-thinking design. Section scores are the raw data; the synthesis interprets what they mean for AI-assisted work readiness.
+- **Evidence-grounded claims.** Every assertion in the profile must trace to specific data — a section score, a speed pattern, an open-ended response quality signal. No generic characterizations ("shows promise") without evidence.
+- **Actionable `recommended_role_contexts`.** This field must suggest specific types of AI-assisted work based on demonstrated strengths — not generic job descriptions. Examples: "spec-driven feature delegation," "AI output review and quality assurance," "process design and automation." A person strong in decomposition but weak in validation should get different recommendations than the reverse.
+- **Honest `development_recommendations`.** Weaknesses are named directly with specific, actionable suggestions a manager could act on. Recommendations are prioritized by impact on AI-assisted work readiness.
+- **Fitness rating fidelity.** The `justification` field must explain the rating with reference to the behavioral descriptions in the rating scale above — not just restate the tier name or composite score.
+- **Red flag interpretation.** When speed anomalies or pattern inconsistencies exist, the `red_flags` array must include them with severity and implication for AI-assisted work readiness, not just flag them as data points.
 
 **Acceptance Criteria:**
 
@@ -808,7 +907,7 @@ interface LLMProvider {
 
 **Inputs:** All scored profiles in `data/profiles/`.
 
-**Outputs:** Calibration parameter file at `data/calibration/current.json`, with historical snapshots in `data/calibration/history/`.
+**Outputs:** Row in the `calibration_snapshots` PostgreSQL table (`params JSONB` + `is_current` flag + `sample_size`, `generated_at` scalars). History is all rows; current is the row with `is_current = true`.
 
 **Key Requirements:**
 
@@ -1005,26 +1104,21 @@ interface DataProvider {
 - `compositeScore`, `classification`, `fitnessRating`, `percentileRank`
 - `sectionScores[]` (sectionId, sectionName, rawScore)
 
-**v1.0 implementation: `JsonFileProvider`** — reads JSON files from `data/profiles/`, `data/calibration/`, `data/pipeline/runs/`, `data/golden-tests/runs/`. Filtering and sorting happen in the transform layer, not the provider.
+**v1.0 implementation: `PostgresProvider`** — queries PostgreSQL via Drizzle ORM. Simple filters (organization, date range, classification) push down into SQL WHERE clauses for efficiency. Complex aggregation and shaping remain in the transform layer.
 
-**Future swap:** `DatabaseProvider` implements the same interface, driven by configuration:
-```typescript
-const dataProvider = config.storageBackend === "database"
-  ? new DatabaseProvider(config.dbConnection)
-  : new JsonFileProvider(config.dataDirectory);
-```
+**Cloud migration:** Swap `DATABASE_URL` to a managed service (Neon, RDS, Supabase). Same Drizzle schema, same provider code, same interface. Zero changes to transforms or presentation.
 
 **Acceptance Criteria:**
 
-1. `JsonFileProvider` correctly reads all data directories.
+1. `PostgresProvider` correctly queries all database tables.
 2. `listProfiles` returns all profiles as summaries.
 3. `getProfile` returns full Responder Profile for a given response ID.
-4. Interface is clean enough that a `DatabaseProvider` could be written without modifying any consuming code.
-5. No caching in v1.0; direct file reads on every call.
+4. Interface is clean enough that swapping to a cloud-managed database requires only a connection string change.
+5. Simple filters (org, date, classification) execute as SQL WHERE clauses, not in-memory filtering.
 
 **Dependencies:** Feature 0.3.4 (profiles must exist), Feature 0.3.5 (calibration data).
 
-**Scope Boundaries:** No caching. No query optimization. Database migration is v2.2 (FB §3.1).
+**Scope Boundaries:** No caching beyond what PostgreSQL provides natively. Cloud database migration is v2.2 (connection string swap).
 
 ---
 
@@ -1429,8 +1523,9 @@ data/
 ---
 
 *Document: 02_FUNCTIONAL_SPECS.md*
-*Version: 1.1*
+*Version: 1.3*
 *Created: February 2026*
-*Source: Synthesized from CORE Assessment Functional Spec v2.2, AI Evaluation Technical Spec v1.3, Dashboard Module Spec v1.1, Versioning Roadmap v1.1, Future Backlog Spec v2.1, assessment-meta.json, Question Bank Summary*
+*Updated: April 2026*
+*Source: Synthesized from CORE Assessment Functional Spec v2.4, AI Evaluation Technical Spec v1.5, Dashboard Module Spec v1.2, Versioning Roadmap v1.2, Future Backlog Spec v2.2, UI Experience Spec v1.0, Design Philosophy v1.0, assessment-meta.json, Question Bank Summary*
 *Repository: [github.com/enesol-julio/core-assessment](https://github.com/enesol-julio/core-assessment)*
 *Local path: `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment`*

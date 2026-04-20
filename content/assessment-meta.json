@@ -15,7 +15,7 @@
     "open_ended_word_limit": 1000,
     "multi_select_penalty_factor": 0.25,
     "drag_order_partial_credit_tolerance": 1,
-    "total_questions_in_bank": 67,
+    "total_questions_in_bank": 70,
     "total_questions_per_session": 34,
     "estimated_session_duration_minutes": 48
   },
@@ -36,18 +36,18 @@
       "estimated_duration_seconds": 300
     },
     {
-      "section_id": "section-2-problem-decomposition",
-      "name": "Problem Decomposition",
-      "short_name": "Decomposition",
-      "file": "sections/section-2-problem-decomposition.json",
+      "section_id": "section-4-logical-reasoning",
+      "name": "Logical Reasoning Under Constraints",
+      "short_name": "Logic",
+      "file": "sections/section-4-logical-reasoning.json",
       "order": 2,
-      "weight": 0.25,
-      "description": "Breaking complex problems into logical, sequenced steps with correct dependencies.",
-      "questions_in_pool": 10,
-      "questions_served": 5,
-      "question_types": ["drag_to_order", "open_ended"],
-      "timer_mode": "hidden_with_warning",
-      "estimated_duration_seconds": 750
+      "weight": 0.20,
+      "description": "Deductive and conditional reasoning, constraint handling, multi-step logic chains.",
+      "questions_in_pool": 15,
+      "questions_served": 8,
+      "question_types": ["single_select", "open_ended"],
+      "timer_mode": "mixed",
+      "estimated_duration_seconds": 860
     },
     {
       "section_id": "section-3-critical-observation",
@@ -64,18 +64,18 @@
       "estimated_duration_seconds": 720
     },
     {
-      "section_id": "section-4-logical-reasoning",
-      "name": "Logical Reasoning Under Constraints",
-      "short_name": "Logic",
-      "file": "sections/section-4-logical-reasoning.json",
+      "section_id": "section-2-problem-decomposition",
+      "name": "Problem Decomposition",
+      "short_name": "Decomposition",
+      "file": "sections/section-2-problem-decomposition.json",
       "order": 4,
-      "weight": 0.20,
-      "description": "Deductive and conditional reasoning, constraint handling, multi-step logic chains.",
-      "questions_in_pool": 15,
-      "questions_served": 8,
-      "question_types": ["single_select", "open_ended"],
-      "timer_mode": "mixed",
-      "estimated_duration_seconds": 860
+      "weight": 0.25,
+      "description": "Breaking complex problems into logical, sequenced steps with correct dependencies.",
+      "questions_in_pool": 10,
+      "questions_served": 5,
+      "question_types": ["drag_to_order", "open_ended"],
+      "timer_mode": "hidden_with_warning",
+      "estimated_duration_seconds": 750
     },
     {
       "section_id": "section-5-output-validation",
@@ -85,7 +85,7 @@
       "order": 5,
       "weight": 0.15,
       "description": "Evaluating whether outputs satisfy original intent — not just whether they look right.",
-      "questions_in_pool": 10,
+      "questions_in_pool": 13,
       "questions_served": 5,
       "question_types": ["multi_select", "open_ended"],
       "timer_mode": "hidden_with_warning",

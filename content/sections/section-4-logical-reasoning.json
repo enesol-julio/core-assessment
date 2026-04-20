@@ -527,7 +527,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "The argument claims that redesigning the support page caused the 40% drop in call volume. This is a classic correlation-as-causation error — two things happened in sequence, but that doesn't prove one caused the other.\n\nThe key flaw is uncontrolled variables. Many things could explain reduced call volume during the same period: a seasonal dip in product usage, fewer new customers onboarding, a product update that resolved common issues, or even customers giving up and churning instead of calling. Without isolating the page redesign as the only change, attributing the drop to it is speculation.\n\nAdditionally, 'fewer support calls' isn't inherently positive. If calls dropped because customers found answers on the redesigned page, that's a success. But if calls dropped because the page was confusing enough that customers gave up, switched to email, or simply stopped trying to get help, the drop masks a worse customer experience. The argument assumes the drop is good without examining where those customers went.\n\nTo make this argument valid, you'd need: a comparison period with no other changes, evidence that customers actually used the redesigned page (page views, time-on-page), evidence that customer satisfaction didn't decline during the same period, and ideally an A/B test where some customers saw the old page and others saw the new one.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
@@ -597,7 +597,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "This conclusion is premature and the reasoning has several critical gaps.\n\nThe most fundamental issue is the sample size disparity: 5,000 visitors vs. 50,000. At 5,000 visitors, a 3.8% conversion rate means roughly 190 conversions. Random variation alone could easily account for the 0.6 percentage point difference — a statistical significance test is needed to determine whether this difference is real or noise.\n\nThe time periods aren't comparable either. Version A was measured over 4 weeks, Version B over just 1 week. A single week is vulnerable to day-of-week effects, seasonal fluctuations, or one-time events — a marketing email that drove high-intent traffic during that specific week could explain the entire difference. Four weeks smooths out these variations; one week amplifies them.\n\nCrucially, the comparison assumes nothing else changed between the two periods. Were any marketing campaigns running during the Version B week? Did the traffic source mix shift (more organic vs. paid)? Was there a sale or promotion? Any of these could explain the conversion difference independent of the page design.\n\nThe correct approach: run both versions concurrently in a proper A/B test with random traffic splitting, for at least 2–4 weeks, until both reach sufficient sample sizes to establish statistical significance. Only then can the difference be attributed to the design change.",
       "speed_flags": {
         "suspicious_fast_seconds": 25,
         "slow_threshold_seconds": 170
@@ -667,7 +667,7 @@
           }
         ]
       },
-      "sample_strong_response": "[TODO] To be authored before pilot (v0.5).",
+      "sample_strong_response": "The manager's denial is defensible under one reading of the policy but not clearly correct, because the policy contains a fundamental ambiguity.\n\nThe tension is between 'are entitled to overtime pay' (which sounds like an automatic right triggered by working over 8 hours) and 'must be pre-approved by a supervisor' (which sounds like a condition that must be met before the entitlement applies). These two clauses can be read as contradicting each other: is the entitlement absolute once the hours are worked, with pre-approval being a procedural expectation? Or is pre-approval a prerequisite without which the entitlement doesn't activate?\n\nAlex's situation exposes a critical edge case the policy doesn't address: what happens when compliance with the pre-approval requirement is impossible? The supervisor was out sick and unreachable. Alex couldn't have obtained pre-approval even with good intentions. A policy that requires an action that circumstances make impossible creates an unresolvable conflict.\n\nThe policy also doesn't define an escalation path: if the direct supervisor is unavailable, can another supervisor approve? Can the employee self-certify with after-the-fact documentation? The absence of a fallback mechanism means any employee facing a genuine deadline and an unavailable supervisor must choose between missing the deadline or forgoing overtime pay — a choice the policy shouldn't force.",
       "speed_flags": {
         "suspicious_fast_seconds": 20,
         "slow_threshold_seconds": 140
