@@ -162,7 +162,7 @@ core-assessment/
 ```
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.2                   │
-│  Feature: 0.2.2 — Domain Allowlist Mgmt     │
+│  Feature: 0.2.3 — Assessment Session Flow   │
 │  Status: In Progress                        │
 └─────────────────────────────────────────────┘
 ```

@@ -9,6 +9,12 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.2 — Domain Allowlist Management
+- Added `src/lib/auth/domains.ts` — validate, normalize, list, add (idempotent), remove (with safety guard against removing last domain)
+- API routes (all admin-only): `GET /api/admin/domains`, `POST /api/admin/domains`, `DELETE /api/admin/domains/{domain}`
+- Domain format validation: rejects whitespace, `@`, wildcards, invalid TLDs; strips leading `@` and normalizes case
+- Smoke script `npm run smoke:domains` covers validation, idempotency, and the last-domain guard (passing)
+
 ### v0.2.1 — Email OTP Authentication
 - Added `src/lib/auth/` — `config.ts`, `otp.ts`, `session.ts`, `email.ts`, `middleware.ts`
 - OTP flow: 6-digit codes, 10-min expiry, single-use, domain allowlist check, JWT session via `jose`, secure cookie, 4-hr default expiry
