@@ -189,3 +189,32 @@ export type PipelineRun = typeof pipelineRuns.$inferSelect;
 export type GoldenTestResponse = typeof goldenTestResponses.$inferSelect;
 export type GoldenTestRun = typeof goldenTestRuns.$inferSelect;
 export type AllowedDomain = typeof allowedDomains.$inferSelect;
+
+export const pilotFeedback = pgTable(
+  "pilot_feedback",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    responseId: uuid("response_id")
+      .notNull()
+      .references(() => responses.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "restrict" }),
+    overallRating: integer("overall_rating").notNull(),
+    clarityRating: integer("clarity_rating").notNull(),
+    difficultyRating: integer("difficulty_rating").notNull(),
+    fairnessRating: integer("fairness_rating").notNull(),
+    timingComments: text("timing_comments"),
+    questionComments: text("question_comments"),
+    uxIssues: text("ux_issues"),
+    additionalNotes: text("additional_notes"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("pilot_feedback_response_unique").on(t.responseId),
+    index("pilot_feedback_user_idx").on(t.userId),
+  ],
+);
+
+export type PilotFeedback = typeof pilotFeedback.$inferSelect;
+export type NewPilotFeedback = typeof pilotFeedback.$inferInsert;

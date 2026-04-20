@@ -9,6 +9,16 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.5 — Pilot Harness (infrastructure layer)
+- New `pilot_feedback` table (0001_pilot_feedback migration): overall/clarity/difficulty/fairness ratings 1–5, four free-text fields, unique on `response_id`
+- `POST /api/pilot/feedback` — authenticated test-takers or admins submit feedback tied to their own response; 409 on duplicate
+- `PilotFeedbackForm` client component rendered on the `/complete` page so participants can submit feedback immediately after the assessment
+- `npm run pilot:readiness` — structured checklist: env vars, production-safety guard, admin seeded, allowed domains, content loads EN+ES (70 questions), pipeline provider detected, golden tests seeded, pilot_feedback reachable. Exits 1 on any failure so CI can gate the pilot start
+- `npm run pilot:seed-golden` — bootstraps the 20 golden test responses (idempotent)
+- `npm run pilot:simulate -- --n=8` — simulates 5-8 participants end-to-end (submit → evaluate → feedback) under the fixture provider so the dashboard can be exercised without real humans
+- `npm run pilot:validate` — post-hoc analysis: classification / fitness distributions, 5-point histogram, section variance (flags std < 7), optional pilot-feedback aggregation, exits 1 on high-severity findings (ceiling/floor effects above 60%)
+- Non-automatable pieces deferred to the operator: real participant recruitment, controlled-environment administration, founder subjective review of profiles for known participants. Those are documented as v0.5.1 and v0.5.3 human work in the Functional Spec
+
 ### v0.4.1–0.4.5 — Dashboard & Reporting (data, transforms, APIs, UI)
 - `DataProvider` interface at `src/services/dashboard/interfaces/data-provider.ts`; `PostgresProvider` at `src/services/dashboard/providers/postgres-provider.ts` pushes organization/classification/fitness/date filters into SQL WHERE clauses; returns latest-version-per-response summaries
 - Transforms in `src/services/dashboard/transforms/` — pure functions only:

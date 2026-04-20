@@ -161,9 +161,9 @@ core-assessment/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  CURRENTLY BUILDING: v0.5                   │
-│  Feature: 0.5.1 — Pilot harness             │
-│  Status: v0.4 milestone closed              │
+│  CURRENTLY BUILDING: — (v1.0 path complete) │
+│  Status: v0.1–v0.5 infrastructure closed    │
+│  Next: real-pilot recruitment + creds       │
 └─────────────────────────────────────────────┘
 ```
 
@@ -200,10 +200,10 @@ core-assessment/
 - 0.4.4 — Operational Dashboard View ✅
 - 0.4.5 — Dashboard API Endpoints ✅
 
-**v0.5 scope (Pilot Program):**
-- 0.5.1 — Pilot Setup & Recruitment (human + infrastructure)
-- 0.5.2 — Assessment Administration & Data Collection
-- 0.5.3 — Validation Analysis
+**v0.5 scope (Pilot Program) — infrastructure complete; human work deferred:**
+- 0.5.1 — Pilot readiness checklist + domain seeding + admin user ✅ (recruitment = human)
+- 0.5.2 — Pilot feedback table + form + simulate-pilot harness ✅ (actual sessions = human)
+- 0.5.3 — Validation-analysis tooling (distributions + variance + feedback) ✅ (founder review = human)
 
 ---
 

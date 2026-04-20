@@ -21,7 +21,11 @@
     "smoke:assess": "tsx scripts/validate/assess-submit-smoke.mjs",
     "smoke:pipeline": "tsx scripts/validate/pipeline-smoke.mjs",
     "smoke:v03": "tsx scripts/validate/v03-smoke.mjs",
-    "smoke:dashboard": "tsx scripts/validate/dashboard-smoke.mjs"
+    "smoke:dashboard": "tsx scripts/validate/dashboard-smoke.mjs",
+    "pilot:readiness": "tsx scripts/pilot/readiness-check.mjs",
+    "pilot:validate": "tsx scripts/pilot/validation-analysis.mjs",
+    "pilot:simulate": "tsx scripts/pilot/simulate-pilot.mjs",
+    "pilot:seed-golden": "tsx scripts/pilot/seed-golden.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
