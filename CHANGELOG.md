@@ -9,6 +9,13 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.6 — Content Loader with i18n Overlay
+- Added `src/lib/content/index.ts` — `loadAssessmentMeta`, `loadSection`, `loadAssessment` merge Spanish overlays from `content/translations/es/` onto the English base with silent fallback for missing translations
+- UI string loading (`loadUiStrings`, `uiString`, `interpolate`) with fallback to English and `{token}` replacement
+- Added `src/lib/content/selection.ts` — rejection-sampling + constructive fallback to satisfy overlapping selection constraints (e.g. S5: type=multi_select ≥ 2, type=open_ended ≥ 2, output_source=ai ≥ 2, count=5)
+- Assessment sections returned in the presentation order dictated by `assessment-meta.json` (S1→S4→S3→S2→S5)
+- Smoke `npm run smoke:content` covers EN/ES overlay merge, question prompt/option translation, section ordering, selection constraints across S1/S2/S5, UI string fallback, interpolation
+
 ### v0.2.5 — Role-Based Route Protection
 - Added `src/app/(admin)/layout.tsx` — server-side gate that redirects unauthenticated visitors to `/?from=admin` and non-admins to `/?forbidden=1`
 - `requireAdmin`/`requireAuth` in `src/lib/auth/middleware.ts` return 401/403 JSON for API routes

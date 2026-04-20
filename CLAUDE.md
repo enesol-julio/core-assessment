@@ -163,7 +163,7 @@ core-assessment/
 ┌─────────────────────────────────────────────┐
 │  CURRENTLY BUILDING: v0.2                   │
 │  Feature: 0.2.3 — Assessment Session Flow   │
-│  Status: In Progress                        │
+│  Status: In Progress (API + UI)             │
 └─────────────────────────────────────────────┘
 ```
 
