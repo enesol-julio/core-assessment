@@ -9,6 +9,12 @@
 - All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
 - All multi_select questions have more options than correct answers
 
+### v0.2.5 — Role-Based Route Protection
+- Added `src/app/(admin)/layout.tsx` — server-side gate that redirects unauthenticated visitors to `/?from=admin` and non-admins to `/?forbidden=1`
+- `requireAdmin`/`requireAuth` in `src/lib/auth/middleware.ts` return 401/403 JSON for API routes
+- All admin API routes built so far (`/api/admin/domains`, `/api/admin/domains/{domain}`) wired through `requireAdmin`; future pipeline, dashboard, and golden-test routes will do the same
+- Smoke script `npm run smoke:auth-gate` verifies JWT signing/verification, role encoding (`admin` vs `test_taker`), and tampered-token rejection
+
 ### v0.2.4 — Deterministic Scoring Engine
 - Added `src/lib/scoring/index.ts` — pure functions for `scoreSingleSelect`, `scoreMultiSelect`, `scoreDragToOrder`, `scoreFromRubric`, `sectionRawScore`, `compositeScore`, `classify`
 - Multi-select: `max(0, (correct/total_correct) − incorrect × 0.25) × maxScore` per spec

@@ -15,7 +15,8 @@
     "db:studio": "drizzle-kit studio",
     "smoke:auth": "tsx scripts/validate/auth-smoke.mjs",
     "smoke:domains": "tsx scripts/validate/domains-smoke.mjs",
-    "smoke:scoring": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate/scoring-smoke.mjs"
+    "smoke:scoring": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate/scoring-smoke.mjs",
+    "smoke:auth-gate": "tsx scripts/validate/auth-gate-smoke.mjs"
   },
   "dependencies": {
     "@azure/msal-node": "^5.1.3",
