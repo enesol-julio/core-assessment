@@ -1,8 +1,9 @@
 # Microsoft Entra ID App Registration Setup
 
-**Purpose:** Register an application in Microsoft Entra ID for Microsoft Graph API email access (OTP delivery)  
-**Project:** CORE Assessment Platform  
-**Version:** v1.0
+**Purpose:** Register an application in Microsoft Entra ID for Microsoft Graph API email access (OTP delivery)
+**Project:** CORE Assessment Platform
+**Version:** v1.1
+**Updated:** April 2026 — env var names aligned with the shipping implementation (`AZURE_*` + `EMAIL_FROM`).
 
 ---
 
@@ -114,9 +115,12 @@ You need these three values for the CORE Assessment `.env.local` file:
 
 | Env Variable | Where to Find |
 |--------------|---------------|
-| `GRAPH_TENANT_ID` | App Registration → Overview → **Directory (tenant) ID** |
-| `GRAPH_CLIENT_ID` | App Registration → Overview → **Application (client) ID** |
-| `GRAPH_CLIENT_SECRET` | The value you copied in Step 2 |
+| `AZURE_TENANT_ID` | App Registration → Overview → **Directory (tenant) ID** |
+| `AZURE_CLIENT_ID` | App Registration → Overview → **Application (client) ID** |
+| `AZURE_CLIENT_SECRET` | The value you copied in Step 2 |
+| `EMAIL_FROM` | The shared-mailbox address the app will send from (configured in [M365_GRAPH_SETUP.md](M365_GRAPH_SETUP.md)) |
+
+> The env var names above match what `src/lib/auth/email.ts` reads at runtime. Earlier drafts of this doc used a `GRAPH_*` prefix — the shipping code uses `AZURE_*` + `EMAIL_FROM`. If you see the old names anywhere, they're stale.
 
 ---
 
@@ -189,9 +193,10 @@ Azure Portal
 ### Required Values Summary
 
 ```
-GRAPH_TENANT_ID:     [Directory (tenant) ID from Overview]
-GRAPH_CLIENT_ID:     [Application (client) ID from Overview]
-GRAPH_CLIENT_SECRET: [Value from Certificates & secrets]
+AZURE_TENANT_ID:     [Directory (tenant) ID from Overview]
+AZURE_CLIENT_ID:     [Application (client) ID from Overview]
+AZURE_CLIENT_SECRET: [Value from Certificates & secrets]
+EMAIL_FROM:          [Shared mailbox from M365_GRAPH_SETUP.md]
 ```
 
 ### Permission Required

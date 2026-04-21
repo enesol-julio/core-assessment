@@ -2,12 +2,11 @@
 
 ## [Unreleased]
 
-### v0.1.3 — Question Content Authoring (Confirmed Complete)
-- Audit: 70 base questions across 5 sections (s1-q01 … s5-q13)
-- Type distribution: single_select=32, multi_select=16, drag_to_order=6, open_ended=16
-- Difficulty distribution: easy=6, medium=35, hard=29
-- All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
-- All multi_select questions have more options than correct answers
+### Documentation — April 2026
+- README.md rewritten as the project README with quick-start, env var table, script catalog, architecture summary
+- docs/AZURE_APP_REGISTRATION_SETUP.md, docs/M365_GRAPH_SETUP.md: env var names corrected to match shipping code (`AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `EMAIL_FROM`) — earlier drafts used a `GRAPH_*` prefix that never existed in the code
+- docs/M365_GRAPH_SETUP.md: reflects that `src/lib/auth/email.ts` is already implemented with GraphSender + DevConsoleSender fallback
+- CLAUDE.md §13: restructured into in-repo docs (authoritative), source specs (distilled), and operator guides; removed stale RUNBOOK reference; UI Experience Spec bumped v1.0 → v1.1 to match its file version
 
 ### v0.5 — Pilot Harness (infrastructure layer)
 - New `pilot_feedback` table (0001_pilot_feedback migration): overall/clarity/difficulty/fairness ratings 1–5, four free-text fields, unique on `response_id`
@@ -129,6 +128,13 @@
 - Cross-validation: section `file` references exist, pool counts match meta, type sets match, per-section `question_id` prefix matches, classification tiers cover 0–100 with no gaps/overlaps, weights sum to 1.0
 - `npm run validate:content` script entry, exit code 1 on validation errors
 - Enabled `allowImportingTsExtensions` in `tsconfig.json` so Node 25 can run TypeScript directly without a build step
+
+### v0.1.3 — Question Content Authoring (Confirmed Complete)
+- Audit: 70 base questions across 5 sections (s1-q01 … s5-q13)
+- Type distribution: single_select=32, multi_select=16, drag_to_order=6, open_ended=16
+- Difficulty distribution: easy=6, medium=35, hard=29
+- All open-ended questions have `sample_strong_response` and ≥3 rubric criteria
+- All multi_select questions have more options than correct answers
 
 ### v0.1.4 — Assessment Response Schema
 - Added `src/lib/types/assessment-response.ts` with Zod schemas

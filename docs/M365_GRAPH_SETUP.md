@@ -1,9 +1,10 @@
 # Microsoft 365 Graph API Email Setup
 
-**Purpose:** Configure Microsoft Graph API to send OTP emails from the CORE Assessment Platform  
-**Project:** CORE Assessment Platform  
-**Stack:** Next.js 14+ / TypeScript  
-**Version:** v1.0
+**Purpose:** Configure Microsoft Graph API to send OTP emails from the CORE Assessment Platform
+**Project:** CORE Assessment Platform
+**Stack:** Next.js 14+ / TypeScript
+**Version:** v1.1
+**Updated:** April 2026 — env var names aligned with the shipping code (`AZURE_*` + `EMAIL_FROM`); reflects that the email service now ships at `src/lib/auth/email.ts` and falls back to a dev-console sender when credentials are absent.
 
 ---
 
@@ -25,7 +26,7 @@ This guide configures email sending via Microsoft Graph API for OTP delivery. Th
   - Client ID (Application ID)
   - Client Secret
 - Admin access to Microsoft 365 Admin Center
-- CORE Assessment project scaffolded (v0.1 complete)
+- CORE Assessment project cloned locally with `.env.local` in place (see project [`README.md`](../README.md) Quick Start)
 
 ---
 
@@ -55,29 +56,20 @@ With tenant-wide `Mail.Send` permission, the app can send from any mailbox in yo
 
 ## Step 2: Install Dependencies
 
-From the project root, install the Microsoft Authentication Library for Node.js:
-
-```bash
-cd /Users/jutuonair/GDrive/ProductDevelopment/core-assessment
-npm install @azure/msal-node
-```
-
-This is the only dependency needed. OTP emails are sent via direct REST calls to `https://graph.microsoft.com/v1.0/users/{sender}/sendMail` — no Graph SDK required.
+`@azure/msal-node` is already in `package.json` — nothing to install. OTP emails are sent via direct REST calls to `https://graph.microsoft.com/v1.0/users/{sender}/sendMail` — no Graph SDK required. MSAL handles token acquisition (client-credentials flow) and in-memory token caching.
 
 ---
 
 ## Step 3: Update `.env.local`
 
-Add the Graph API credentials to your `.env.local` file at the project root:
+Add the Graph API credentials to your `.env.local` file at the project root. These names match exactly what `src/lib/auth/email.ts` reads:
 
 ```env
 # ── Email Service (for OTP delivery via Microsoft Graph) ──
-EMAIL_PROVIDER=graph
-GRAPH_TENANT_ID=YOUR_TENANT_ID
-GRAPH_CLIENT_ID=YOUR_CLIENT_ID
-GRAPH_CLIENT_SECRET=YOUR_CLIENT_SECRET
-GRAPH_SENDER_EMAIL=core-assessment@dataforgetechnologies.com
-GRAPH_SENDER_NAME=CORE Assessment
+AZURE_TENANT_ID=YOUR_TENANT_ID
+AZURE_CLIENT_ID=YOUR_CLIENT_ID
+AZURE_CLIENT_SECRET=YOUR_CLIENT_SECRET
+EMAIL_FROM=core-assessment@dataforgetechnologies.com
 ```
 
 **Replace:**
@@ -86,70 +78,49 @@ GRAPH_SENDER_NAME=CORE Assessment
 - `YOUR_CLIENT_SECRET` — From App Registration (secret value)
 
 **Verify:**
-- `GRAPH_SENDER_EMAIL` matches the shared mailbox you created in Step 1
-- `.env.local` is in `.gitignore` (it should be by default from the scaffold)
+- `EMAIL_FROM` matches the shared mailbox you created in Step 1
+- `.env.local` is in `.gitignore` (it already is in this repo)
+
+**Provider selection is automatic.** `src/lib/auth/email.ts` looks at all four of these values at request time. If any are unset or still at the `.env.example` placeholders, it falls back to `DevConsoleSender`, which logs the OTP to stdout and `data/audit/otp/` instead of sending email. That keeps the OTP flow exercisable without real credentials.
 
 ---
 
-## Step 4: Implement the Email Service
+## Step 4: Email Service (already implemented)
 
-The email service lives at `src/lib/auth/email.ts` (per the project architecture — auth utilities go in `src/lib/auth/`).
+The email service lives at [`src/lib/auth/email.ts`](../src/lib/auth/email.ts). It exposes two implementations of the `EmailSender` interface and a factory:
 
-The implementation should:
+- **`GraphSender`** — production path. Uses `@azure/msal-node` `ConfidentialClientApplication` (authority `https://login.microsoftonline.com/{AZURE_TENANT_ID}`, scope `https://graph.microsoft.com/.default`) to acquire a token, then `POST https://graph.microsoft.com/v1.0/users/{EMAIL_FROM}/sendMail` to deliver the OTP. Subject/body are localized (EN/ES) based on the requesting session language.
+- **`DevConsoleSender`** — fallback. Writes the OTP to stdout and appends to `data/audit/otp/{email}.log`. Selected automatically when any of `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, or `EMAIL_FROM` is unset / placeholder.
+- **`getEmailSender()`** — detects which to return.
 
-1. **Acquire an access token** using `@azure/msal-node` `ConfidentialClientApplication` with client credentials flow:
-   - Authority: `https://login.microsoftonline.com/{GRAPH_TENANT_ID}`
-   - Scope: `https://graph.microsoft.com/.default`
-
-2. **Send email** via `POST https://graph.microsoft.com/v1.0/users/{GRAPH_SENDER_EMAIL}/sendMail` with the access token in the Authorization header.
-
-3. **Token caching** is handled automatically by MSAL Node — it caches tokens in memory and refreshes them when they expire. No manual token management needed.
-
-Key design notes:
-- The email service is consumed by the `/api/auth/request-otp` API route
-- It should export a single function (e.g., `sendOtpEmail(to, name, otpCode)`)
-- Error handling should return a success/failure result, not throw — the API route decides the HTTP response
-- When `AUTH_BYPASS=true` in development, the OTP should print to console instead of sending email
+The API route [`src/app/api/auth/request-otp/route.ts`](../src/app/api/auth/request-otp/route.ts) consumes the sender. MSAL caches tokens in memory and refreshes on expiry — no manual token management needed.
 
 ---
 
 ## Step 5: Test Email Sending
 
-### Quick Test (after implementing the email service)
+### Quick test via the API
 
-Create a temporary test script at `scripts/test-email.ts`:
+With the dev server running and `AUTH_BYPASS=false` in `.env.local`:
 
-```typescript
-// Run with: npx tsx scripts/test-email.ts
-import { sendOtpEmail } from '../src/lib/auth/email';
-
-async function main() {
-  const result = await sendOtpEmail(
-    'your-email@dataforgetechnologies.com',
-    'Your Name',
-    '123456'
-  );
-  console.log('Success:', result.success);
-  console.log('Message:', result.message);
-}
-
-main().catch(console.error);
-```
-
-Run it:
 ```bash
-npx tsx scripts/test-email.ts
+curl -sS -X POST http://localhost:3000/api/auth/request-otp \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@dataforgetechnologies.com","language":"en"}' | jq
 ```
 
-**Expected:** Email arrives in your inbox from `core-assessment@dataforgetechnologies.com`.
+**Expected (real Graph credentials present):** `{"ok":true,"expires_at":"..."}` and the email arrives in your inbox.
+**Expected (fallback):** Same JSON response, but the OTP code is printed to the dev-server console and appended to `data/audit/otp/you_at_dataforgetechnologies.com.log`.
 
-### Full Login Flow Test (after v0.2.1 is implemented)
+### Full login flow
 
 1. Start the dev server: `npm run dev`
-2. Go to `http://localhost:3000`
-3. Enter your email on the login page
-4. Check inbox for OTP email
-5. Enter OTP and verify login works
+2. Visit `http://localhost:3000`
+3. Enter your email on the login screen → click Sign in
+4. Retrieve the OTP (inbox, or dev console / `data/audit/otp/`)
+5. Enter the OTP on the verify screen → you land on `/assess` (or `/dashboard` if admin)
+
+The full OTP lifecycle is also exercised by `npm run smoke:auth`, which disables `AUTH_BYPASS` and hits the underlying functions directly (issue, consume, expire, reuse, single-use, JWT round-trip, session revoke).
 
 ---
 
@@ -166,15 +137,15 @@ App doesn't have `Mail.Send` permission:
 
 Sender mailbox doesn't exist or app can't access it:
 1. Verify the shared mailbox exists in Microsoft 365 Admin Center
-2. Check spelling in `.env.local` `GRAPH_SENDER_EMAIL` matches exactly
+2. Check spelling in `.env.local` — `EMAIL_FROM` must match exactly
 3. New shared mailboxes may take a few minutes to provision — wait and retry
 
 ### Error: "InvalidAuthenticationToken"
 
 Token issue:
-1. Verify `GRAPH_TENANT_ID` is correct
-2. Verify `GRAPH_CLIENT_ID` is correct
-3. Verify `GRAPH_CLIENT_SECRET` hasn't expired
+1. Verify `AZURE_TENANT_ID` is correct
+2. Verify `AZURE_CLIENT_ID` is correct
+3. Verify `AZURE_CLIENT_SECRET` hasn't expired
 4. Confirm the secret is the **Value**, not the Secret ID
 
 ### Error: "Forbidden"
@@ -190,8 +161,9 @@ Admin consent not granted:
 2. Check Microsoft 365 message trace:
    - **Exchange Admin Center** → **Mail flow** → **Message trace**
    - Search for sender: `core-assessment@dataforgetechnologies.com`
-3. Verify `AUTH_BYPASS` is `false` in `.env.local` (if `true`, OTP prints to console instead of emailing)
-4. Check Next.js server logs for Graph API errors
+3. Verify `AUTH_BYPASS` is `false` in `.env.local` (with `true`, the OTP request endpoint is bypassed entirely — login is auto-approved)
+4. Verify all four of `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, `AZURE_CLIENT_SECRET`, `EMAIL_FROM` are set to real values (any missing → `DevConsoleSender` fallback and no mail is sent)
+5. Check Next.js server logs for Graph API errors
 
 ---
 

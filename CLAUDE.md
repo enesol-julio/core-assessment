@@ -332,16 +332,36 @@ AUTH_BYPASS_ROLE=admin
 
 ## 13. Companion Docs
 
+**Synthesized in-repo (authoritative):**
+
+| File | Covers |
+|---|---|
+| `specs/00_PROJECT_OVERVIEW.md` | Goals, positioning, success criteria |
+| `specs/01_ARCHITECTURE.md` | System structure, component inventory, data flows, deployment |
+| `specs/02_FUNCTIONAL_SPECS.md` | Feature-by-feature acceptance criteria for every v0.1–v0.5 feature |
+| `specs/03_UI_EXPERIENCE.md` | Screen-by-screen test-taker UX |
+| `CHANGELOG.md` | Per-feature delivery log |
+| `README.md` | Setup, run, deploy, script catalog |
+
+**Source specifications distilled into `specs/02_FUNCTIONAL_SPECS.md`:**
+
 | Spec | Version | Covers |
 |---|---|---|
 | Functional Spec | v2.4 | Assessment design, sections, scoring, auth, schemas |
 | AI Evaluation Technical Spec | v1.5 | Pipeline architecture, prompts, golden tests, calibration |
 | Dashboard Module Spec | v1.2 | Three-layer dashboard, PostgresProvider, transforms, access control |
-| UI Experience Spec | v1.0 | Screen-by-screen test-taker UX |
+| UI Experience Spec | v1.1 | Screen-by-screen test-taker UX |
 | Design Philosophy | v1.0 | 7 cognitive patterns, section mapping |
 | Versioning Roadmap | v1.2 | Version scheme, milestone gates, dependency chain |
 | Future Backlog Spec | v2.2 | Everything deferred to v2+ |
-| RUNBOOK | 1.2 | Local setup, build workflow, EC2 deployment |
+
+**Operator guides:**
+
+| File | Covers |
+|---|---|
+| `docs/AZURE_APP_REGISTRATION_SETUP.md` | Register the Entra ID app for Graph-based OTP email |
+| `docs/M365_GRAPH_SETUP.md` | Sender mailbox + env vars + troubleshooting |
+| `docs/TRANSLATION_REVIEWER_NOTES.md` | Bilingual question-authoring judgment calls |
 
 **Key entities:**
 
@@ -357,4 +377,4 @@ AUTH_BYPASS_ROLE=admin
 
 ---
 
-*CLAUDE.md Version: 1.2 · Updated: April 2026*
+*CLAUDE.md Version: 1.3 · Updated: April 2026 (post-v0.5 infrastructure close)*
