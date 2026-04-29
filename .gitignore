@@ -39,3 +39,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /.claude/
+
+# Local-only operational notes
+/runbooks/
