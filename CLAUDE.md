@@ -315,7 +315,7 @@ AUTH_BYPASS_ROLE=admin
 | **Server** | AWS EC2, Ubuntu 24.04 LTS |
 | **Database** | PostgreSQL 16 on same EC2 instance (v1.0) |
 | **App path (server)** | `/home/ubuntu/core-assessment` |
-| **App path (local)** | `/Users/jutuonair/GDrive/ProductDevelopment/core-assessment` |
+| **App path (local)** | `/Users/jutuonair/repos/core-assessment` |
 | **Process manager** | pm2 |
 | **Reverse proxy + SSL** | Automatic SSL certificate management with multi-domain support. Caddy recommended. |
 | **Env file (server)** | `.env.production` (gitignored) |
